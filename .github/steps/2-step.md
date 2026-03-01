@@ -2,7 +2,7 @@
 
 > _QUACK! You've made it to **Ducky's Deployment Dock!** Ducky lives by one rule: "If it isn't automated, it isn't deployed." She's wearing her GitHub t-shirt and her merge button is glowing green. Your mission? Help Ducky launch the rocket by setting up a GitHub Actions workflow — before the countdown hits zero!_
 
-<img width="400" alt="Ducky's Deployment Dock – the rubber duck mascot in a GitHub t-shirt with a merge button" src="https://github.com/user-attachments/assets/94c61bed-f731-4bc3-b63f-ad6772379848" />
+<img width="400" alt="Ducky's Deployment Dock – the rubber duck mascot in a GitHub t-shirt with a merge button" src="https://github.com/user-attachments/assets/cd1e15fb-0efa-48a2-a567-cd772e5d255e" />
 
 ---
 

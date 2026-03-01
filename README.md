@@ -2,7 +2,7 @@
 
 _Join your favorite characters on a three-level GitHub adventure — branch with Mona, deploy with Ducky, and forge code with Copilot!_
 
-<img src="https://github.com/user-attachments/assets/631758ce-770a-49c3-8dfc-449f01b58a33" alt="Mona, Ducky, and Copilot — Friends & Builders" width="600" />
+<img src="https://github.com/user-attachments/assets/764699fb-a735-4a5c-94c7-714ed0702c67" alt="Mona, Ducky, and Copilot — Friends & Builders" width="600" />
 
 ## Welcome
 
@@ -15,7 +15,7 @@ _Join your favorite characters on a three-level GitHub adventure — branch with
 
 - **How long**: This exercise takes less than 45 minutes to complete.
 
-<img src="https://github.com/user-attachments/assets/94c61bed-f731-4bc3-b63f-ad6772379848" alt="Mona's Dev Den, Ducky's Deployment Dock, and Copilot's AI Forge" width="600" />
+<img src="https://github.com/user-attachments/assets/cd1e15fb-0efa-48a2-a567-cd772e5d255e" alt="Mona's Dev Den, Ducky's Deployment Dock, and Copilot's AI Forge" width="600" />
 
 In this exercise, you will:
 

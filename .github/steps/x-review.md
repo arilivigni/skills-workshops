@@ -2,7 +2,7 @@
 
 _Congratulations, adventurer! You've completed all three levels and learned core GitHub skills alongside Mona, Ducky, and Copilot!_
 
-<img src="https://github.com/user-attachments/assets/631758ce-770a-49c3-8dfc-449f01b58a33" alt="Mona, Ducky, and Copilot together in the Friends & Builders workshop" width="500" align="right" />
+<img src="https://github.com/user-attachments/assets/764699fb-a735-4a5c-94c7-714ed0702c67" alt="Mona, Ducky, and Copilot together in the Friends & Builders workshop" width="500" align="right" />
 
 Here's a recap of your epic journey:
 

@@ -2,7 +2,7 @@
 
 > _ZAP! You've entered the **Copilot's AI Forge** — a crackling chamber of electricity and code where ideas become reality in seconds. Copilot (the purple robot) hovers before a holographic terminal, goggles glowing, ready to amplify your skills. Here, you don't just write code — you **co-create** it with an AI partner. Charge up and forge something amazing!_
 
-<img width="400" alt="Copilot's AI Forge – the purple robot Copilot surrounded by electric arcs at a holographic terminal" src="https://github.com/user-attachments/assets/94c61bed-f731-4bc3-b63f-ad6772379848" />
+<img width="400" alt="Copilot's AI Forge – the purple robot Copilot surrounded by electric arcs at a holographic terminal" src="https://github.com/user-attachments/assets/cd1e15fb-0efa-48a2-a567-cd772e5d255e" />
 
 ---
 

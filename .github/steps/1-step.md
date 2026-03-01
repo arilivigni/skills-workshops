@@ -2,7 +2,7 @@
 
 > _Welcome to **Mona's Dev Den!** Mona has been coding all night and her repo is a glorious mess of ideas. She needs YOUR help to organize the adventure. Put on your hoodie, grab your laptop, and let's crack the code together!_
 
-<img width="400" alt="Mona's Dev Den – Mona the purple-hoodie coder sitting at her laptop" src="https://github.com/user-attachments/assets/94c61bed-f731-4bc3-b63f-ad6772379848" />
+<img width="400" alt="Mona's Dev Den – Mona the purple-hoodie coder sitting at her laptop" src="https://github.com/user-attachments/assets/cd1e15fb-0efa-48a2-a567-cd772e5d255e" />
 
 ---
 
