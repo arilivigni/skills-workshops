@@ -1,175 +1,257 @@
-# Activity 1: Repository-Wide Custom Instructions
+# Activity 1: Custom Instructions vs. Prompt Files
 
-> **⏱ Time:** 15 minutes  
-> **🔵 Must-do**  
-> **📍 Where:** VS Code with your workshop repository open
+> **Time:** 15 minutes
+> **Where:** VS Code with your workshop repository open
+> **Goal:** Learn which guidance should be always-on and which guidance should be reusable on demand
+
+This activity teaches the core split from the workshop:
+- **Custom instructions** are for durable project rules and architecture context.
+- **Focused instructions** in `.github/instructions/` are for rules that should apply only to certain files or folders.
+- **Prompt files** are for repeatable task prompts you want to invoke intentionally.
 
 ---
 
 ## What You're Building
 
-A `.github/copilot-instructions.md` file — the single most impactful thing you can do to improve Copilot's usefulness in your project. This file is automatically included in every Copilot Chat conversation when your workspace is open, without you having to reference it each time.
-
-Think of it as a **permanent briefing document** you hand to the AI assistant every time it shows up for work.
+By the end of this activity you will have:
+1. A `.github/copilot-instructions.md` file for repo-wide guidance
+2. A focused `*.instructions.md` file in `.github/instructions/`
+3. A `.prompt.md` file in `.github/prompts/` for a repeated workflow
+4. A concrete example of a prompt file that pins a model for a specific task
 
 ---
 
 ## Before You Start
 
-Open VS Code with your workshop repository. Verify Copilot Chat is available:
+Open Copilot Chat and ask a generic question about your repo, for example:
 
-1. Open **Copilot Chat** from the Activity Bar or run **Chat: Focus on Chat View** from the Command Palette  
-2. Type: `What language and framework does this project use?`  
-3. Note the response — it may be generic or uncertain. After this activity, it will be specific.
+```text
+What architecture patterns should I follow in this repository?
+```
+
+Notice what is missing or too generic. You will compare this to the result after your instruction file exists.
 
 ---
 
-## Step 1 — Create the Instructions File
+## Part A - Create Durable Custom Instructions
 
-In your repository root, create the directory and file:
+> **Suggested time:** 7 minutes
+
+### Step A1 - Create the file
 
 ```bash
 mkdir -p .github
 touch .github/copilot-instructions.md
 ```
 
-Or use VS Code's Explorer: right-click in the file tree → **New Folder** → `.github`, then **New File** → `copilot-instructions.md`.
+### Step A2 - Add the right kind of content
 
-Open the file in the editor.
+Custom instructions are best for guidance that should apply to almost every chat in this repo.
 
----
+Good content:
+- architecture cues
+- stack choices
+- naming conventions
+- testing expectations
+- security and error-handling guardrails
+- your preferred response style
 
-## Step 2 — Write Your Instructions
+Bad content:
+- one-off tasks
+- temporary sprint notes
+- issue-specific details
+- giant pasted specs that only matter once
 
-Your instructions should answer the questions an AI assistant would need to be immediately useful on your project. Use the template below as a **starting point** — then replace every placeholder with something true and specific to your project.
-
-> **Key principle:** Vague instructions produce vague improvements. Specific instructions produce specific improvements.
-
-### Starter Template
+### Step A3 - Use this starter template
 
 ```markdown
-# Project: [Your Project Name]
+# Project Context
+- This repository is for: [describe the product or system]
+- Primary language/runtime: [describe stack]
+- Main frameworks/libraries: [list the important ones]
 
-## What This Project Does
-[One or two sentences. What problem does this solve? Who uses it?]
+## Architecture Rules
+- Keep [describe important modules or layers] separate
+- Prefer [patterns you want] over [patterns you want to avoid]
+- Follow existing naming and folder conventions before introducing new patterns
 
-## Language & Runtime
-- Primary language: [e.g., TypeScript 5.x / Python 3.12 / Go 1.22]
-- Runtime: [e.g., Node.js 20 / CPython / standard Go toolchain]
-- Package manager: [e.g., pnpm / poetry / go modules]
+## Engineering Guardrails
+- Validate external input before use
+- Reuse existing helpers before adding new abstractions
+- Add tests for new behavior changes
+- Keep explanations concise unless deeper reasoning is requested
 
-## Key Frameworks & Libraries
-- [Framework name]: [one-line description of how it's used]
-- [Library name]: [one-line description of how it's used]
-- [Add more as relevant]
-
-## Code Style & Conventions
-- [e.g., Use async/await, never .then() chains]
-- [e.g., Prefer named exports over default exports]
-- [e.g., All public functions must have JSDoc comments]
-- [e.g., Use early returns to reduce nesting]
-- [e.g., Error handling: always throw typed errors, never swallow]
-
-## Project Structure
-- `src/` — [describe what lives here]
-- `tests/` — [describe testing conventions]
-- [Add other directories that matter]
-
-## What to Avoid
-- [e.g., Do not use `var`, always `const` or `let`]
-- [e.g., Do not use deprecated APIs from X library]
-- [e.g., Do not add new dependencies without discussing first]
-- [e.g., Do not generate commented-out code]
-
-## Testing
-- Framework: [e.g., Vitest / pytest / Go's testing package]
-- Convention: [e.g., test files live next to source files as `*.test.ts`]
-- Coverage target: [e.g., aim for >80% branch coverage on new code]
-```
-
-**Fill this in for your real project.** If you're using the GitHub Skill template repo, describe what you know about it or what kind of project you *wish* you were configuring.
-
----
-
-## Step 3 — Add a Personalization Section
-
-At the bottom of your file, add a section that is **entirely personal to your workflow** — things about how you like to work, not just what the project requires.
-
-This is the personalization moment: Copilot's behavior should reflect *you*, not just the project.
-
-Examples of personal workflow preferences:
-```markdown
 ## My Workflow Preferences
-- When I ask for code examples, show the simplest version first, then offer a more robust version
-- I prefer explanations that start with the "why" before the "how"
-- When suggesting refactors, show the before/after side by side
-- I work in short focused sessions — keep responses concise unless I ask for depth
-- Flag potential performance or security concerns proactively, even if I didn't ask
+- Start with a short answer, then add detail only if needed
+- Flag risks and assumptions early
+- When proposing code changes, explain the smallest sensible path first
 ```
 
-Write your own — make it real.
+### Step A4 - Keep it compact
+
+Tell participants why this matters:
+- these instructions ride along all the time
+- long files cause dilution and context rot
+- the goal is durable signal, not maximum word count
+
+### Step A5 - Test it
+
+Ask the same question again or try:
+
+```text
+Suggest a safe way to add a new feature in this repo.
+```
+
+Look for better use of the right stack, patterns, and response style.
+
+### Success Criteria for Part A
+- [ ] `.github/copilot-instructions.md` exists
+- [ ] It contains durable repo guidance, not one-off tasks
+- [ ] It includes at least one personal workflow preference
+- [ ] You observed a more repo-aware response
 
 ---
 
-## Step 4 — Test Your Instructions
+## Part B - Add Focused Instructions in `.github/instructions/`
 
-With the file saved, go back to Copilot Chat and ask the **same question** from Before You Start:
+> **Suggested time:** 4 minutes
 
-```
-What language and framework does this project use?
-```
-
-Compare to your earlier response. Then try a task-oriented prompt:
-
-```
-Write a utility function that [something relevant to your project]
-```
-
-Observe:
-- Does the response use the right language/framework?
-- Does it follow the conventions you specified?
-- Does it avoid the things you said to avoid?
-
-If something is off, go back to the file and sharpen the relevant instruction.
-
----
-
-## Step 5 — Commit
+### Step B1 - Create the file
 
 ```bash
-git add .github/copilot-instructions.md
-git commit -m "chore: add repository-wide Copilot instructions"
+mkdir -p .github/instructions
+touch .github/instructions/docs.instructions.md
+```
+
+### Step B2 - Add a focused rule set
+
+Use focused instructions when the rule should apply only in a narrower context than the whole repo.
+
+```markdown
+---
+name: Docs Writing Rules
+description: Additional guidance for workshop and documentation markdown files
+applyTo: "**/*.md"
+---
+
+# Documentation Instructions
+
+- Lead with the main takeaway
+- Prefer short sections with practical headings
+- Use examples to make abstract AI customization concepts concrete
+- Keep workshop directions action-oriented and easy to scan live
+```
+
+### Step B3 - Explain the split inside instructions
+
+Use this rule of thumb:
+- `.github/copilot-instructions.md` = repo-wide defaults
+- `.github/instructions/*.instructions.md` = focused rules for matching files
+
+### Success Criteria for Part B
+- [ ] A `*.instructions.md` file exists in `.github/instructions/`
+- [ ] The file includes `applyTo` in frontmatter
+- [ ] The rules are clearly narrower than the repo-wide instruction file
+
+---
+
+## Part C - Create a Reusable Prompt File
+
+> **Suggested time:** 8 minutes
+
+### Step C1 - Pick a repeated task
+
+Choose something you repeatedly ask for, such as:
+- summarize a diff for review
+- draft release notes
+- create a small implementation plan
+- produce a code review checklist
+- write migration notes
+
+### Step C2 - Create the prompt file
+
+```bash
+mkdir -p .github/prompts
+touch .github/prompts/draft-release-notes.prompt.md
+```
+
+### Step C3 - Add frontmatter and pin a model
+
+Use a prompt file when you want a repeatable ask with optional model/tool settings.
+
+```markdown
+---
+name: draft-release-notes
+description: Draft release notes from the current branch changes
+model: GPT-5.4
+---
+
+# Draft Release Notes
+
+Review the current branch changes and write release notes with these sections:
+- Summary
+- User-visible changes
+- Risk areas
+- Follow-up actions
+
+Requirements:
+- Be concrete
+- Call out breaking changes explicitly
+- Mention docs or migrations if they changed
+```
+
+> If your environment offers a premium model for this task, try swapping `model: GPT-5.4` for `Claude Opus 4.6` and compare. The important lesson is that prompt files can carry task-specific model preferences.
+
+### Step C4 - Run it from chat
+
+In Copilot Chat, type `/` and select your prompt file.
+
+Then compare that experience to the instruction file:
+- the repo-wide instruction file shapes every request
+- the focused instruction file shapes matching files automatically
+- the prompt file injects a specific task prompt only when invoked
+
+### Step C5 - Explain the difference in one sentence
+
+Finish with this rule of thumb:
+
+> If it should happen in every chat, use `.github/copilot-instructions.md`. If it should happen only for matching files, use `.github/instructions/*.instructions.md`. If it should happen only when you ask for it, use a prompt file.
+
+### Success Criteria for Part C
+- [ ] A `.prompt.md` file exists in `.github/prompts/`
+- [ ] The file includes `description` and `model` in frontmatter
+- [ ] The prompt captures a repeated task
+- [ ] You ran it from the `/` menu
+
+---
+
+## Quick Reflection
+
+Answer in your own words:
+1. What belongs in repo-wide instructions in your repo?
+2. What belongs in focused instructions in `.github/instructions/`?
+3. What repeated task is now a better fit for a prompt file?
+
+---
+
+## Commit Your Work
+
+```bash
+git add .github/copilot-instructions.md .github/instructions/ .github/prompts/
+git commit -m "chore: add instructions and prompt files"
 ```
 
 ---
 
-## ✅ Success Criteria
+## Troubleshooting
 
-Before moving on, confirm:
-
-- [ ] `.github/copilot-instructions.md` exists and contains meaningful, project-specific content (not just placeholder text)
-- [ ] You have tested Copilot Chat and observed the instructions taking effect
-- [ ] You have added at least one personal workflow preference
-- [ ] The file is committed to your repository
-
----
-
-## 💡 Pro Tips
-
-- **Be specific about negatives.** "Don't use `var`" is more useful than "write clean code."
-- **Keep it maintained.** Treat this file like a living document. Update it when your stack or conventions change.
-- **It's a team artifact.** When you're done, this file benefits every developer on the team — not just you.
-- **Length sweet spot:** 100–300 lines is typical. Under 50 is probably too vague; over 500 may have diminishing returns.
-
----
-
-## 🆘 Troubleshooting
-
-| Problem | Solution |
+| Problem | What to Check |
 |---|---|
-| Copilot still gives generic responses | Make sure the file is saved. Then ask a prompt that should obviously trigger the instructions and, if needed, reload the VS Code window (`Ctrl+Shift+P` → "Developer: Reload Window"). Commit the file once you're happy with it so the setup is shared with your team. |
-| File not found in Explorer | Ensure the directory is named `.github` (with a dot) and the file is `copilot-instructions.md` (exact name). |
-| Instructions seem partially applied | Check for formatting issues — use plain Markdown, avoid HTML tags or unusual characters. |
+| Instructions still feel generic | Split repo-wide guidance from focused file-specific guidance and sharpen both |
+| Focused instructions do not activate | Confirm the file is in `.github/instructions/`, ends with `.instructions.md`, and has a matching `applyTo` glob |
+| Prompt file missing from `/` menu | Confirm the file is in `.github/prompts/` and ends with `.prompt.md` |
+| Model pin seems ignored | Use a model available in your Copilot plan or remove the model temporarily |
+| Everything is getting too long | Move durable guidance into instructions and keep prompt files narrowly scoped |
 
 ---
 

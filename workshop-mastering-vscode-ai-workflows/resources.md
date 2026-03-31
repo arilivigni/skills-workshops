@@ -1,43 +1,47 @@
-# Resources — Workshop 1: Mastering VS Code AI Workflows & Context
+# Resources - Workshop 1: Mastering VS Code AI Workflows & Agent Customization
 
-A curated list of official references and workshop support material.
+A curated list of current documentation and workshop support material for instructions, prompt files, custom agents, and skills in VS Code.
 
 ---
 
-## Official Documentation
+## Official VS Code Customization Documentation
 
-### VS Code Copilot Customization
-- **[Customization Overview](https://code.visualstudio.com/docs/copilot/copilot-customization)**  
-  Good starting point for understanding instructions, prompts, agents, skills, and related customization options.
+- **[Customization Overview](https://code.visualstudio.com/docs/copilot/copilot-customization)**
+  Starting point for understanding the full customization surface.
 
-- **[Custom Instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)**  
-  Covers `.github/copilot-instructions.md`, `*.instructions.md`, `applyTo` globs, and related file locations.
+- **[Custom Instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)**
+  Covers `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md`, `applyTo` globs, and where instructions apply.
 
-- **[Prompt Files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)**  
-  Covers `.prompt.md` files, frontmatter, and how to invoke prompts from Copilot Chat.
+- **[Prompt Files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)**
+  Covers `.prompt.md` files, slash-command usage, tools, agents, and model frontmatter.
 
-- **[Custom Agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents)**  
-  Covers `.agent.md` files, frontmatter, tools, agent selection, and agent-specific behaviors.
+- **[Custom Agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents)**
+  Covers `.agent.md` files, tool restrictions, model preferences, and handoffs.
 
-- **[Agent Skills](https://code.visualstudio.com/docs/copilot/customization/agent-skills)**  
-  Covers `.github/skills/<skill-name>/SKILL.md`, skill metadata, and when skills are the right fit.
+- **[Agent Skills](https://code.visualstudio.com/docs/copilot/customization/agent-skills)**
+  Covers `SKILL.md`, portability, and progressive loading.
 
-### GitHub Copilot Docs
-- **[GitHub Copilot in your IDE](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-your-ide)**
+- **[Chat Customizations Editor](https://code.visualstudio.com/docs/copilot/customization/overview#_chat-customizations-editor)**
+  Useful for creating and managing instructions, prompts, agents, and skills from the VS Code UI.
+
+---
+
+## GitHub and Ecosystem References
+
+- **[Customize Your GitHub Copilot Experience](https://github.com/skills/customize-your-github-copilot-experience)**
+  The GitHub Skill that inspired this workshop.
+
+- **[GitHub Copilot in Your IDE](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-your-ide)**
+
 - **[Adding Custom Instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-custom-instructions-for-github-copilot)**
+
 - **[Prompt Engineering for GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/prompt-engineering-for-github-copilot)**
 
----
+- **[Agent Skills Open Standard](https://agentskills.io)**
+  Background on the open skills format used across compatible agents.
 
-## GitHub Skills References
-
-- **[Customize Your GitHub Copilot Experience](https://github.com/skills/customize-your-github-copilot-experience)**  
-  The GitHub Skill that inspired this workshop structure.
-
-- **[Getting Started with GitHub Copilot](https://github.com/skills/getting-started-with-github-copilot)**  
-  Useful prerequisite for participants who need more baseline practice.
-
-- **[All GitHub Skills](https://learn.github.com/skills)**
+- **[Awesome Copilot](https://github.com/github/awesome-copilot)**
+  Community examples for instructions, prompts, agents, and skills.
 
 ---
 
@@ -47,29 +51,39 @@ The `examples/` folder in this workshop includes:
 
 | File | Purpose |
 |---|---|
-| `example-copilot-instructions.md` | Example repository-wide instructions file |
-| `example-targeted-instructions.md` | Example targeted instructions content |
-| `example-prompt-template.prompt.md` | Example reusable prompt file |
-| `example-agent.md` | Example custom agent definition |
-| `example-skill.md` | Example starter skill |
+| `example-copilot-instructions.md` | Example repo-wide instructions focused on durable guidance |
+| `example-targeted-instructions.md` | Example focused instructions for `.github/instructions/` with an `applyTo` scope |
+| `example-prompt-template.prompt.md` | Example reusable prompt file with a pinned model |
+| `example-agent.md` | Example planning agent with explicit workflow boundaries |
+| `example-skill.md` | Example PDF reader skill |
+| `example-pdf-reader.py` | Example helper script for PDF extraction |
 
 ---
 
 ## Suggested Follow-up Practice
 
 After the workshop, try one of these in a real repository:
-1. Add a real `.github/copilot-instructions.md` to a team repo
-2. Create two targeted instruction files for two different parts of the codebase
-3. Turn a repeated engineering task into a prompt file
-4. Create a specialist agent that supports your real review workflow
-5. Package a repeated multi-step process as a skill with `SKILL.md` and examples
+1. Trim an overgrown instruction file until only durable rules remain.
+2. Convert one repeated chat request into a `.prompt.md` file with a task-appropriate model.
+3. Create a planning agent with a handoff into implementation.
+4. Package a real capability that needs scripts or templates as a skill.
+5. Review a long-running chat and split it into the right customization layers.
+
+---
+
+## PDF Skill Support
+
+For the PDF-reading skill example, the helper script in this workshop uses **pypdf**:
+- **[pypdf Documentation](https://pypdf.readthedocs.io/)**
+
+Use this as a concrete example of why a skill can bundle both instructions and helper code.
 
 ---
 
 ## Troubleshooting & Community
 
 - **[VS Code Copilot issue tracker](https://github.com/microsoft/vscode-copilot-release/issues)**
-- **[GitHub Community Discussions — Copilot](https://github.com/orgs/community/discussions/categories/copilot)**
+- **[GitHub Community Discussions - Copilot](https://github.com/orgs/community/discussions/categories/copilot)**
 - **[GitHub Copilot changelog](https://github.blog/changelog/label/copilot/)**
 
 ---

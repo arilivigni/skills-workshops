@@ -1,11 +1,11 @@
-# Workshop 1: Mastering VS Code AI Workflows & Context
+# Workshop 1: Mastering VS Code AI Workflows & Agent Customization
 
-> **Format:** Instructor-led live workshop · **Duration:** 60 minutes · **Level:** Intermediate  
+> **Format:** Instructor-led live workshop · **Duration:** 60 minutes · **Level:** Intermediate
 > **Inspired by:** [Customize Your GitHub Copilot Experience](https://github.com/skills/customize-your-github-copilot-experience) (GitHub Skills)
 
-This workshop helps participants move beyond one-off prompting and learn how to shape **persistent AI behavior in VS Code**. Instead of relying on repeated reminders in chat, participants will build a layered customization setup that gives GitHub Copilot stronger context about their project, workflow, and task types.
+This workshop teaches participants how to customize AI agent behavior in VS Code with the tools that matter most in practice: **custom instructions, prompt files, custom agents, and agent skills**. Instead of treating Copilot as a single chat box, participants learn how VS Code assembles context, where each customization type lands, and how to keep the assistant effective as prompts and context grow.
 
-The session is built for live delivery: short concept framing, fast hands-on cycles, visible checkpoints, and practical examples that participants can reuse in real repositories.
+The session is designed for live delivery: a short mental-model lecture, focused hands-on exercises, visible checkpoints, and reusable artifacts participants can take back to real repositories.
 
 ---
 
@@ -13,18 +13,19 @@ The session is built for live delivery: short concept framing, fast hands-on cyc
 
 By the end of this workshop, participants will be able to:
 
-1. **Explain the practical AI context stack** in VS Code: system context, user prompt, workspace/repository context, custom instructions, prompt files, custom agents, and agent skills.
-2. **Create repository-wide custom instructions** that improve Copilot's default behavior for an entire project.
-3. **Create targeted instruction files and reusable prompt files** for specific file types and recurring tasks.
-4. **Build a custom agent** with a focused role, clear boundaries, and the right tool access for a specialized workflow.
-5. **Describe when to use an agent skill instead of an instruction, prompt, or agent**, and optionally scaffold a starter skill folder.
+1. **Explain how VS Code assembles agent context** from core identity, system rules, tool instructions, output guidance, workspace context, and user-side prompt inputs.
+2. **Describe context rot** and explain why overly long context windows lower accuracy, consistency, and task focus.
+3. **Use custom instructions for durable project guidance** and **prompt files for reusable task prompts**, including model-pinned prompt files.
+4. **Create a custom planning agent** with a narrow role, clear workflow, and the right tool boundaries.
+5. **Explain and scaffold an agent skill** that uses progressive loading to save context window space.
+6. **Choose the right customization layer** for a real workflow instead of solving every problem with a longer chat prompt.
 
 ---
 
 ## Prerequisites
 
 **Knowledge**
-- Comfortable using VS Code and opening the integrated terminal
+- Comfortable using VS Code and the integrated terminal
 - Basic familiarity with GitHub Copilot Chat in VS Code
 - Basic Git workflow (`clone`, `add`, `commit`)
 - Comfortable editing Markdown files
@@ -36,7 +37,7 @@ By the end of this workshop, participants will be able to:
 - [ ] Git installed and working in the terminal
 - [ ] A repository to use during the workshop (personal repo or template-based practice repo)
 
-> **Instructor note:** The most common failure point is authentication or extension setup. Ask participants to open Copilot Chat and send a simple prompt before the workshop starts.
+> **Instructor note:** The most common failure point is still authentication or extension setup. Before the workshop begins, ask participants to open Copilot Chat and send one simple prompt successfully.
 
 ---
 
@@ -44,14 +45,14 @@ By the end of this workshop, participants will be able to:
 
 Participants need an open repository in VS Code.
 
-### Option A — Use a practice repository (recommended for consistent facilitation)
+### Option A - Use a practice repository (recommended for consistent facilitation)
 ```bash
 gh repo create my-copilot-workshop --template skills/customize-your-github-copilot-experience --public --clone
 cd my-copilot-workshop
 code .
 ```
 
-### Option B — Use a real repository
+### Option B - Use a real repository
 ```bash
 cd ~/path/to/your-project
 code .
@@ -59,10 +60,10 @@ code .
 
 ### Pre-flight Check
 Before the workshop officially starts, ask participants to verify:
-1. Copilot Chat opens in VS Code
-2. They can send and receive a response
-3. Their repository is writable
-4. Git works in the integrated terminal
+1. Copilot Chat opens in VS Code.
+2. They can send and receive a response.
+3. Their repository is writable.
+4. Git works in the integrated terminal.
 
 > **Facilitation recommendation:** If the audience is mixed, let confident participants use their own repos and steer beginners toward the template repo for easier troubleshooting.
 
@@ -70,223 +71,183 @@ Before the workshop officially starts, ask participants to verify:
 
 ## Workshop Agenda
 
-> Sections marked **🔵 Must-do** are core. Sections marked **🟡 Flexible** can be shortened, demoed, or assigned as follow-up if time runs tight.
-
-| Time | Section | Format | Priority |
+| Time | Section | Format | Outcome |
 |---|---|---|---|
-| 00:00–05:00 | [1. Welcome & Framing](#section-1-welcome--framing) | Instructor-led | 🔵 Must-do |
-| 05:00–13:00 | [2. The AI Context Stack](#section-2-the-ai-context-stack) | Concept + demo | 🔵 Must-do |
-| 13:00–28:00 | [3. Activity 1 — Repository-Wide Custom Instructions](#section-3-activity-1--repository-wide-custom-instructions) | Hands-on | 🔵 Must-do |
-| 28:00–42:00 | [4. Activity 2 — Targeted Instructions & Prompt Files](#section-4-activity-2--targeted-instructions--prompt-files) | Hands-on | 🔵 Must-do |
-| 42:00–55:00 | [5. Activity 3 — Custom Agents & Agent Skills](#section-5-activity-3--custom-agents--agent-skills) | Hands-on / demo | 🟡 Flexible |
-| 55:00–60:00 | [6. Wrap-up & Next Steps](#section-6-wrap-up--next-steps) | Instructor-led | 🔵 Must-do |
-
-**Built-in buffer:** Activities are intentionally scoped to leave 1-2 minutes of slack inside each block for questions, slow setup, or regrouping.
+| 00:00-15:00 | [1. The Anatomy of the Agent System Prompt & Context Rot](#section-1-the-anatomy-of-the-agent-system-prompt--context-rot) | Concept + demo | Participants understand where each customization layer lands and why long context hurts quality |
+| 15:00-30:00 | [2. Activity 1 - Custom Instructions vs. Prompt Files](#section-2-activity-1---custom-instructions-vs-prompt-files) | Hands-on | Participants create durable instructions and one reusable prompt file |
+| 30:00-45:00 | [3. Activity 2 - Custom Agents for Structured Workflows](#section-3-activity-2---custom-agents-for-structured-workflows) | Hands-on | Participants build a planning agent and use it as part of a plan-then-implement workflow |
+| 45:00-60:00 | [4. Activity 3 - Implementing Agent Skills](#section-4-activity-3---implementing-agent-skills) | Hands-on + debrief | Participants scaffold a skill and understand progressive loading with a PDF example |
 
 ---
 
-## Section 1: Welcome & Framing
+## Section 1: The Anatomy of the Agent System Prompt & Context Rot
 
-**Duration:** 5 minutes  
-**Format:** Instructor-led
-
-### Talking Points
-- This workshop is not about clever prompts alone.
-- The real productivity gain comes from **engineering the context around the assistant**.
-- If an assistant keeps missing your standards, your stack, or your preferred output format, you should not have to re-teach it every chat.
-- Today participants will build a reusable setup they can keep in version control.
-
-### Opening Question
-> “When Copilot gives you something generic or off-target, what do you usually do next?”
-
-Take 2-3 answers. Then land the point: most people retry the prompt, but this workshop focuses on **fixing the environment instead of retyping the same guidance**.
-
----
-
-## Section 2: The AI Context Stack
-
-**Duration:** 8 minutes  
+**Duration:** 15 minutes
 **Format:** Instructor explanation + short live demo
 
-### The Practical Context Model
+### Teaching Goal
+Give participants a practical mental model for where customization lands in VS Code, then show why pushing too much information into one giant context window eventually makes the model worse instead of better.
 
-Use this stack to explain what shapes AI behavior in practice:
+### The Practical Context Stack
 
-```
-┌──────────────────────────────────────────────────────┐
-│ 7. Current User Prompt                              │
-│    What you ask right now                           │
-├──────────────────────────────────────────────────────┤
-│ 6. Agent Skills                                     │
-│    Reusable, task-specific capabilities and         │
-│    resources loaded when relevant                   │
-├──────────────────────────────────────────────────────┤
-│ 5. Custom Agents                                    │
-│    Role, instructions, tools, model preferences     │
-├──────────────────────────────────────────────────────┤
-│ 4. Prompt Files                                     │
-│    Reusable task templates invoked with /           │
-├──────────────────────────────────────────────────────┤
-│ 3. Custom Instructions                              │
-│    Repo-wide or targeted instructions files         │
-├──────────────────────────────────────────────────────┤
-│ 2. Workspace / Repository Context                   │
-│    Open files, selections, repo structure, diffs    │
-├──────────────────────────────────────────────────────┤
-│ 1. User / Tool Configuration                        │
-│    VS Code settings, enabled tools, environment     │
-├──────────────────────────────────────────────────────┤
-│ 0. System Context                                   │
-│    Product-level baseline behavior you don't edit   │
-└──────────────────────────────────────────────────────┘
+Use this workshop model to explain what the agent effectively receives:
+
+```text
+┌──────────────────────────────────────────────────────────────┐
+│ User Prompt 4 - prior turns and follow-up context           │
+├──────────────────────────────────────────────────────────────┤
+│ User Prompt 3 - reusable prompt-file text                   │
+├──────────────────────────────────────────────────────────────┤
+│ User Prompt 2 - attached files, selections, and inputs      │
+├──────────────────────────────────────────────────────────────┤
+│ User Prompt 1 - what the user is asking right now           │
+├──────────────────────────────────────────────────────────────┤
+│ Workspace Info - repo structure, open files, diffs, state   │
+├──────────────────────────────────────────────────────────────┤
+│ Output Format - response shape and UI expectations          │
+├──────────────────────────────────────────────────────────────┤
+│ Tool Instructions - what tools exist and how to use them    │
+├──────────────────────────────────────────────────────────────┤
+│ General Rules - product guardrails and behavior rules       │
+├──────────────────────────────────────────────────────────────┤
+│ Core Identity - the assistant's base role                   │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ### What to Say About Each Layer
-- **System context:** The baseline behavior provided by the product. Participants cannot edit this directly.
-- **User prompt:** Still matters. It tells the assistant what job to do right now.
-- **Workspace/repository context:** Open tabs, selected code, repo files, naming patterns, and current changes strongly influence results.
-- **Custom instructions:** Durable guidance for how the assistant should behave in a project or file scope.
-- **Prompt files:** Saved task templates for repeated workflows.
-- **Custom agents:** Named specialists with their own instructions and tool boundaries.
-- **Agent skills:** Reusable capabilities packaged as a small folder, often including instructions, examples, or scripts for more complex workflows.
+- **Core identity:** the product-level baseline role the assistant starts with.
+- **General rules:** platform guardrails, safety rules, and operating constraints.
+- **Tool instructions:** what actions the model is allowed to take and how those tools should be used.
+- **Output format:** how responses should be shaped for the UI or task at hand.
+- **Workspace info:** repo structure, open files, selections, diffs, and environment state.
+- **User prompts 1-4:** the current ask plus extra user-side prompt inputs such as prompt files, attachments, and prior chat turns.
 
-> **Key message:** These layers are additive. A prompt file can benefit from repo instructions. A custom agent still operates inside the repository context. A skill adds reusable capability without replacing the other layers.
+### Where the Customization Types Fit
+- **Custom instructions:** best for high-level project architecture, durable coding rules, and team conventions. Use `.github/copilot-instructions.md` for repo-wide guidance and `.github/instructions/*.instructions.md` for focused rules that apply to specific file types or folders.
+- **Prompt files:** reusable, task-specific prompts that are injected on the user-prompt side when invoked.
+- **Custom agents:** specialized personas with their own tools, workflow, and model preferences.
+- **Agent skills:** portable capabilities that load only when needed.
 
-### Live Demo (suggested)
-1. Ask Copilot a generic question in a repo with no custom files.
-2. Add a short `.github/copilot-instructions.md`.
-3. Ask the same question again.
-4. Narrate the difference: the assistant did not become smarter in general; it became better informed.
+### Context Rot Talking Points
+Use plain language:
+- The model does not become more reliable just because you keep adding text.
+- As context grows, the assistant is more likely to miss constraints, over-index on stale details, or produce bland summaries instead of precise work.
+- Long context windows often hide the important instruction instead of strengthening it.
+
+### How to Explain Context Rot
+When the context window becomes bloated, quality drops in familiar ways:
+- answers become generic even when good instructions exist
+- the model forgets or ignores the most important rule
+- it repeats stale assumptions from earlier turns
+- it spends tokens re-reading context instead of solving the task
+
+### Mitigation Strategies
+1. Keep **always-on instructions short and durable**.
+2. Put **repeated tasks in prompt files** instead of pasting long prompts into chat.
+3. Use **custom agents** to split planning, implementation, and review into separate workflows.
+4. Use **skills** for larger capabilities so detailed instructions load progressively instead of every time.
+
+### Suggested Live Demo
+1. Start with a generic repo and ask Copilot for help.
+2. Show a short `.github/copilot-instructions.md`.
+3. Add one focused file such as `.github/instructions/docs.instructions.md` with an `applyTo` glob and show how it differs from repo-wide guidance.
+4. Invoke a `.prompt.md` file from `/` and point out that it lands as task text, not as a repo-wide rule.
+5. Explain why these are better than keeping a 40-message chat alive forever.
 
 ### Checkpoint Question
-> “If I want tests and UI files to follow different conventions, which customization type is the best fit?”
+> "If I want a rule to influence every task in this repo, where should it live?"
 
-**Answer:** targeted custom instructions.
+**Answer:** custom instructions, not a one-off prompt file.
 
 ---
 
-## Section 3: Activity 1 — Repository-Wide Custom Instructions
+## Section 2: Activity 1 - Custom Instructions vs. Prompt Files
 
-**Duration:** 15 minutes  
-**Format:** Hands-on  
-**Priority:** 🔵 Must-do
+**Duration:** 15 minutes
+**Format:** Hands-on
 
 📋 **Full instructions:** [activities/activity-1.md](./activities/activity-1.md)
 
 ### What Participants Do
-1. Create `.github/copilot-instructions.md`
-2. Add project-specific guidance: stack, conventions, architecture cues, things to avoid
-3. Add one **personal workflow preference** section
-4. Test the effect in Copilot Chat with a real question
+1. Create or improve `.github/copilot-instructions.md` with repo-wide architecture, conventions, and workflow preferences.
+2. Create one focused `*.instructions.md` file in `.github/instructions/` for a specific file type or folder.
+3. Create one `.prompt.md` file in `.github/prompts/` for a repeated task.
+4. Pin a model in the prompt file frontmatter to show that prompt files can influence model choice.
+5. Compare when to use repo-wide instructions, focused instructions, and reusable task prompts.
 
 ### Success Criteria
-- [ ] `.github/copilot-instructions.md` exists
-- [ ] File includes real, project-specific content
-- [ ] Participant can point to at least one visible response improvement
-- [ ] File includes at least one personal preference, not just team conventions
+- [ ] `.github/copilot-instructions.md` contains durable project guidance.
+- [ ] A focused `*.instructions.md` file exists in `.github/instructions/`.
+- [ ] A `.prompt.md` file exists in `.github/prompts/`.
+- [ ] The prompt file has a `model` in frontmatter.
+- [ ] The participant can explain the difference between repo-wide instructions, focused instructions, and prompt files.
 
 ### Instructor Notes
-- Coach specificity: “avoid `any` in TypeScript” is better than “write good code.”
-- Encourage participants to include both **positive guidance** and **negative guardrails**.
-- If someone finishes early, ask them to improve the file based on a failed or vague response.
+- Keep repeating the distinction: **instructions are standards**, **prompt files are reusable asks**.
+- Inside instructions, separate **repo-wide guidance** from **focused file-based guidance**.
+- Coach participants away from stuffing one-off tasks into repo instructions.
 
 ---
 
-## Section 4: Activity 2 — Targeted Instructions & Prompt Files
+## Section 3: Activity 2 - Custom Agents for Structured Workflows
 
-**Duration:** 14 minutes  
-**Format:** Hands-on  
-**Priority:** 🔵 Must-do
+**Duration:** 15 minutes
+**Format:** Hands-on
 
 📋 **Full instructions:** [activities/activity-2.md](./activities/activity-2.md)
 
 ### What Participants Do
-**Part A — Targeted instructions**
-1. Create a `*.instructions.md` file in `.github/instructions/`
-2. Add an `applyTo` glob so it applies automatically to a specific file type or folder
-3. Test behavior in a matching file
-
-**Part B — Prompt files**
-1. Create a `.prompt.md` file in `.github/prompts/`
-2. Capture a repeated task from their workflow
-3. Add at least one team- or project-specific requirement
-4. Invoke it from Copilot Chat using `/`
+1. Create a **Plan Mode** custom agent in `.github/agents/`.
+2. Give it a narrow role: gather context, ask for missing details, produce a concise implementation plan, and stop.
+3. Prefer a larger premium model for the planning step.
+4. Use the plan to switch into a smaller everyday model for implementation work.
 
 ### Success Criteria
-- [ ] At least one targeted instructions file exists and contains `applyTo`
-- [ ] At least one `.prompt.md` file exists
-- [ ] Participant can explain the difference between an always-on instruction and a manually invoked prompt file
-- [ ] Prompt file includes a personalization detail unique to the participant's workflow
+- [ ] A `.agent.md` file exists in `.github/agents/`.
+- [ ] The agent has explicit workflow steps and boundaries.
+- [ ] The agent is used for a real planning task.
+- [ ] The participant can explain why planning and implementation are intentionally split.
 
 ### Instructor Notes
-- Participants often confuse instructions and prompt files. Reinforce:
-  - **Instructions** = always-on or automatically applied
-  - **Prompt files** = manually invoked for a task
-- If people are stuck, suggest common prompt ideas: PR description, test scaffold, README helper, security review.
-- Encourage them to open both a matching file and a non-matching file when testing targeted instructions.
+- Emphasize that this is not about making one super-agent do everything.
+- The key design idea is **separation of concerns**: premium planning, cheaper iterative execution.
+- If participants finish early, have them add a handoff or a second implementation-focused agent.
 
 ---
 
-## Section 5: Activity 3 — Custom Agents & Agent Skills
+## Section 4: Activity 3 - Implementing Agent Skills
 
-**Duration:** 13 minutes  
-**Format:** Hands-on with optional instructor demo  
-**Priority:** 🟡 Flexible
+**Duration:** 15 minutes
+**Format:** Hands-on + debrief
 
 📋 **Full instructions:** [activities/activity-3.md](./activities/activity-3.md)
 
 ### What Participants Do
-**Must-do core:**
-1. Create one custom agent in `.github/agents/` using a `.agent.md` file
-2. Define its purpose, tools, and boundaries
-3. Activate it in VS Code and run a real task
-
-**Optional extension if time allows:**
-4. Scaffold one starter skill in `.github/skills/<skill-name>/SKILL.md`
-5. Write a description explaining when the skill should be used
+1. Create a skill folder with `SKILL.md`.
+2. Write the skill name and description so the agent can decide when to load it.
+3. Explain progressive loading: discovery first, instructions second, resources only when needed.
+4. Use a real-world example such as a skill that extracts and reads PDF content with Python.
 
 ### Success Criteria
-- [ ] A `.agent.md` file exists in `.github/agents/`
-- [ ] Participant can explain what makes the agent specialized
-- [ ] Participant runs the agent on a real task
-- [ ] Participant can state when a skill is a better fit than an agent or prompt
+- [ ] `.github/skills/<skill-name>/SKILL.md` exists.
+- [ ] The skill description clearly says what it does and when to use it.
+- [ ] The participant can explain how skills save context window space.
+- [ ] The participant can describe why the PDF workflow is a better fit for a skill than for always-on instructions.
 
 ### Instructor Notes
-- If time is short, demo the agent live and make the skill portion conceptual only.
-- If participants are unsure what role to create, suggest: documentation reviewer, test generator, API reviewer, security reviewer.
-- Explain the distinction clearly:
-  - **Agent** = a persona / role with tools and behavior
-  - **Skill** = a reusable capability package that can be loaded when relevant
-
----
-
-## Section 6: Wrap-up & Next Steps
-
-**Duration:** 5 minutes  
-**Format:** Instructor-led
-
-### Recap Talking Points
-1. Better AI results are often a **context design problem**, not a prompting problem.
-2. The highest-ROI first step is usually `.github/copilot-instructions.md`.
-3. Different customization types solve different problems:
-   - instructions for standards
-   - prompt files for repeated tasks
-   - agents for roles
-   - skills for reusable capabilities
-4. The strongest workshop outcome is not “I learned a feature.” It is “I now have a working setup I can evolve.”
-
-### Exit Prompt
-> “What is one AI customization you are going to bring back to a real repository this week?”
+- This section is where the context-rot story pays off: skills keep large workflows out of the main prompt until needed.
+- If time is short, scaffold the skill and talk through the supporting script rather than fully building it live.
+- Use the last 2-3 minutes for the workshop exit question and one takeaway per participant.
 
 ---
 
 ## Hands-On Activities Summary
 
-| Activity | Outcome | Must-do? | Success Signal |
-|---|---|---|---|
-| [Activity 1](./activities/activity-1.md) | Repository-wide instructions file | Yes | Copilot starts responding with better project awareness |
-| [Activity 2](./activities/activity-2.md) | One targeted instructions file + one prompt file | Yes | Different file scopes and reusable prompts behave as intended |
-| [Activity 3](./activities/activity-3.md) | One custom agent, plus optional starter skill | Flexible | Agent acts like a specialist; participant can explain when a skill fits |
+| Activity | Outcome | Why it matters |
+|---|---|---|
+| [Activity 1](./activities/activity-1.md) | Repo-wide instructions + focused instructions + one model-aware prompt file | Shows the difference between persistent guidance layers and reusable task prompts |
+| [Activity 2](./activities/activity-2.md) | A planning agent with explicit workflow boundaries | Demonstrates how custom agents structure work instead of just adding more text |
+| [Activity 3](./activities/activity-3.md) | A starter skill with a PDF-reading example | Shows progressive loading and capability packaging |
 
 ---
 
@@ -294,17 +255,17 @@ Use this stack to explain what shapes AI behavior in practice:
 
 For advanced participants or post-workshop follow-up:
 
-1. **Create two targeted instruction files** for different parts of the repo and compare outcomes.
-2. **Turn a real repeated team workflow into a prompt file** and commit it for teammates.
-3. **Build a second custom agent** with a different tool set and compare behavior.
-4. **Create a real agent skill** with `SKILL.md`, examples, and a support file.
-5. **Add org- or team-level guidance** by aligning repo customizations with broader engineering standards.
+1. Add one targeted `*.instructions.md` file for a specific folder or file type.
+2. Create a second prompt file that uses a different model for a different task profile.
+3. Add a handoff from a planning agent to an implementation or review agent.
+4. Package a real multi-file workflow as a skill with scripts and examples.
+5. Audit an existing long-running chat and refactor it into instructions, prompts, agents, and skills.
 
 ---
 
 ## Resources
 
-See [resources.md](./resources.md) for official documentation, the original GitHub Skill, and reference examples included in this workshop folder.
+See [resources.md](./resources.md) for current VS Code customization docs, GitHub references, and the example artifacts included in this workshop.
 
 ---
 
@@ -314,35 +275,30 @@ See [resources.md](./resources.md) for official documentation, the original GitH
 
 | Question | Suggested Answer |
 |---|---|
-| “What should go in repo instructions versus a prompt file?” | Put durable project standards in instructions. Put task-specific workflows in prompt files. |
-| “What is the difference between a custom agent and a skill?” | An agent defines a role and tool set. A skill packages a reusable capability or workflow that can load when relevant. |
-| “Can I use my own project instead of the template?” | Yes, and that is often more valuable. The template just makes facilitation easier. |
-| “Do these files need to be committed?” | They take effect locally when saved, but commit them if you want your team to share the configuration. |
-| “Do I need all customization types?” | No. Start with repo instructions, then add prompt files or agents only where they solve a clear problem. |
+| "What belongs in custom instructions versus a prompt file?" | Put durable repo guidance in instructions. Put reusable task requests in prompt files. |
+| "Why not keep everything in one long chat?" | Because long context eventually hurts recall, precision, and focus. Split stable guidance from task-specific context. |
+| "When should I create a custom agent?" | When the job needs a stable persona, a workflow, tool boundaries, or different model preferences. |
+| "When is a skill a better fit than an agent?" | When you need a portable capability package with instructions, scripts, or examples that should load only when relevant. |
+| "Do I need every layer?" | No. Start with repo instructions, then add prompt files, agents, and skills only where they solve a real repeat problem. |
 
 ### Troubleshooting
 
 | Symptom | Likely Cause | Fix |
 |---|---|---|
-| Copilot seems generic even after adding instructions | File is too vague or not saved | Save the file, sharpen the wording, ask a concrete test prompt |
-| Targeted instructions do not seem to activate | Wrong file name, wrong extension, or bad `applyTo` glob | Use `*.instructions.md`, add YAML frontmatter, verify the glob matches a real file |
-| Prompt file does not show in `/` menu | Wrong extension or folder | Use `.prompt.md` in `.github/prompts/`, then reload VS Code if needed |
-| Agent does not appear in VS Code | Wrong file type or invalid frontmatter | Use `.agent.md` in `.github/agents/`, check YAML frontmatter, reload the window |
-| Skill is not discoverable | Wrong folder structure | Use `.github/skills/<skill-name>/SKILL.md` and make sure `name` matches the folder |
+| Copilot still sounds generic after adding instructions | Instructions are vague or overloaded | Shorten the file and make the rules concrete and durable |
+| Prompt file does not appear in `/` | Wrong folder or extension | Use `.github/prompts/*.prompt.md`, then reload VS Code if needed |
+| Prompt file runs but ignores the intended model | Model not available in the current plan or environment | Try a supported model name or remove the pin temporarily |
+| Planner agent behaves like a general assistant | Role and workflow are underspecified | Add clear steps, boundaries, and tool restrictions |
+| Skill is not discoverable | Name/path mismatch or vague description | Make the folder and `name` match exactly and describe when to use the skill |
 
 ### Facilitation Tips
-- Keep the lecture portions short. Participants learn fastest once their hands are on the files.
-- Walk the room during activity time; do not wait for participants to self-identify as blocked.
-- Normalize iteration. The first version of a customization is rarely the final one.
-- If time is running short, keep Activities 1 and 2 intact and convert most of Activity 3 into an instructor demo.
-- Ask participants to personalize at least one artifact. That moment makes the workshop feel relevant instead of theoretical.
+- Keep the first 15 minutes visual. Draw the stack and physically point to where each customization lands.
+- When discussing context rot, use symptoms participants already recognize: "It forgot my rules" and "It got more generic after a long chat."
+- In Activity 2, explicitly celebrate narrow agents. Narrow beats clever.
+- In Activity 3, connect progressive loading back to the workshop thesis: the best context is often the context you did **not** load yet.
 
 ---
 
-## Facilitator Tips
+## Exit Prompt
 
-- **Keep the pace visible:** Call out time remaining at the halfway point of each activity.
-- **Use real examples:** Show one mediocre AI response and one improved one.
-- **Favor examples over abstraction:** When explaining context layers, connect each layer to a file or action participants can see.
-- **Protect the must-do outcomes:** Everyone should leave with repo instructions and at least one prompt or targeted instruction file.
-- **Close with action:** Encourage participants to commit what they created before they leave.
+> "What is one AI workflow you will split into instructions, a prompt file, an agent, or a skill when you get back to your real repo?"

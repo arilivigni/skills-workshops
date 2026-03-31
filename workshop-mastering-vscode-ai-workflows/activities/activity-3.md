@@ -1,203 +1,144 @@
-# Activity 3: Custom Agents & Agent Skills
+# Activity 3: Implementing Agent Skills
 
-> **⏱ Time:** 13 minutes  
-> **🟡 Flexible** — complete the agent portion first; use the skill portion if time remains  
-> **📍 Where:** VS Code with your workshop repository open  
-> **🔗 Prerequisite:** [Activity 1](./activity-1.md) and [Activity 2](./activity-2.md)
+> **Time:** 15 minutes
+> **Where:** VS Code with your workshop repository open
+> **Goal:** Package a reusable capability as a skill and understand progressive loading
 
-This activity helps participants understand two advanced customization types:
-- **Custom agents** for specialized roles
-- **Agent skills** for reusable capabilities and workflows
+This activity focuses on the most context-efficient customization type in the workshop.
 
----
-
-## The Difference in One Sentence Each
-
-- **Custom agent:** “Act like this specialist, with these tools and boundaries.”
-- **Agent skill:** “When this type of task appears, load this reusable capability package.”
-
-If you remember only one thing, remember this:
-- use an **agent** for a role
-- use a **skill** for a reusable capability or workflow
+A skill is a **capability package**:
+- instructions in `SKILL.md`
+- optional scripts
+- optional templates or examples
+- loaded only when relevant
 
 ---
 
-# Part A — Build a Custom Agent
+## What You're Building
 
-> **Suggested time:** 9 minutes  
-> **Priority:** Must-do
-
-## Step A1 — Pick a Specialist Role
-
-Choose a role that would genuinely help in your workflow.
-
-Examples:
-- documentation reviewer
-- security reviewer
-- test generator
-- API design reviewer
-- refactor coach
-
-Write down:
-- the role name
-- what it should do
-- what it should avoid doing
-- what tools it needs
+By the end of this activity you will have:
+1. A starter skill in `.github/skills/<skill-name>/SKILL.md`
+2. A real example of a skill that uses Python to extract text from PDFs
+3. A simple explanation of how progressive loading protects your context window
 
 ---
 
-## Step A2 — Create the Agent File
+## Why a Skill Instead of More Instructions?
 
-Create the folder and file:
+Use this workshop answer:
+- **Instructions** are for rules that should always be around.
+- **Skills** are for capabilities that should load only when the task needs them.
+
+That difference is what makes skills useful against context rot.
+
+---
+
+## Part A - Create the Skill Folder
+
+> **Suggested time:** 5 minutes
+
+### Step A1 - Create the folder and files
 
 ```bash
-mkdir -p .github/agents
-touch .github/agents/doc-writer.agent.md
+mkdir -p .github/skills/pdf-reader
+touch .github/skills/pdf-reader/SKILL.md
+touch .github/skills/pdf-reader/extract_pdf.py
 ```
 
-Custom agents in VS Code are stored as Markdown files with the `.agent.md` extension.
-
-> **Tip:** Keep your first agent simple. You can always add more tools or model preferences later.
-
-Use this starter template:
+### Step A2 - Add this starter `SKILL.md`
 
 ```markdown
 ---
-name: Doc Writer
-description: Helps write and improve code documentation in this repository
-tools: ['search/codebase']
+name: pdf-reader
+description: Extract and summarize text from PDF files with Python. Use this when asked to inspect, quote, or summarize PDF content from a local file.
 ---
 
-# Role
-You are a documentation specialist for this codebase.
-
-# Responsibilities
-- Improve JSDoc, docstrings, and README content
-- Read related files before suggesting documentation
-- Prefer concise, concrete explanations
-
-# Boundaries
-- Do not refactor code unless asked
-- Do not review style or performance unless it affects documentation
-
-# Output Format
-- Start with a short summary
-- Then list recommended documentation changes
-- End with any unanswered questions
-```
-
----
-
-## Step A3 — Personalize the Agent
-
-Make the instructions specific to your workflow.
-
-Ideas:
-- require a certain review format
-- enforce your team's vocabulary
-- make the agent ask clarifying questions before acting
-- force the agent to stay narrow and avoid generic advice
-
-Examples:
-- “Always point out missing examples in public APIs.”
-- “Use our severity levels: Critical, Warning, Suggestion.”
-- “If the request is ambiguous, ask one clarifying question before proposing edits.”
-
----
-
-## Step A4 — Run the Agent
-
-In VS Code, open Copilot Chat and select your custom agent from the agents picker.
-
-Then give it a real task, such as:
-
-```text
-Review the documentation in src/utils/parser.ts and suggest improvements.
-```
-
-```text
-Generate JSDoc for the public functions in this file.
-```
-
-Observe:
-- does it stay in role?
-- does it follow your requested output format?
-- does it avoid tasks you told it not to do?
-
-### Success Criteria for Part A
-- [ ] A `.agent.md` file exists in `.github/agents/`
-- [ ] The file has YAML frontmatter and Markdown instructions
-- [ ] The agent has a specific role and clear boundaries
-- [ ] You ran the agent on a real task
-
----
-
-# Part B — Understand or Scaffold an Agent Skill
-
-> **Suggested time:** 4 minutes  
-> **Priority:** Flexible
-
-Agent skills are useful when you want something more reusable than a prompt file and more portable than a repo-specific instruction.
-
-A skill can include:
-- a `SKILL.md` file with instructions
-- examples
-- supporting resources
-- scripts or templates
-
-## Step B1 — Create a Starter Skill Folder
-
-```bash
-mkdir -p .github/skills/pr-review-helper
-touch .github/skills/pr-review-helper/SKILL.md
-```
-
-Add this starter template:
-
-```markdown
----
-name: pr-review-helper
-description: Helps perform structured pull request reviews. Use this when asked to review a PR for risks, missing tests, and rollout concerns.
----
-
-# PR Review Helper
+# PDF Reader Skill
 
 ## When to Use This Skill
-Use this skill when reviewing a pull request, a branch diff, or a set of staged changes.
+Use this skill when the task involves reading or summarizing a PDF instead of a normal text file.
 
 ## Workflow
-1. Summarize the change
-2. Identify risky areas
-3. Check for missing tests or docs
-4. Highlight rollout or migration concerns
-5. End with clear next steps
+1. Confirm which PDF file should be read.
+2. Run the helper script to extract text from the PDF.
+3. Review the extracted text before answering.
+4. Summarize or quote only the sections relevant to the user's request.
+5. Mention extraction limits if the PDF is image-only or malformed.
+
+## Resources
+- Helper script: [extract_pdf.py](./extract_pdf.py)
 ```
 
-## Step B2 — Explain Why This Is a Skill
+### Step A3 - Explain the loading story
 
-Write one sentence below the workflow answering:
+Describe progressive loading in three steps:
+1. VS Code first sees only the **skill name and description**.
+2. The **body of `SKILL.md`** loads only if the skill is selected or judged relevant.
+3. Extra files like **`extract_pdf.py`** load only when the agent actually needs them.
 
-> Why is this better as a skill than as a one-off prompt?
+That is the context-saving idea participants should remember.
 
-Examples:
-- because it is a repeated multi-step review pattern
-- because the team can share it
-- because it may later include examples or scripts
+---
 
-### Success Criteria for Part B
-- [ ] `.github/skills/<skill-name>/SKILL.md` exists **or** you can clearly explain the structure verbally
-- [ ] You can explain when a skill is a better fit than a prompt file
+## Part B - Add the Helper Script
+
+> **Suggested time:** 5 minutes
+
+Use this simple Python example:
+
+```python
+from pathlib import Path
+import sys
+
+from pypdf import PdfReader
+
+
+def main() -> None:
+    if len(sys.argv) < 2:
+        raise SystemExit("Usage: python extract_pdf.py <path-to-pdf>")
+
+    pdf_path = Path(sys.argv[1]).expanduser().resolve()
+    reader = PdfReader(str(pdf_path))
+    text = "\n".join(page.extract_text() or "" for page in reader.pages)
+    print(text)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+If participants do not have Python ready, keep the script conceptual and focus on why a script belongs inside a skill folder.
+
+---
+
+## Part C - Connect It Back to the Workshop
+
+> **Suggested time:** 5 minutes
+
+### Why this works well as a skill
+- it is a reusable capability
+- it may need helper code and extra files
+- it should not consume context in every conversation
+- it is useful across repos and even across AI tools that support skills
+
+### Success Criteria
+- [ ] `.github/skills/pdf-reader/SKILL.md` exists
+- [ ] The `name` matches the folder name
+- [ ] The description says what the skill does and when to use it
+- [ ] You can explain progressive loading in one sentence
+
+Use this one-sentence version if needed:
+
+> Skills save context because the agent sees the name and description first, then loads instructions and helper files only when the task actually needs them.
 
 ---
 
 ## Commit Your Work
 
 ```bash
-git add .github/agents/ .github/skills/
-git commit -m "chore: add custom agent and starter skill"
+git add .github/skills/
+git commit -m "chore: add pdf reader skill"
 ```
-
-> If you only completed the agent portion, commit just `.github/agents/`.
 
 ---
 
@@ -205,18 +146,18 @@ git commit -m "chore: add custom agent and starter skill"
 
 | Problem | What to Check |
 |---|---|
-| Agent does not appear in VS Code | Confirm the file is in `.github/agents/` and ends with `.agent.md` |
-| Agent behavior is too generic | Strengthen the role, responsibilities, and boundaries |
-| Frontmatter errors | Check YAML punctuation, brackets, and indentation |
-| Skill is not recognized | Confirm the path is `.github/skills/<name>/SKILL.md` and the `name` matches the folder |
+| Skill is not recognized | Confirm the path is `.github/skills/pdf-reader/SKILL.md` |
+| Skill is hard to discover | Make the description say exactly when to use it |
+| Script path is broken | Reference helper files with relative links from `SKILL.md` |
+| PDF extraction fails on scanned documents | Explain that image-only PDFs may need OCR, not plain text extraction |
 
 ---
 
-## Quick Debrief Prompt
+## Quick Debrief
 
 Answer in one sentence:
-- What role did you turn into an agent?
-- What workflow might eventually become a team skill?
+- What capability did you package as a skill?
+- Why is it better as a skill than as an always-on instruction?
 
 ---
 

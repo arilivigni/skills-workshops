@@ -1,25 +1,23 @@
 ---
-name: Testing Rules
-description: Additional guidance for test files
-applyTo: "**/*.test.ts,**/*.spec.ts"
+name: Docs Writing Rules
+description: Additional guidance for workshop and documentation markdown files
+applyTo: "**/*.md"
 ---
 
-# Testing Instructions
+# Documentation Instructions
 
-> These instructions apply when working inside test files.
-> They extend the repository-wide Copilot instructions rather than replacing them.
+Use these targeted instructions when editing workshop or documentation markdown files.
+Use this alongside `.github/copilot-instructions.md`, not instead of it.
 
-## Testing Philosophy
-- Each test verifies one specific behavior
-- Test names should read like behavior statements beginning with `should`
-- Tests should describe public behavior, not internal implementation details
+These instructions do **not** set a model. They shape behavior automatically when matching files are in scope and inherit whichever agent/model is already active.
 
-## Test Structure
-- Use Arrange-Act-Assert with a blank line between sections
-- Prefer readable fixtures over large inline setup blocks
-- Reset mocks after each test
+## Style
+- Lead with the main takeaway
+- Prefer short sections with practical headings
+- Use examples to make abstract AI customization concepts concrete
+- Keep workshop directions action-oriented and easy to scan live
 
 ## What to Avoid
-- Do not leave TODO comments in test files
-- Do not rely on test execution order
-- Do not mock the function under test
+- Do not hide the key difference between instructions, prompts, agents, and skills
+- Do not turn step-by-step activities into long essays
+- Do not assume participants already know why context size affects model quality

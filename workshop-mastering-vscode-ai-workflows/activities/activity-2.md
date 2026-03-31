@@ -1,231 +1,147 @@
-# Activity 2: Targeted Instructions & Prompt Files
+# Activity 2: Custom Agents for Structured Workflows
 
-> **⏱ Time:** 14 minutes total  
-> **🔵 Must-do**  
-> **📍 Where:** VS Code with your workshop repository open  
-> **🔗 Prerequisite:** [Activity 1](./activity-1.md)
+> **Time:** 15 minutes
+> **Where:** VS Code with your workshop repository open
+> **Goal:** Build a custom planning agent and use it to separate planning from implementation
 
-This activity has two short builds:
-- **Part A:** create a targeted instructions file for a specific file type or folder
-- **Part B:** create a reusable prompt file for a task you do repeatedly
+This activity turns the workshop's context-rot lesson into a workflow pattern:
+- use a **larger premium model** for planning and synthesis
+- write the plan to a Markdown artifact
+- switch to a **smaller everyday model** for iterative implementation
 
 ---
 
 ## What You're Building
 
 By the end of this activity you will have:
-1. One `*.instructions.md` file in `.github/instructions/` that activates automatically for matching files
-2. One `.prompt.md` file in `.github/prompts/` that you can run from the `/` menu in Copilot Chat
-
-These solve different problems:
-- **Targeted instructions** shape behavior automatically in specific contexts
-- **Prompt files** package repeated tasks you want to invoke on demand
+1. A custom **Plan Mode** agent in `.github/agents/`
+2. A repeatable workflow for gathering context and producing a concise plan
+3. A clearer reason to separate planning from implementation instead of doing both in one long chat
 
 ---
 
-# Part A — Targeted Instructions
+## Part A - Create a Planning Agent
 
-> **Suggested time:** 7 minutes
+> **Suggested time:** 8 minutes
 
-## Step A1 — Pick a Scoped Context
-
-Choose one area of your repo where the assistant should behave differently.
-
-Good examples:
-- test files
-- API handlers
-- UI components
-- docs files
-- database access code
-
-Write down:
-- the folder or file type
-- the behavior you want
-- 2-4 rules that apply there but not everywhere
-
-Examples:
-- Tests should use Arrange-Act-Assert
-- API handlers must validate input before use
-- Docs should use second person and active voice
-- UI components should prioritize accessibility and semantic HTML
-
----
-
-## Step A2 — Create the Instructions File
-
-Create the folder and file:
+### Step A1 - Create the file
 
 ```bash
-mkdir -p .github/instructions
-touch .github/instructions/testing.instructions.md
+mkdir -p .github/agents
+touch .github/agents/plan-mode.agent.md
 ```
 
-Use the `.instructions.md` extension so VS Code recognizes it as a file-based instructions file.
-
-Add YAML frontmatter with an `applyTo` glob.
-
-### Example: test file instructions
+### Step A2 - Use this starter template
 
 ```markdown
 ---
-name: Testing Rules
-description: Additional guidance for unit and integration test files
-applyTo: "**/*.test.ts"
+name: Plan Mode
+description: Gather context, produce a concise implementation plan, and stop before making code changes.
+tools: ['search/codebase', 'search/usages', 'web/fetch']
+model: ['Claude Opus 4.6', 'GPT-5.4']
+handoffs:
+  - label: Start Implementation
+    agent: agent
+    prompt: Implement the approved plan step by step. Keep changes small and explain tradeoffs only when necessary.
+    send: false
 ---
 
-# Testing Rules
+# Role
+You are the planning agent for this repository.
 
-- Write tests using Arrange-Act-Assert
-- Name tests as full behavior statements starting with "should"
-- Test public behavior, not internal implementation details
-- Reset mocks after each test
-- Avoid TODO comments in tests
-```
+# Workflow
+1. Read the relevant code and docs before proposing a plan.
+2. Ask one clarifying question if a requirement is still ambiguous.
+3. Produce a concise plan with scope, risks, and implementation steps.
+4. Write or update a Markdown plan document if the user asks for an artifact.
+5. Stop after planning. Do not make code changes.
 
-> If your project uses another language, change the glob. Examples: `**/*.spec.ts`, `**/*.py`, `**/*_test.go`, `docs/**/*.md`.
-
----
-
-## Step A3 — Personalize the Rules
-
-Now make the file real for your own workflow.
-
-Add at least one rule that is specific to your project, team, or habits.
-
-Examples:
-- “In controller tests, always mock at the service layer, not the DB layer.”
-- “For docs files, always include a short prerequisites section.”
-- “In React components, prefer accessible labels over placeholder-only forms.”
-- “For API tests, always assert both status code and response body shape.”
-
-This is the workshop's personalization moment for Activity 2.
-
----
-
-## Step A4 — Test It
-
-Open a file that matches your `applyTo` glob and ask Copilot for help.
-
-Examples:
-```text
-Add a test for the updateStatus function
-```
-
-```text
-Improve this API handler to validate incoming input
-```
-
-Then compare by asking a similar question in a non-matching file.
-
-### Success Criteria for Part A
-- [ ] A file exists in `.github/instructions/`
-- [ ] The file ends with `.instructions.md`
-- [ ] It includes `applyTo` in YAML frontmatter
-- [ ] The body contains specific, useful rules
-- [ ] You tested it in at least one matching file
-
----
-
-# Part B — Prompt Files
-
-> **Suggested time:** 7 minutes
-
-## Step B1 — Choose a Repeated Task
-
-Pick a task you do often enough that retyping the prompt feels wasteful.
-
-Good examples:
-- writing PR descriptions
-- generating unit test scaffolds
-- producing README sections
-- creating code review checklists
-- asking for a security review
-- generating migration notes
-
-Write down:
-- what task the prompt should do
-- what output format you want
-- what must always be included
-
----
-
-## Step B2 — Create the Prompt File
-
-Create the folder and file:
-
-```bash
-mkdir -p .github/prompts
-touch .github/prompts/pr-description.prompt.md
-```
-
-### Example prompt file
-
-```markdown
----
-description: Generate a structured PR description for the current branch
----
-
-# PR Description Generator
-
-Review the current changes and write a PR description with these sections:
+# Output Format
 - Summary
-- What Changed
-- Testing Done
-- Risks or Follow-up
+- Assumptions
+- Implementation Steps
+- Risks
+- Suggested handoff
 
-Requirements:
-- Be specific about what changed
-- Do not use vague filler like "misc updates"
-- Mention if docs, tests, or config changed
+# Boundaries
+- Do not edit code.
+- Do not suggest a giant rewrite when an incremental change is possible.
+- Do not skip reading the existing repo structure.
 ```
 
----
+### Step A3 - Explain why this is useful
 
-## Step B3 — Personalize the Prompt
-
-Add at least one requirement that is specific to your team or workflow.
-
-Examples:
-- “Flag breaking API changes explicitly.”
-- “Call out database migration risk if schema files changed.”
-- “Use our team severity labels: Critical, Warning, Suggestion.”
-- “Always include manual verification steps.”
+Talk through the design:
+- the planning agent has a specific identity
+- it uses read-oriented tools
+- it prefers a larger model because planning benefits from synthesis
+- it ends before implementation, which keeps the task focused
 
 ---
 
-## Step B4 — Run the Prompt
+## Part B - Use the Agent in a Plan-Then-Implement Workflow
 
-Open Copilot Chat and type `/`.
+> **Suggested time:** 7 minutes
 
-Your prompt file should appear in the menu. Select it and run it.
+### Step B1 - Give the agent a real task
 
-If it does not appear:
-- confirm the file is in `.github/prompts/`
-- confirm the extension is `.prompt.md`
-- reload the VS Code window
+Try a prompt like:
 
-### Success Criteria for Part B
-- [ ] A `.prompt.md` file exists in `.github/prompts/`
-- [ ] It includes a description in frontmatter
-- [ ] It captures a repeated task
-- [ ] It includes at least one personalized requirement
-- [ ] You successfully invoked it from Copilot Chat
+```text
+Plan how to add a CSV import feature to this repository. Keep the plan under 10 bullet points and include major risks.
+```
+
+or
+
+```text
+Review this repo and create a small Markdown implementation plan for adding audit logging.
+```
+
+### Step B2 - Write the plan down
+
+If you want a reusable artifact, save the output into a Markdown file such as:
+
+```text
+docs/implementation-plan.md
+```
+
+The workshop point is not the exact filename. The point is to externalize the plan so you do not keep re-pasting or re-explaining it in every turn.
+
+### Step B3 - Switch to implementation deliberately
+
+After the plan is approved:
+1. switch back to the default coding agent or your implementation agent
+2. choose a smaller everyday model if that fits your plan or budget
+3. implement the plan in small steps instead of one giant prompt
+
+### Step B4 - State the workflow strategy
+
+Use this summary line:
+
+> Big model for planning and synthesis. Smaller model for execution and iteration.
+
+### Success Criteria
+- [ ] A `.agent.md` file exists in `.github/agents/`
+- [ ] The agent has a clear role, workflow, and boundaries
+- [ ] You used it on a real planning task
+- [ ] You can explain why the implementation step happens separately
 
 ---
 
-## Quick Reflection
+## Optional Extension
 
-Before moving on, answer these in your own words:
-1. When would you use a targeted instructions file instead of a prompt file?
-2. Which one will save you more time in your real workflow?
+If you finish early, create a second agent such as `.github/agents/implement-mode.agent.md` that:
+- focuses on small code changes
+- prefers the current default model or a lower-cost one
+- never replans the whole task unless asked
 
 ---
 
 ## Commit Your Work
 
 ```bash
-git add .github/instructions/ .github/prompts/
-git commit -m "chore: add targeted instructions and prompt files"
+git add .github/agents/
+git commit -m "chore: add planning agent workflow"
 ```
 
 ---
@@ -234,10 +150,10 @@ git commit -m "chore: add targeted instructions and prompt files"
 
 | Problem | What to Check |
 |---|---|
-| Instructions don't seem active | Verify the file ends with `.instructions.md` and has a valid `applyTo` glob |
-| Prompt file missing from `/` menu | Verify the file ends with `.prompt.md` and is inside `.github/prompts/` |
-| Results still feel generic | Your rules may be too vague; rewrite them with stronger, concrete language |
-| Matching files don't trigger the instruction | Open a file that clearly matches the glob and try again |
+| Agent is too generic | Strengthen the role, workflow, and boundaries |
+| Agent tries to code anyway | Add a stronger stop condition such as "Do not edit code" |
+| Handoff is unclear | Make the handoff prompt more explicit about implementing the approved plan |
+| Planning output is too long | Add a length limit and a stronger output format |
 
 ---
 
