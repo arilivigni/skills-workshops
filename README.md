@@ -29,6 +29,14 @@ workshop-XX-title/
 - **Developer advocates** running hands-on labs at conferences, meetups, or internal learning days
 - **Educators** building curriculum around GitHub Skills and AI-assisted development
 
+## Codespaces and Dev Containers
+
+This repo includes a top-level `.devcontainer/` so you can open it directly in:
+- **GitHub Codespaces**
+- **VS Code Dev Containers**
+
+The container uses `mcr.microsoft.com/devcontainers/base:jammy` and preps the workshop environment for Copilot demos, Markdown editing, and the PDF skill example.
+
 ## Contributing
 
 Each workshop is self-contained and designed to be runnable with minimal prep. See individual workshop `README.md` files for prerequisites and setup instructions.

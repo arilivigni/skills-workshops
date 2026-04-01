@@ -74,6 +74,17 @@ cd ~/path/to/your-project
 code .
 ```
 
+### Option C - Use this workshop repo in a Codespace or dev container
+
+This repository includes a top-level `.devcontainer/` using `mcr.microsoft.com/devcontainers/base:jammy`.
+
+- In **GitHub Codespaces**, create a codespace from this repository.
+- In **VS Code**, run **Dev Containers: Reopen in Container** from the Command Palette.
+
+Once the container starts, open:
+- `README.md`
+- `workshop-mastering-vscode-ai-workflows/README.md`
+
 ### Pre-flight Check
 Before the workshop officially starts, ask participants to verify:
 1. Copilot Chat opens in VS Code.
