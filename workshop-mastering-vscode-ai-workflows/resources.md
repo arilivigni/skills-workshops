@@ -21,6 +21,9 @@ A curated list of current documentation and workshop support material for instru
 - **[Agent Skills](https://code.visualstudio.com/docs/copilot/customization/agent-skills)**
   Covers `SKILL.md`, portability, and progressive loading.
 
+- **[Agent Plugins](https://code.visualstudio.com/docs/copilot/customization/agent-plugins)**
+  Covers browsing and installing marketplace plugins that can provide shared skills.
+
 - **[Chat Customizations Editor](https://code.visualstudio.com/docs/copilot/customization/overview#_chat-customizations-editor)**
   Useful for creating and managing instructions, prompts, agents, and skills from the VS Code UI.
 
@@ -42,6 +45,9 @@ A curated list of current documentation and workshop support material for instru
 
 - **[Awesome Copilot](https://github.com/github/awesome-copilot)**
   Community examples for instructions, prompts, agents, and skills.
+
+- **[Copilot Plugins Marketplace Repo](https://github.com/github/copilot-plugins)**
+  Default marketplace source that VS Code can browse for agent plugins and shared skills.
 
 ---
 

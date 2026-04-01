@@ -9,6 +9,22 @@ The session is designed for live delivery: a short mental-model lecture, focused
 
 ---
 
+## Welcome
+
+- **Who is this for:** Developers, educators, and workshop facilitators who want to tailor GitHub Copilot behavior inside VS Code
+- **What you'll learn:** How to shape Copilot with repo-wide instructions, focused instructions, prompt files, custom agents, and agent skills
+- **What you'll build:** A workshop repo containing layered AI customizations you can demo live and adapt to a real project
+- **How to use this README:** Walk the workshop in order from Section 1 through Activity 3; each section below includes the instructor goal, the participant task, and a concrete example you can demo
+
+In this workshop, you will:
+
+1. Explain how VS Code builds agent context and why context rot happens
+2. Create repo-wide and focused custom instructions, then compare them to prompt files
+3. Build a planning agent for structured plan-then-implement workflows
+4. Create one local skill and use one skill provided by an installed marketplace plugin
+
+---
+
 ## Learning Objectives
 
 By the end of this workshop, participants will be able to:
@@ -76,7 +92,7 @@ Before the workshop officially starts, ask participants to verify:
 | 00:00-15:00 | [1. The Anatomy of the Agent System Prompt & Context Rot](#section-1-the-anatomy-of-the-agent-system-prompt--context-rot) | Concept + demo | Participants understand where each customization layer lands and why long context hurts quality |
 | 15:00-30:00 | [2. Activity 1 - Custom Instructions vs. Prompt Files](#section-2-activity-1---custom-instructions-vs-prompt-files) | Hands-on | Participants create durable instructions and one reusable prompt file |
 | 30:00-45:00 | [3. Activity 2 - Custom Agents for Structured Workflows](#section-3-activity-2---custom-agents-for-structured-workflows) | Hands-on | Participants build a planning agent and use it as part of a plan-then-implement workflow |
-| 45:00-60:00 | [4. Activity 3 - Implementing Agent Skills](#section-4-activity-3---implementing-agent-skills) | Hands-on + debrief | Participants scaffold a skill and understand progressive loading with a PDF example |
+| 45:00-60:00 | [4. Activity 3 - Implementing Agent Skills](#section-4-activity-3---implementing-agent-skills) | Hands-on + debrief | Participants create one local skill and use one marketplace-installed skill |
 
 ---
 
@@ -154,6 +170,12 @@ When the context window becomes bloated, quality drops in familiar ways:
 4. Invoke a `.prompt.md` file from `/` and point out that it lands as task text, not as a repo-wide rule.
 5. Explain why these are better than keeping a 40-message chat alive forever.
 
+### Suggested Example
+Use a simple docs workflow throughout the first half of the workshop:
+- repo-wide guidance in `.github/copilot-instructions.md`
+- markdown-specific guidance in `.github/instructions/docs.instructions.md`
+- a `/draft-release-notes` prompt file in `.github/prompts/`
+
 ### Checkpoint Question
 > "If I want a rule to influence every task in this repo, where should it live?"
 
@@ -174,6 +196,11 @@ When the context window becomes bloated, quality drops in familiar ways:
 3. Create one `.prompt.md` file in `.github/prompts/` for a repeated task.
 4. Pin a model in the prompt file frontmatter to show that prompt files can influence model choice.
 5. Compare when to use repo-wide instructions, focused instructions, and reusable task prompts.
+
+### Suggested Example
+- `.github/copilot-instructions.md` for overall project and response rules
+- `.github/instructions/docs.instructions.md` for markdown-specific guidance
+- `.github/prompts/draft-release-notes.prompt.md` for an on-demand workflow
 
 ### Success Criteria
 - [ ] `.github/copilot-instructions.md` contains durable project guidance.
@@ -202,6 +229,11 @@ When the context window becomes bloated, quality drops in familiar ways:
 3. Prefer a larger premium model for the planning step.
 4. Use the plan to switch into a smaller everyday model for implementation work.
 
+### Suggested Example
+Ask the agent to plan a small feature such as:
+- “Plan how to add CSV import to this repo”
+- “Plan a docs refactor for the workshop README”
+
 ### Success Criteria
 - [ ] A `.agent.md` file exists in `.github/agents/`.
 - [ ] The agent has explicit workflow steps and boundaries.
@@ -223,21 +255,27 @@ When the context window becomes bloated, quality drops in familiar ways:
 📋 **Full instructions:** [activities/activity-3.md](./activities/activity-3.md)
 
 ### What Participants Do
-1. Create a skill folder with `SKILL.md`.
+1. Create one local skill folder with `SKILL.md`.
 2. Write the skill name and description so the agent can decide when to load it.
 3. Explain progressive loading: discovery first, instructions second, resources only when needed.
 4. Use a real-world example such as a skill that extracts and reads PDF content with Python.
+5. Install one agent plugin from the marketplace that provides a skill and invoke that skill from chat.
 
 ### Success Criteria
 - [ ] `.github/skills/<skill-name>/SKILL.md` exists.
 - [ ] The skill description clearly says what it does and when to use it.
+- [ ] A marketplace-installed plugin skill is visible in chat and used once.
 - [ ] The participant can explain how skills save context window space.
 - [ ] The participant can describe why the PDF workflow is a better fit for a skill than for always-on instructions.
 
 ### Instructor Notes
 - This section is where the context-rot story pays off: skills keep large workflows out of the main prompt until needed.
-- If time is short, scaffold the skill and talk through the supporting script rather than fully building it live.
+- If time is short, scaffold the local skill first, then demo the marketplace-installed skill yourself.
 - Use the last 2-3 minutes for the workshop exit question and one takeaway per participant.
+
+### Suggested Example
+1. **Create locally:** a `pdf-reader` skill with `extract_pdf.py`
+2. **Use from marketplace:** install an agent plugin from the default marketplace that exposes at least one skill, then run that skill from `/` or the skills picker
 
 ---
 
@@ -247,7 +285,7 @@ When the context window becomes bloated, quality drops in familiar ways:
 |---|---|---|
 | [Activity 1](./activities/activity-1.md) | Repo-wide instructions + focused instructions + one model-aware prompt file | Shows the difference between persistent guidance layers and reusable task prompts |
 | [Activity 2](./activities/activity-2.md) | A planning agent with explicit workflow boundaries | Demonstrates how custom agents structure work instead of just adding more text |
-| [Activity 3](./activities/activity-3.md) | A starter skill with a PDF-reading example | Shows progressive loading and capability packaging |
+| [Activity 3](./activities/activity-3.md) | One local skill plus one marketplace-installed skill | Shows progressive loading and how shared skills appear in real workflows |
 
 ---
 

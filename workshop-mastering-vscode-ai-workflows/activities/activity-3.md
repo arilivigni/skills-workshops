@@ -2,7 +2,7 @@
 
 > **Time:** 15 minutes
 > **Where:** VS Code with your workshop repository open
-> **Goal:** Package a reusable capability as a skill and understand progressive loading
+> **Goal:** Create one local skill, use one marketplace-installed skill, and understand progressive loading
 
 This activity focuses on the most context-efficient customization type in the workshop.
 
@@ -19,7 +19,8 @@ A skill is a **capability package**:
 By the end of this activity you will have:
 1. A starter skill in `.github/skills/<skill-name>/SKILL.md`
 2. A real example of a skill that uses Python to extract text from PDFs
-3. A simple explanation of how progressive loading protects your context window
+3. One installed skill from the marketplace or an agent plugin
+4. A simple explanation of how progressive loading protects your context window
 
 ---
 
@@ -111,7 +112,55 @@ If participants do not have Python ready, keep the script conceptual and focus o
 
 ---
 
-## Part C - Connect It Back to the Workshop
+## Part C - Install and Use a Marketplace Skill
+
+> **Suggested time:** 3 minutes
+
+VS Code can surface skills from installed **agent plugins**. This is the easiest way to show that skills are not only local files; they can also come from shared marketplace packages.
+
+### Step C1 - Open the plugin view
+
+Use one of these paths:
+1. Open **Extensions**
+2. Search for `@agentPlugins`
+
+Or:
+1. Open Copilot Chat
+2. Use the gear menu to open **Chat Customizations**
+3. Go to **Plugins**
+
+### Step C2 - Install a plugin that provides a skill
+
+Install any plugin from the default marketplace that exposes at least one skill.
+
+What to look for:
+- the plugin mentions a skill, slash command, or bundled chat customization
+- the plugin is from a source you trust
+- the plugin's purpose is easy to demo quickly
+
+> **Instructor tip:** Preview availability can vary. If the room does not have a good plugin option, the instructor can demo this step while participants continue with the local skill.
+
+### Step C3 - Verify the installed skill appears
+
+After installation:
+1. Open chat and type `/`
+2. Or run **Chat: Open Chat Customizations** and inspect the **Skills** tab
+3. Confirm the installed skill appears alongside your local `pdf-reader` skill
+
+### Step C4 - Run the installed skill once
+
+Use the installed skill on a small task from its domain.
+
+Examples:
+- if it is a markdown or docs skill, run it on a workshop markdown file
+- if it is a testing skill, run it against a simple test-related prompt
+- if it is a review skill, ask it to inspect a small diff or file
+
+The important learning outcome is not the exact plugin. It is understanding that **skills can come from your repo or from installed marketplace plugins**.
+
+---
+
+## Part D - Connect It Back to the Workshop
 
 > **Suggested time:** 5 minutes
 
@@ -120,11 +169,13 @@ If participants do not have Python ready, keep the script conceptual and focus o
 - it may need helper code and extra files
 - it should not consume context in every conversation
 - it is useful across repos and even across AI tools that support skills
+- it can be shared through plugins and marketplaces instead of being rewritten by every team
 
 ### Success Criteria
 - [ ] `.github/skills/pdf-reader/SKILL.md` exists
 - [ ] The `name` matches the folder name
 - [ ] The description says what the skill does and when to use it
+- [ ] One marketplace-installed skill is visible and invoked once
 - [ ] You can explain progressive loading in one sentence
 
 Use this one-sentence version if needed:
@@ -150,6 +201,7 @@ git commit -m "chore: add pdf reader skill"
 | Skill is hard to discover | Make the description say exactly when to use it |
 | Script path is broken | Reference helper files with relative links from `SKILL.md` |
 | PDF extraction fails on scanned documents | Explain that image-only PDFs may need OCR, not plain text extraction |
+| Marketplace skill is not visible | Verify the plugin is installed and enabled, then reopen the Skills view or `/` menu |
 
 ---
 
@@ -157,7 +209,8 @@ git commit -m "chore: add pdf reader skill"
 
 Answer in one sentence:
 - What capability did you package as a skill?
-- Why is it better as a skill than as an always-on instruction?
+- Which installed skill did you try from the marketplace?
+- Why is a skill better than an always-on instruction for that workflow?
 
 ---
 
