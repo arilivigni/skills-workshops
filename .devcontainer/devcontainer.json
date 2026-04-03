@@ -1,34 +1,47 @@
 {
   "name": "skills-workshops",
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
-  "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.12"
-    }
-  },
   "customizations": {
-    "codespaces": {
-      "openFiles": [
-        "README.md",
-        "workshop-mastering-vscode-ai-workflows/README.md"
-      ]
-    },
     "vscode": {
+      "settings": {
+        "files.insertFinalNewline": true,
+        "files.trimTrailingWhitespace": true,
+        "markdown.preview.breaks": true
+      },
       "extensions": [
         "GitHub.copilot",
         "GitHub.copilot-chat",
         "DavidAnson.vscode-markdownlint",
         "ms-python.python"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "README.md",
+        "workshop-mastering-vscode-ai-workflows/README.md"
       ],
-      "settings": {
-        "files.insertFinalNewline": true,
-        "files.trimTrailingWhitespace": true,
-        "markdown.preview.breaks": true
+      "repositories": {
+        "arilivigni/skills-workshops": {
+          "permissions": {
+            "actions": "write",
+            "contents": "write",
+            "discussions": "read",
+            "issues": "read",
+            "pull-requests": "write",
+            "workflows": "write"
+          }
+        }
       }
     }
   },
-  "postCreateCommand": "bash .devcontainer/postCreate.sh",
+  "features": {
+    "ghcr.io/devcontainers/features/copilot-cli:latest": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/postCreate.sh && curl -fsSL https://raw.githubusercontent.com/github/gh-aw/refs/heads/main/install-gh-aw.sh | bash",
   "postStartCommand": "bash .devcontainer/postStart.sh",
   "remoteUser": "vscode"
 }
