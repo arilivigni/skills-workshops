@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bulb Controller</title>
+    <!--
+      Pico CSS — a classless CSS framework for clean, minimal styling.
+      No class names needed; it styles native HTML elements directly.
+      https://picocss.com
+    -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <h2>Bulb Controller</h2>
+      <p>Select a bulb and choose a color, then click <strong>Set Bulb</strong>.</p>
+
+      <form id="bulb-form">
+        <!-- Bulb selector -->
+        <label for="bulb">Select bulb</label>
+        <select id="bulb" name="bulb" required>
+          <option value="">Choose a bulb...</option>
+          <option value="living-room">Living Room</option>
+          <option value="bedroom">Bedroom</option>
+          <option value="kitchen">Kitchen</option>
+          <option value="office">Office</option>
+        </select>
+
+        <!-- Color picker -->
+        <label for="color">Choose color</label>
+        <input
+          type="color"
+          id="color"
+          name="color"
+          value="#ffd27f"
+          title="Pick a color for the bulb"
+        />
+
+        <!-- Brightness slider (optional extension) -->
+        <label for="brightness">
+          Brightness: <span id="brightness-value">80</span>%
+        </label>
+        <input
+          type="range"
+          id="brightness"
+          name="brightness"
+          min="1"
+          max="100"
+          value="80"
+        />
+
+        <button type="submit">Set Bulb</button>
+      </form>
+
+      <!-- Status message updated by ui.ts -->
+      <p id="status" aria-live="polite"></p>
+    </main>
+
+    <!--
+      Vite processes this script reference and inlines the compiled TypeScript
+      into the final HTML output during vite build.
+    -->
+    <script type="module" src="./ui.ts"></script>
+  </body>
+</html>
