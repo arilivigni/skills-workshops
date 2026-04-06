@@ -6,7 +6,8 @@
       "settings": {
         "files.insertFinalNewline": true,
         "files.trimTrailingWhitespace": true,
-        "markdown.preview.breaks": true
+        "markdown.preview.breaks": true,
+        "terminal.integrated.defaultLocation": "editor"
       },
       "extensions": [
         "GitHub.copilot",
