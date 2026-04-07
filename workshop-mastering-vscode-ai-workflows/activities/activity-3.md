@@ -17,9 +17,9 @@ A skill is a **capability package**:
 ## What You're Building
 
 By the end of this activity you will have:
-1. A starter skill in `.github/skills/<skill-name>/SKILL.md`
+1. A local `pdf-reader` skill in `.github/skills/pdf-reader/SKILL.md`
 2. A real example of a skill that uses Python to extract text from PDFs
-3. One installed skill from the marketplace or an agent plugin
+3. One installed marketplace skill (`@github` from the GitHub Pull Requests extension)
 4. A simple explanation of how progressive loading protects your context window
 
 ---
@@ -129,34 +129,50 @@ Or:
 2. Use the gear menu to open **Chat Customizations**
 3. Go to **Plugins**
 
-### Step C2 - Install a plugin that provides a skill
+### Step C2 - Install a recommended marketplace skill plugin
 
-Install any plugin from the default marketplace that exposes at least one skill.
+Install the **GitHub Pull Requests** extension (`GitHub.vscode-pull-request-github`) from the VS Code marketplace. This extension exposes the `@github` agent with built-in skills for working with pull requests, issues, and code search.
 
-What to look for:
-- the plugin mentions a skill, slash command, or bundled chat customization
-- the plugin is from a source you trust
-- the plugin's purpose is easy to demo quickly
+```
+Name: GitHub Pull Requests
+ID: GitHub.vscode-pull-request-github
+Publisher: GitHub
+```
 
-> **Instructor tip:** Preview availability can vary. If the room does not have a good plugin option, the instructor can demo this step while participants continue with the local skill.
+To install from the terminal:
+```bash
+code --install-extension GitHub.vscode-pull-request-github
+```
+
+> **Why this plugin:** It is officially maintained by GitHub, exposes clearly named skills (`@github`), and is directly relevant to any developer workflow. The skills it provides — such as searching code, managing pull requests, and querying issues — are easy to demo in any repository.
+
+> **Instructor tip:** If the `@github` agent is already installed, skip to Step C3 to verify the skill appears in the Skills view. If the room does not have extension install access, the instructor can demo this step while participants review the local `pdf-reader` skill they just built.
 
 ### Step C3 - Verify the installed skill appears
 
 After installation:
-1. Open chat and type `/`
+1. Open Copilot Chat and type `@github` — the agent should appear with its available skills listed
 2. Or run **Chat: Open Chat Customizations** and inspect the **Skills** tab
-3. Confirm the installed skill appears alongside your local `pdf-reader` skill
+3. Confirm the marketplace skill appears alongside your local `pdf-reader` skill
 
-### Step C4 - Run the installed skill once
+### Step C4 - Run the installed skill once using the proper invocation pattern
 
-Use the installed skill on a small task from its domain.
+Invoke the `@github` skill with a focused task. The proper pattern is to mention the agent with `@` and then describe your task:
 
-Examples:
-- if it is a markdown or docs skill, run it on a workshop markdown file
-- if it is a testing skill, run it against a simple test-related prompt
-- if it is a review skill, ask it to inspect a small diff or file
+```text
+@github Search for all open issues in this repository that mention "bug"
+```
 
-The important learning outcome is not the exact plugin. It is understanding that **skills can come from your repo or from installed marketplace plugins**.
+Or to use a skill directly:
+```text
+@github /search What files in this repo handle PDF reading?
+```
+
+Compare this invocation pattern with the local `pdf-reader` skill:
+- **Local skill** (`pdf-reader`): selected from the skills picker when asked to summarize a PDF
+- **Marketplace skill** (`@github`): invoked directly by mentioning the agent name with `@` or selecting from the skills picker
+
+The important learning outcome is not the exact plugin. It is understanding that **skills can come from your repo or from installed marketplace plugins**, and the invocation pattern for both follows the same VS Code skills interface.
 
 ---
 
@@ -173,10 +189,11 @@ The important learning outcome is not the exact plugin. It is understanding that
 
 ### Success Criteria
 - [ ] `.github/skills/pdf-reader/SKILL.md` exists
-- [ ] The `name` matches the folder name
+- [ ] The `name` in the frontmatter matches the folder name (`pdf-reader`)
 - [ ] The description says what the skill does and when to use it
-- [ ] One marketplace-installed skill is visible and invoked once
-- [ ] You can explain progressive loading in one sentence
+- [ ] The `@github` marketplace skill (or equivalent) is visible in chat and invoked at least once
+- [ ] You can explain how skills save context window space
+- [ ] You can describe why the PDF workflow is a better fit for a skill than for always-on instructions
 
 Use this one-sentence version if needed:
 
@@ -201,15 +218,16 @@ git commit -m "chore: add pdf reader skill"
 | Skill is hard to discover | Make the description say exactly when to use it |
 | Script path is broken | Reference helper files with relative links from `SKILL.md` |
 | PDF extraction fails on scanned documents | Explain that image-only PDFs may need OCR, not plain text extraction |
-| Marketplace skill is not visible | Verify the plugin is installed and enabled, then reopen the Skills view or `/` menu |
+| Marketplace skill is not visible | Verify the plugin is installed and enabled, then reopen the Skills view or type `@` in chat |
+| `@github` agent is not responding | Confirm the GitHub Pull Requests extension is installed and you are signed in to GitHub |
 
 ---
 
 ## Quick Debrief
 
 Answer in one sentence:
-- What capability did you package as a skill?
-- Which installed skill did you try from the marketplace?
+- What capability did you package as a local skill? (`pdf-reader`)
+- Which marketplace skill did you invoke? (`@github` from the GitHub Pull Requests extension)
 - Why is a skill better than an always-on instruction for that workflow?
 
 ---
