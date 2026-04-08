@@ -225,13 +225,9 @@ The MCP server will return the UI as a resource. The resource needs to be self-c
 
 > **Suggested time:** 3 minutes
 
-### Step D1 - Install the `ext-apps` package
+### Step D1 - Continue with the core MCP SDK
 
-```bash
-npm install @modelcontextprotocol/ext-apps
-```
-
-> **Note:** The current published package is `@modelcontextprotocol/ext-apps`. Check the MCP documentation for the current package name and version for your target host before installing.
+No additional package installation is needed in this activity. You will register and serve the UI resource using core SDK schemas and Node.js modules.
 
 > 💬 **Copilot Prompt — add resource registration** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
 >
@@ -343,7 +339,6 @@ git commit -m "feat: add HTML form, Vite bundle, and UI resource registration"
 | ------------------------------------------ | ----------------------------------------------------------------------------------------------- |
 | Vite build fails with a path error         | Confirm `root: "ui"` in `vite.config.ts` and that `ui/index.html` exists                        |
 | `dist/ui/index.html` has no inlined script | Add `inlineDynamicImports: true` to the Rollup output options                                   |
-| `@modelcontextprotocol/ext-apps` not found | Check the MCP documentation and npm registry for the current published package name and version |
 | `readFileSync` fails at runtime            | Confirm the build ran before starting the server so `dist/ui/index.html` exists                 |
 | TypeScript errors on `__dirname`           | Add the `dirname`, `fileURLToPath` imports and the `__dirname` assignment shown above           |
 
