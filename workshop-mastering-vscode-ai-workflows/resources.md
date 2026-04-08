@@ -49,6 +49,9 @@ A curated list of current documentation and workshop support material for instru
 - **[Copilot Plugins Marketplace Repo](https://github.com/github/copilot-plugins)**
   Default marketplace source that VS Code can browse for agent plugins and shared skills.
 
+- **[GitHub Pull Requests Extension (`GitHub.vscode-pull-request-github`)](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github)**
+  The recommended marketplace extension for Activity 3. After installation, use `@github` in Copilot Chat to invoke its built-in skills for pull requests, issues, and code search.
+
 ---
 
 ## Workshop Example Files

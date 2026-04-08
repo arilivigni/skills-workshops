@@ -6,7 +6,7 @@ from pypdf import PdfReader
 
 def main() -> None:
     if len(sys.argv) < 2:
-        raise SystemExit("Usage: python example-pdf-reader.py <path-to-pdf>")
+        raise SystemExit("Usage: python extract_pdf.py <path-to-pdf>")
 
     pdf_path = Path(sys.argv[1]).expanduser().resolve()
     reader = PdfReader(str(pdf_path))

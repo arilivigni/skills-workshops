@@ -13,13 +13,13 @@ description: Extract and summarize text from PDF files with Python. Use this whe
 # PDF Reader Skill
 
 ## When to Use This Skill
-Use this skill when the task involves reading a PDF instead of a normal text file.
+Use this skill when the task involves reading or summarizing a PDF instead of a normal text file.
 
 ## Workflow
 1. Confirm which PDF file should be read.
-2. Run the helper script to extract text.
+2. Run the helper script to extract text from the PDF.
 3. Review the extracted text before answering.
-4. Summarize only the parts relevant to the request.
+4. Summarize or quote only the sections relevant to the user's request.
 5. Mention extraction limits if the PDF is image-only or malformed.
 
 ## Resources

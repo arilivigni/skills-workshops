@@ -21,7 +21,7 @@ In this workshop, you will:
 1. Explain how VS Code builds agent context and why context rot happens
 2. Create repo-wide and focused custom instructions, then compare them to prompt files
 3. Build a planning agent for structured plan-then-implement workflows
-4. Create one local skill and use one skill provided by an installed marketplace plugin
+4. Create one local `pdf-reader` skill and use the `@github` skill from the GitHub Pull Requests marketplace extension
 
 ---
 
@@ -270,23 +270,23 @@ Ask the agent to plan a small feature such as:
 2. Write the skill name and description so the agent can decide when to load it.
 3. Explain progressive loading: discovery first, instructions second, resources only when needed.
 4. Use a real-world example such as a skill that extracts and reads PDF content with Python.
-5. Install one agent plugin from the marketplace that provides a skill and invoke that skill from chat.
+5. Install the **GitHub Pull Requests** extension (`@github`) from the VS Code marketplace and invoke one of its skills from chat using the `@github` invocation pattern.
 
 ### Success Criteria
-- [ ] `.github/skills/<skill-name>/SKILL.md` exists.
+- [ ] `.github/skills/pdf-reader/SKILL.md` exists.
 - [ ] The skill description clearly says what it does and when to use it.
-- [ ] A marketplace-installed plugin skill is visible in chat and used once.
+- [ ] The `@github` marketplace skill is visible in chat and invoked at least once.
 - [ ] The participant can explain how skills save context window space.
 - [ ] The participant can describe why the PDF workflow is a better fit for a skill than for always-on instructions.
 
 ### Instructor Notes
 - This section is where the context-rot story pays off: skills keep large workflows out of the main prompt until needed.
-- If time is short, scaffold the local skill first, then demo the marketplace-installed skill yourself.
+- If time is short, scaffold the local skill first, then demo the marketplace-installed `@github` skill yourself.
 - Use the last 2-3 minutes for the workshop exit question and one takeaway per participant.
 
 ### Suggested Example
 1. **Create locally:** a `pdf-reader` skill with `extract_pdf.py`
-2. **Use from marketplace:** install an agent plugin from the default marketplace that exposes at least one skill, then run that skill from `/` or the skills picker
+2. **Use from marketplace:** install the **GitHub Pull Requests** extension, then run `@github` skills from chat (for example, `@github Search for all open issues in this repository that mention "bug"`)
 
 ---
 
@@ -339,6 +339,7 @@ See [resources.md](./resources.md) for current VS Code customization docs, GitHu
 | Prompt file runs but ignores the intended model | Model not available in the current plan or environment | Try a supported model name or remove the pin temporarily |
 | Planner agent behaves like a general assistant | Role and workflow are underspecified | Add clear steps, boundaries, and tool restrictions |
 | Skill is not discoverable | Name/path mismatch or vague description | Make the folder and `name` match exactly and describe when to use the skill |
+| `@github` skill is not available | GitHub Pull Requests extension not installed or not signed in | Install `GitHub.vscode-pull-request-github` and confirm GitHub sign-in |
 
 ### Facilitation Tips
 - Keep the first 15 minutes visual. Draw the stack and physically point to where each customization lands.
