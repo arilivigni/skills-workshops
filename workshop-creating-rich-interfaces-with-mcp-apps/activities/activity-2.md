@@ -244,11 +244,15 @@ npm install @modelcontextprotocol/ext-apps
 > Import the new schema types from @modelcontextprotocol/sdk/types.js and fs/path/url modules.
 > ```
 
-### Step D2 - Import the UI schema helper
+### Step D2 - Import the UI schema helpers
 
 Open `src/server.ts` and add the following import at the top:
 
 ```typescript
+import {
+  ListResourcesRequestSchema,
+  ReadResourceRequestSchema,
+} from "@modelcontextprotocol/sdk/types.js";
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -261,11 +265,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 In `server.ts`, add a `ListResourcesRequestSchema` handler after the existing `ListToolsRequestSchema` handler:
 
 ```typescript
-import {
-  ListResourcesRequestSchema,
-  ReadResourceRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
-
 // Register the bundled UI as a resource
 server.setRequestHandler(ListResourcesRequestSchema, async () => {
   return {
