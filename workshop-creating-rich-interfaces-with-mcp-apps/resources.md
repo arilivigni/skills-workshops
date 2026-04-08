@@ -67,9 +67,6 @@ A curated list of documentation, reference material, and workshop support artifa
 - **[GitHub Copilot MCP Support](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-mcp)**
   Documentation for using MCP servers with GitHub Copilot in VS Code, including how the `mcpHost` bridge is injected.
 
-- **[Claude Desktop MCP Configuration](https://modelcontextprotocol.io/quickstart/user)**
-  Instructions for registering an MCP server in Claude Desktop for testing.
-
 - **[VS Code MCP Server Setup](https://code.visualstudio.com/docs/copilot/model-context-protocol)**
   How to configure and test MCP servers inside VS Code with GitHub Copilot.
 

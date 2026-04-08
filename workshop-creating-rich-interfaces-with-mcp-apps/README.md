@@ -7,6 +7,8 @@ This workshop teaches participants how to build Model Context Protocol (MCP) app
 
 The session is designed for live delivery: a short concept introduction, focused hands-on exercises, visible checkpoints, and reusable starter artifacts participants can take back to their own projects.
 
+> **Copilot-first approach:** Each activity includes **💬 Copilot Prompt** blocks — copy-paste prompts for **GitHub Copilot Chat** or **Inline Chat** (`⌘I` / `Ctrl+I`). Participants can use these prompts to generate code with Copilot instead of typing it by hand, keeping the focus on understanding the MCP patterns rather than TypeScript syntax.
+
 ---
 
 ## Welcome
@@ -53,7 +55,7 @@ By the end of this workshop, participants will be able to:
 - [ ] Node.js 18+ and npm installed
 - [ ] TypeScript installed globally or available via `npx`
 - [ ] VS Code installed (or another editor with TypeScript support)
-- [ ] An MCP-compatible AI host (such as VS Code with GitHub Copilot, or Claude Desktop)
+- [ ] VS Code with the GitHub Copilot extension installed and signed in
 - [ ] Git installed and working in the terminal
 
 > **Instructor note:** Participants do not need prior MCP experience. The first 15 minutes establish the concept before any code is written.

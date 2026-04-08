@@ -10,7 +10,7 @@
 - Clone the repository and open it in a Codespace or dev container so you have a working environment.
 - Run `npm install` inside `workshop-creating-rich-interfaces-with-mcp-apps/` and verify the example server compiles: `npx tsc --noEmit`.
 - Open `examples/example-mcp-server.ts` and read through it end-to-end. You will be demoing from this file live.
-- If your AI host supports MCP Apps (VS Code + GitHub Copilot, Claude Desktop), register the example server and confirm the full loop works: prompt → UI shown → submit → chat resumes.
+- In VS Code with GitHub Copilot, register the example server and confirm the full loop works: prompt → UI shown → submit → chat resumes.
 - Have `workshop-creating-rich-interfaces-with-mcp-apps/activities/activity-1.md` open in a side panel as your facilitation guide.
 - Print or bookmark this speaker-notes file so you can glance at it without switching windows.
 
@@ -97,7 +97,7 @@ AI guesses or asks again  →  Form appears in chat → user picks → chat cont
 cd workshop-creating-rich-interfaces-with-mcp-apps
 # If demo project is pre-built:
 npm start
-# Then open your AI host and type:
+# Then open Copilot Chat in VS Code (⌃⌘I / Ctrl+Alt+I) and type:
 # "Set the lights to something warm."
 ```
 
@@ -105,7 +105,14 @@ npm start
 > _Show the AI responding with the exact values you chose._
 
 **Say:**
-> "Notice the chat froze while the form was open. That's the Promise at work. And the AI used our exact input — it didn't guess."
+> "Notice the chat froze while the form was open. That's the Promise at work. And Copilot used our exact input — it didn't guess."
+
+---
+
+### Copilot Prompts in the Activities
+
+**Say:**
+> "Each activity in your handout has a 💬 Copilot Prompt block. If you copy that prompt and paste it into Copilot Chat — or into Inline Chat with ⌘I — Copilot will generate the code for you. Use this to keep pace with the group. The goal is to understand the pattern, not to memorize TypeScript syntax."
 
 ---
 
@@ -257,7 +264,7 @@ Chat resumes
 > "Add a `console.error` inside `submit_form` to confirm it's being reached. If the log appears but the chat doesn't resume, check that `pending.resolve` is actually being called."
 
 **`mcpHost` is not defined in the UI:**
-> "This global is injected by the MCP host into the UI context. The exact name may differ by host — check your host's documentation. For a local test, you can stub it: `window.mcpHost = { callTool: async (name, args) => console.log(name, args), sessionId: 'test' }`."
+> "This global is injected by GitHub Copilot into the UI context. Check the Copilot MCP documentation for the injected bridge API. For a local test, you can stub it: `window.mcpHost = { callTool: async (name, args) => console.log(name, args), sessionId: 'test' }`."
 
 ---
 

@@ -56,6 +56,20 @@ The key insight: `show_ui` does not return immediately. It stores the Promise's 
 
 > **Suggested time:** 6 minutes
 
+> 💬 **Copilot Prompt — add the session store and show_ui tool** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+> ```
+> Add to this MCP server:
+> 1. A Map called pendingForms at the top of the file (below imports) that stores Promise resolvers keyed by session_id string. Each entry should have resolve and reject callbacks typed for { bulb: string; color: string; brightness: number }.
+> 2. A show_ui tool registered in ListTools with a required "session_id" string argument. Its description should explain it shows the Bulb Controller UI and suspends the chat.
+> 3. A show_ui handler in CallTool that:
+>    - Creates a 5-minute timeout using Promise.race
+>    - Stores the Promise resolver in pendingForms keyed by session_id
+>    - Awaits the Promise (which halts the chat until submit_form resolves it)
+>    - Cleans up the pendingForms entry in a finally block
+>    - Returns the bulb, color, and brightness as a text content result after the Promise resolves
+>    - Logs to console.error that it is waiting for form submission
+> ```
+
 ### Step A1 - Add a session store
 
 At the top of `src/server.ts`, below the imports, add:
@@ -144,6 +158,19 @@ console.error(`[show_ui] session ${session_id} — waiting for form submission`)
 
 > **Suggested time:** 4 minutes
 
+> 💬 **Copilot Prompt — add submit_form tool** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+> ```
+> Add a submit_form tool to this MCP server:
+> 1. Register it in ListTools with required arguments: session_id (string), bulb (string), color (string), brightness (number). The description should say it is called by the UI when the user submits the form and resolves the pending show_ui Promise.
+> 2. Add a handler in CallTool that:
+>    - Reads session_id, bulb, color, brightness from request.params.arguments
+>    - Looks up the session in pendingForms Map
+>    - Throws an error if not found ("No pending form for session: <id>")
+>    - Deletes the entry from pendingForms
+>    - Calls pending.resolve({ bulb, color, brightness })
+>    - Returns a text content result confirming the submitted values
+> ```
+
 ### Step B1 - Register `submit_form` in the tools list
 
 Add the following tool to the `ListToolsRequestSchema` array:
@@ -226,6 +253,14 @@ When `pending.resolve({ bulb, color, brightness })` is called:
 
 > **Suggested time:** 3 minutes
 
+> 💬 **Copilot Prompt — update ui.ts to call submit_form** (open `ui/ui.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+> ```
+> Update this TypeScript file so that instead of console.log, the form submit handler calls mcpHost.callTool("submit_form", { session_id: mcpHost.sessionId, bulb, color }).
+> Add a TypeScript declare const for mcpHost with callTool (name: string, args: Record<string, unknown>) => Promise<void> and sessionId: string.
+> On success, set statusEl.textContent to "Submitted! The chat will continue now." and add the inert attribute to the form so it cannot be submitted again.
+> Wrap the callTool call in try/catch and show any error in statusEl.textContent.
+> ```
+
 ### Step C1 - Update `ui/ui.ts`
 
 Replace the `console.log` stub from Activity 2 with an actual MCP tool call:
@@ -279,31 +314,26 @@ Confirm `dist/ui/index.html` is updated. The inlined script should now include t
 
 > **Suggested time:** 2 minutes
 
-### Step D1 - Start the server
+### Step D1 - Register the MCP server with GitHub Copilot in VS Code
 
-```bash
-npm start
-```
+In VS Code, open the Command Palette (`⌘⇧P` / `Ctrl+Shift+P`) and run **MCP: Add Server**. Enter the path to your compiled `dist/server.js` and follow the prompts to register it.
 
-### Step D2 - Trigger the flow from the AI chat
+> 💬 **Copilot Chat Prompt — open a new chat and test the loop**
+> ```
+> Set the living room lights to a warm color.
+> ```
+>
+> GitHub Copilot should recognize the ambiguity, call `show_ui`, and render the Bulb Controller form in the chat. Fill in the form and click Submit. Watch the chat resume with the values you selected.
 
-In your MCP-compatible AI host, register the server and send a prompt such as:
+### Step D2 - Verify the output
 
-```text
-Set the living room lights to a warm color.
-```
-
-The AI should recognize the ambiguity and call `show_ui`. The interactive form should appear in the chat. Fill in the form and click Submit. Observe the chat resume with the values you selected.
-
-### Step D3 - Verify the output
-
-The AI should respond with something like:
+After submitting the form, Copilot should respond with something like:
 
 ```text
 Done! Set the living room bulb to #ffd27f (warm white).
 ```
 
-The exact wording will vary depending on the model, but the values should match what you submitted in the form.
+The exact wording will vary, but the values should match what you submitted in the form.
 
 ### Success Criteria
 - [ ] `show_ui` suspends the chat until `submit_form` is called
@@ -316,6 +346,11 @@ The exact wording will vary depending on the model, but the values should match 
 ## Optional: Add a Cancel / Timeout
 
 For a more robust implementation, add a timeout that rejects the Promise if the user does not submit within a set period.
+
+> 💬 **Copilot Prompt — add timeout and cancel handling** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+> ```
+> Wrap the show_ui Promise in a Promise.race with a 5-minute timeout that rejects with "Form submission timed out". Clean up the pendingForms Map entry in a finally block to avoid memory leaks.
+> ```
 
 ```typescript
 // In show_ui, wrap the Promise with a timeout
@@ -372,7 +407,7 @@ Answer in one sentence:
 | Chat does not halt after `show_ui` is called | Verify `await new Promise(...)` is used and `resolve` is not called immediately |
 | `submit_form` throws "No pending form for session" | Confirm the `session_id` passed to `show_ui` matches the one used in `submit_form` |
 | Form submits but chat does not resume | Check that `pendingForms.get(session_id)` returns a valid entry and `resolve` is called |
-| `mcpHost` is not defined in the UI | Check the host-specific documentation for the injected bridge object name and API |
+| `mcpHost` is not defined in the UI | Check the GitHub Copilot documentation for the injected bridge object name and API |
 | Memory leak warning after many submissions | Add `pendingForms.delete(session_id)` after resolving and in a `finally` block |
 
 ---

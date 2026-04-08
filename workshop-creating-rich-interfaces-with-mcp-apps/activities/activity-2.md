@@ -30,6 +30,19 @@ touch ui/index.html
 touch ui/ui.ts
 ```
 
+> 💬 **Copilot Prompt — generate the HTML form** (paste into Copilot Chat)
+> ```
+> Create an HTML file for a smart bulb controller form using Pico CSS (loaded from CDN: https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css).
+> The form should have:
+> - A <select id="bulb"> with options: Living Room, Bedroom, Kitchen (values: living-room, bedroom, kitchen)
+> - An <input type="color" id="color"> with default value #ffd27f
+> - A submit button labeled "Set Bulb"
+> - A <p id="status" aria-live="polite"> paragraph for status messages
+> - A <script type="module" src="./ui.ts"> tag at the bottom of the body
+> Use lang="en" and data-theme="light" on the html element.
+> Save as ui/index.html.
+> ```
+
 ### Step A2 - Write the HTML form
 
 Add the following to `ui/index.html`:
@@ -84,6 +97,17 @@ Point out the key parts:
 
 > **Suggested time:** 4 minutes
 
+> 💬 **Copilot Prompt — generate the form handler stub** (open `ui/ui.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+> ```
+> Write TypeScript front-end logic for the bulb controller form in this file.
+> It should:
+> - Get the form element by id "bulb-form" (HTMLFormElement)
+> - Get the status paragraph by id "status" (HTMLParagraphElement)
+> - Add a submit event listener that prevents default, reads the bulb select and color input values, and logs them to console.log
+> - Set statusEl.textContent to show the selected bulb and color
+> This is a stub — the console.log will be replaced with an MCP tool call in Activity 3.
+> ```
+
 ### Step B1 - Add the form handler stub
 
 Add the following to `ui/ui.ts`:
@@ -127,6 +151,15 @@ form.addEventListener("submit", async (event) => {
 ```bash
 npm install --save-dev vite
 ```
+
+> 💬 **Copilot Prompt — generate the Vite config** (paste into Copilot Chat)
+> ```
+> Create a vite.config.ts in the project root that:
+> - Sets root to "ui" so Vite treats ui/index.html as the entry point
+> - Sets outDir to "../dist/ui" (relative to root) with emptyOutDir: true
+> - Uses rollupOptions with inlineDynamicImports: true so all JavaScript is inlined into the HTML output (no separate .js asset files)
+> The goal is a single self-contained dist/ui/index.html with no external asset files.
+> ```
 
 ### Step C2 - Create the Vite configuration
 
@@ -193,6 +226,16 @@ npm install @github/mcp-ext-apps
 ```
 
 > **Note:** Check the MCP documentation for the current package name and version for your target host. The `ext-apps` package is the standard way to register app-style UI resources in MCP servers targeting GitHub Copilot and compatible hosts.
+
+> 💬 **Copilot Prompt — add resource registration** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+> ```
+> Add ListResourcesRequestSchema and ReadResourceRequestSchema handlers to this MCP server:
+> - ListResources should return one resource with uri "app://bulb-controller", name "Bulb Controller", description "Interactive UI for selecting a bulb and color.", mimeType "text/html"
+> - ReadResource should read dist/ui/index.html using readFileSync and return it as text/html content for the "app://bulb-controller" URI
+> - Use dirname(fileURLToPath(import.meta.url)) for __dirname compatible path resolution
+> - Also update the Server constructor to add resources: {} to capabilities
+> Import the new schema types from @modelcontextprotocol/sdk/types.js and fs/path/url modules.
+> ```
 
 ### Step D2 - Import the UI schema helper
 
