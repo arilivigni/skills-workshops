@@ -86,6 +86,10 @@ The `examples/` folder in this workshop includes:
 | `example-ui.ts` | TypeScript front-end logic that calls `submit_form` via `mcpHost.callTool` on form submission |
 | `example-vite-config.ts` | Vite configuration for bundling the UI into a single self-contained HTML file |
 
+The `demo/` folder is a pre-scaffolded starter project (created by the devcontainer setup) with `package.json`, `tsconfig.json`, and empty `src/` and `ui/` directories, ready for participants to start coding without spending time on project initialization.
+
+See [speaker-notes.md](./speaker-notes.md) for timed delivery notes, talking points, demo cues, and a common-mistakes guide for instructors.
+
 ---
 
 ## Suggested Follow-up Practice

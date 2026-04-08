@@ -294,6 +294,8 @@ For advanced participants or post-workshop follow-up:
 
 See [resources.md](./resources.md) for MCP documentation, ext-apps package references, Vite documentation, and the example artifacts included in this workshop.
 
+See [speaker-notes.md](./speaker-notes.md) for timed delivery notes, exact talking points, facilitation cues, and a common-mistakes guide for instructors.
+
 ---
 
 ## Instructor Notes: Common Questions, Talking Points, Troubleshooting

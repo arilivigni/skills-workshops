@@ -3,6 +3,9 @@
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12"
     }
@@ -11,7 +14,8 @@
     "codespaces": {
       "openFiles": [
         "README.md",
-        "workshop-mastering-vscode-ai-workflows/README.md"
+        "workshop-mastering-vscode-ai-workflows/README.md",
+        "workshop-creating-rich-interfaces-with-mcp-apps/README.md"
       ]
     },
     "vscode": {
@@ -19,12 +23,23 @@
         "GitHub.copilot",
         "GitHub.copilot-chat",
         "DavidAnson.vscode-markdownlint",
-        "ms-python.python"
+        "ms-python.python",
+        "ms-vscode.vscode-typescript-next",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
       ],
       "settings": {
         "files.insertFinalNewline": true,
         "files.trimTrailingWhitespace": true,
-        "markdown.preview.breaks": true
+        "markdown.preview.breaks": true,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
       }
     }
   },
