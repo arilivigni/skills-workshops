@@ -1,7 +1,7 @@
 # Activity 1: Building the Foundation — Hello World MCP Server
 
 > **Time:** 15 minutes
-> **Where:** Your terminal and editor with a new project folder
+> **Where:** Your terminal and editor in a new `my-mcp-app` project folder
 > **Goal:** Create a working MCP server in TypeScript that communicates over standard I/O and registers at least one tool
 
 This activity establishes the structural foundation for the rest of the workshop. Everything in Activities 2 and 3 builds on top of what you create here.
@@ -22,6 +22,7 @@ You can also **open a file in your editor first**, then use Inline Chat so Copil
 ## What You're Building
 
 By the end of this activity you will have:
+
 1. A new TypeScript project with the MCP SDK installed
 2. A `server.ts` that starts an MCP server using `StdioServerTransport`
 3. At least one registered tool with a name, description, and input schema
@@ -33,12 +34,14 @@ By the end of this activity you will have:
 
 > **Suggested time:** 5 minutes
 
-### Step A1 - Create a project folder
+### Step A1 - Create the `my-mcp-app` project folder
 
 ```bash
 mkdir my-mcp-app && cd my-mcp-app
 npm init -y
 ```
+
+All file paths in Activities 2 and 3 are relative to this `my-mcp-app` folder.
 
 ### Step A2 - Install dependencies
 
@@ -72,6 +75,7 @@ Open `tsconfig.json` and make sure these options are set:
 
 > 💬 **Copilot Prompt — generate tsconfig**
 > Open `tsconfig.json` in VS Code, then use Inline Chat (`⌘I` / `Ctrl+I`) and paste:
+>
 > ```
 > Replace this tsconfig with one targeting ES2022 using Node16 module resolution, outputting to dist/, sourcing from src/, with strict mode and skipLibCheck enabled.
 > ```
@@ -91,6 +95,7 @@ Open `package.json` and add the following inside `"scripts"`:
 Also add `"type": "module"` at the top level of `package.json` so Node.js treats `.js` files as ES modules.
 
 ### Success Criteria for Part A
+
 - [ ] `package.json` exists with the correct dependencies
 - [ ] `tsconfig.json` is configured for ES2022 modules and outputs to `dist/`
 - [ ] `npm install` completes without errors
@@ -111,6 +116,7 @@ touch src/server.ts
 ### Step B2 - Write the Hello World server
 
 > 💬 **Copilot Prompt — generate the full server** (paste into Copilot Chat)
+>
 > ```
 > Create a TypeScript MCP server using @modelcontextprotocol/sdk that:
 > - Uses StdioServerTransport for stdio communication
@@ -142,7 +148,7 @@ const server = new Server(
     capabilities: {
       tools: {},
     },
-  }
+  },
 );
 
 // 2. Register the list of tools the server exposes
@@ -215,6 +221,7 @@ MCP server running on stdio
 The server is now running and waiting for messages on stdin. Press `Ctrl+C` to stop it.
 
 ### Success Criteria for Part B
+
 - [ ] `src/server.ts` exists and compiles without errors
 - [ ] The server starts and prints the startup message
 - [ ] You can explain what each of the four numbered sections does
@@ -231,6 +238,7 @@ The server is now running and waiting for messages on stdin. Press `Ctrl+C` to s
 To reinforce the pattern, add a second tool that takes an input argument.
 
 > 💬 **Copilot Prompt — add echo tool** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+>
 > ```
 > Add an echo tool to this MCP server that accepts a required "message" string argument and returns the message prefixed with "Echo: ". Register it in the ListTools handler and add a handler branch in CallTool.
 > ```
@@ -285,6 +293,7 @@ npm run dev
 The server should still start cleanly. In Activity 2, when you add the UI resource, you will follow the same pattern: register a new tool and handle its call.
 
 ### Success Criteria for Part C
+
 - [ ] `echo` tool is listed in `ListToolsRequestSchema`
 - [ ] `echo` tool call is handled and returns the message
 - [ ] Server rebuilds and starts without errors
@@ -303,14 +312,14 @@ git commit -m "feat: hello world MCP server with get_time and echo tools"
 
 ## Troubleshooting
 
-| Problem | What to Check |
-|---|---|
-| `Cannot find module '@modelcontextprotocol/sdk'` | Run `npm install` again and confirm `node_modules` exists |
-| TypeScript module resolution errors | Confirm `"module": "Node16"` and `"moduleResolution": "Node16"` in `tsconfig.json` and that imports use `.js` extensions |
-| Server exits immediately | Confirm `server.connect(transport)` is awaited and the process does not exit before the first message |
-| Tool call returns an error | Confirm the tool name in `CallToolRequestSchema` matches the name in `ListToolsRequestSchema` exactly |
-| `console.log` interferes with MCP messages | Replace `console.log` with `console.error` for all non-MCP output |
+| Problem                                          | What to Check                                                                                                            |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `Cannot find module '@modelcontextprotocol/sdk'` | Run `npm install` again and confirm `node_modules` exists                                                                |
+| TypeScript module resolution errors              | Confirm `"module": "Node16"` and `"moduleResolution": "Node16"` in `tsconfig.json` and that imports use `.js` extensions |
+| Server exits immediately                         | Confirm `server.connect(transport)` is awaited and the process does not exit before the first message                    |
+| Tool call returns an error                       | Confirm the tool name in `CallToolRequestSchema` matches the name in `ListToolsRequestSchema` exactly                    |
+| `console.log` interferes with MCP messages       | Replace `console.log` with `console.error` for all non-MCP output                                                        |
 
 ---
 
-*← [Back to Workshop README](../README.md) · [Next: Activity 2 →](./activity-2.md)*
+_← [Back to Workshop README](../README.md) · [Next: Activity 2 →](./activity-2.md)_

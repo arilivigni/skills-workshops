@@ -154,7 +154,7 @@ npm install --save-dev vite
 
 > 💬 **Copilot Prompt — generate the Vite config** (paste into Copilot Chat)
 > ```
-> Create a vite.config.ts in the project root that:
+> Create a vite.config.ts in the `my-mcp-app` project root that:
 > - Sets root to "ui" so Vite treats ui/index.html as the entry point
 > - Sets outDir to "../dist/ui" (relative to root) with emptyOutDir: true
 > - Uses rollupOptions with inlineDynamicImports: true so all JavaScript is inlined into the HTML output (no separate .js asset files)
@@ -163,7 +163,7 @@ npm install --save-dev vite
 
 ### Step C2 - Create the Vite configuration
 
-Create `vite.config.ts` in the project root:
+Create `vite.config.ts` in the `my-mcp-app` project root:
 
 ```typescript
 import { defineConfig } from "vite";
@@ -208,7 +208,7 @@ Check that `dist/ui/index.html` exists and contains inlined JavaScript — no se
 The MCP server will return the UI as a resource. The resource needs to be self-contained in a single file because the AI host has no way to fetch additional asset files from the server's filesystem. Vite's inline mode solves this by compiling the TypeScript and embedding it directly in the HTML output.
 
 ### Success Criteria for Part C
-- [ ] `vite.config.ts` exists in the project root
+- [ ] `vite.config.ts` exists in the `my-mcp-app` project root
 - [ ] `npm run build:ui` completes without errors
 - [ ] `dist/ui/index.html` exists and contains inlined script content
 - [ ] There is no separate `.js` file alongside `dist/ui/index.html`
