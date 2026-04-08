@@ -2,6 +2,11 @@
 
 set -euo pipefail
 
+NODE_VERSION="$(node --version)"
+if [[ ! "$NODE_VERSION" =~ ^v20\. ]]; then
+  echo "Warning: expected Node 20.x in this devcontainer, found $NODE_VERSION" >&2
+fi
+
 cat <<'EOF'
 Codespace ready for Skills Workshops.
 

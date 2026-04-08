@@ -28,7 +28,7 @@ A curated list of documentation, reference material, and workshop support artifa
 - **[MCP Apps Overview](https://modelcontextprotocol.io/docs/concepts/apps)**
   Background on how MCP servers can return interactive UI content to the chat host.
 
-- **[ext-apps Package](https://www.npmjs.com/package/@github/mcp-ext-apps)**
+- **[ext-apps Package](https://www.npmjs.com/package/@modelcontextprotocol/ext-apps)**
   The npm package used to register UI app resources in MCP servers targeting GitHub Copilot and compatible hosts.
 
 - **[UI Schema Reference](https://modelcontextprotocol.io/docs/concepts/apps#ui-schema)**

@@ -2,6 +2,12 @@
 
 set -euo pipefail
 
+NODE_VERSION="$(node --version)"
+if [[ ! "$NODE_VERSION" =~ ^v20\. ]]; then
+  echo "Expected Node 20.x in this devcontainer, found $NODE_VERSION" >&2
+  exit 1
+fi
+
 # ---------------------------------------------------------------------------
 # Workshop 1: PDF skill support
 # ---------------------------------------------------------------------------
@@ -16,7 +22,7 @@ echo "- Python and pypdf are ready for the PDF skill example (Workshop 1)."
 # ---------------------------------------------------------------------------
 
 # Install TypeScript globally so participants can run `tsc` directly
-npm install -g typescript
+npm install -g typescript@^6
 
 # Pre-install the Workshop 2 demo project dependencies so that the first
 # `npm install` inside the examples directory is instant during the session.
@@ -41,9 +47,9 @@ if [ ! -f "$DEMO_DIR/package.json" ]; then
     "@modelcontextprotocol/sdk": "^1.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "vite": "^5.0.0"
+    "@types/node": "^20.19.0",
+    "typescript": "^6.0.0",
+    "vite": "^8.0.0"
   }
 }
 PKGJSON
@@ -54,9 +60,9 @@ if [ ! -f "$DEMO_DIR/tsconfig.json" ]; then
   cat > "$DEMO_DIR/tsconfig.json" <<'TSCJSON'
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "target": "ES2023",
+    "module": "Node20",
+    "types": ["node"],
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,

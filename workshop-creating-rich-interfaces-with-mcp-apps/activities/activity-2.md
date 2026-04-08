@@ -11,6 +11,7 @@ This activity takes the working MCP server from Activity 1 and gives it a face. 
 ## What You're Building
 
 By the end of this activity you will have:
+
 1. An `index.html` file with an interactive form styled with Pico CSS
 2. A `ui.ts` TypeScript file that handles front-end form logic
 3. A `vite.config.ts` that bundles both files into a single output
@@ -31,6 +32,7 @@ touch ui/ui.ts
 ```
 
 > 💬 **Copilot Prompt — generate the HTML form** (paste into Copilot Chat)
+>
 > ```
 > Create an HTML file for a smart bulb controller form using Pico CSS (loaded from CDN: https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css).
 > The form should have:
@@ -86,6 +88,7 @@ Add the following to `ui/index.html`:
 ### Step A3 - Explain the structure
 
 Point out the key parts:
+
 - **Pico CSS** — a classless CSS framework loaded from a CDN. No build configuration needed for styling.
 - **`<form id="bulb-form">`** — the form the user will fill in. The `id` is used by `ui.ts` to attach the submit listener.
 - **`<p id="status">`** — a status paragraph updated by `ui.ts` after the form is submitted.
@@ -98,6 +101,7 @@ Point out the key parts:
 > **Suggested time:** 4 minutes
 
 > 💬 **Copilot Prompt — generate the form handler stub** (open `ui/ui.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+>
 > ```
 > Write TypeScript front-end logic for the bulb controller form in this file.
 > It should:
@@ -153,6 +157,7 @@ npm install --save-dev vite
 ```
 
 > 💬 **Copilot Prompt — generate the Vite config** (paste into Copilot Chat)
+>
 > ```
 > Create a vite.config.ts in the `my-mcp-app` project root that:
 > - Sets root to "ui" so Vite treats ui/index.html as the entry point
@@ -208,6 +213,7 @@ Check that `dist/ui/index.html` exists and contains inlined JavaScript — no se
 The MCP server will return the UI as a resource. The resource needs to be self-contained in a single file because the AI host has no way to fetch additional asset files from the server's filesystem. Vite's inline mode solves this by compiling the TypeScript and embedding it directly in the HTML output.
 
 ### Success Criteria for Part C
+
 - [ ] `vite.config.ts` exists in the `my-mcp-app` project root
 - [ ] `npm run build:ui` completes without errors
 - [ ] `dist/ui/index.html` exists and contains inlined script content
@@ -222,12 +228,13 @@ The MCP server will return the UI as a resource. The resource needs to be self-c
 ### Step D1 - Install the `ext-apps` package
 
 ```bash
-npm install @github/mcp-ext-apps
+npm install @modelcontextprotocol/ext-apps
 ```
 
-> **Note:** Check the MCP documentation for the current package name and version for your target host. The `ext-apps` package is the standard way to register app-style UI resources in MCP servers targeting GitHub Copilot and compatible hosts.
+> **Note:** The current published package is `@modelcontextprotocol/ext-apps`. Check the MCP documentation for the current package name and version for your target host before installing.
 
 > 💬 **Copilot Prompt — add resource registration** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+>
 > ```
 > Add ListResourcesRequestSchema and ReadResourceRequestSchema handlers to this MCP server:
 > - ListResources should return one resource with uri "app://bulb-controller", name "Bulb Controller", description "Interactive UI for selecting a bulb and color.", mimeType "text/html"
@@ -254,7 +261,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 In `server.ts`, add a `ListResourcesRequestSchema` handler after the existing `ListToolsRequestSchema` handler:
 
 ```typescript
-import { ListResourcesRequestSchema, ReadResourceRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+import {
+  ListResourcesRequestSchema,
+  ReadResourceRequestSchema,
+} from "@modelcontextprotocol/sdk/types.js";
 
 // Register the bundled UI as a resource
 server.setRequestHandler(ListResourcesRequestSchema, async () => {
@@ -305,7 +315,7 @@ const server = new Server(
       tools: {},
       resources: {},
     },
-  }
+  },
 );
 ```
 
@@ -330,14 +340,14 @@ git commit -m "feat: add HTML form, Vite bundle, and UI resource registration"
 
 ## Troubleshooting
 
-| Problem | What to Check |
-|---|---|
-| Vite build fails with a path error | Confirm `root: "ui"` in `vite.config.ts` and that `ui/index.html` exists |
-| `dist/ui/index.html` has no inlined script | Add `inlineDynamicImports: true` to the Rollup output options |
-| `@github/mcp-ext-apps` not found | Check the current package name in the MCP documentation; the package name may differ by host |
-| `readFileSync` fails at runtime | Confirm the build ran before starting the server so `dist/ui/index.html` exists |
-| TypeScript errors on `__dirname` | Add the `dirname`, `fileURLToPath` imports and the `__dirname` assignment shown above |
+| Problem                                    | What to Check                                                                                   |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| Vite build fails with a path error         | Confirm `root: "ui"` in `vite.config.ts` and that `ui/index.html` exists                        |
+| `dist/ui/index.html` has no inlined script | Add `inlineDynamicImports: true` to the Rollup output options                                   |
+| `@modelcontextprotocol/ext-apps` not found | Check the MCP documentation and npm registry for the current published package name and version |
+| `readFileSync` fails at runtime            | Confirm the build ran before starting the server so `dist/ui/index.html` exists                 |
+| TypeScript errors on `__dirname`           | Add the `dirname`, `fileURLToPath` imports and the `__dirname` assignment shown above           |
 
 ---
 
-*← [Activity 1](./activity-1.md) · [Back to Workshop README](../README.md) · [Next: Activity 3 →](./activity-3.md)*
+_← [Activity 1](./activity-1.md) · [Back to Workshop README](../README.md) · [Next: Activity 3 →](./activity-3.md)_
