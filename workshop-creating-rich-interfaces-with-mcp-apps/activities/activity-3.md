@@ -11,6 +11,7 @@ This activity delivers the core capability of MCP Apps: the AI chat halts until 
 ## What You're Building
 
 By the end of this activity you will have:
+
 1. A `show_ui` tool that returns the UI resource reference and suspends the chat using an unresolved Promise
 2. A `submit_form` tool that resolves the Promise with the form data
 3. An updated `ui.ts` that calls `submit_form` via a JavaScript MCP bridge when the user clicks Submit
@@ -57,6 +58,7 @@ The key insight: `show_ui` does not return immediately. It stores the Promise's 
 > **Suggested time:** 6 minutes
 
 > 💬 **Copilot Prompt — add the session store and show_ui tool** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+>
 > ```
 > Add to this MCP server:
 > 1. A Map called pendingForms at the top of the file (below imports) that stores Promise resolvers keyed by session_id string. Each entry should have resolve and reject callbacks typed for { bulb: string; color: string; brightness: number }.
@@ -79,7 +81,11 @@ At the top of `src/server.ts`, below the imports, add:
 const pendingForms = new Map<
   string,
   {
-    resolve: (data: { bulb: string; color: string; brightness: number }) => void;
+    resolve: (data: {
+      bulb: string;
+      color: string;
+      brightness: number;
+    }) => void;
     reject: (reason?: unknown) => void;
   }
 >();
@@ -118,11 +124,13 @@ if (request.params.name === "show_ui") {
   const { session_id } = request.params.arguments as { session_id: string };
 
   // Return a Promise that stays unresolved until submit_form is called
-  const formData = await new Promise<{ bulb: string; color: string; brightness: number }>(
-    (resolve, reject) => {
-      pendingForms.set(session_id, { resolve, reject });
-    }
-  );
+  const formData = await new Promise<{
+    bulb: string;
+    color: string;
+    brightness: number;
+  }>((resolve, reject) => {
+    pendingForms.set(session_id, { resolve, reject });
+  });
 
   // This line runs only after the user submits the form
   return {
@@ -159,6 +167,7 @@ console.error(`[show_ui] session ${session_id} — waiting for form submission`)
 > **Suggested time:** 4 minutes
 
 > 💬 **Copilot Prompt — add submit_form tool** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+>
 > ```
 > Add a submit_form tool to this MCP server:
 > 1. Register it in ListTools with required arguments: session_id (string), bulb (string), color (string), brightness (number). The description should say it is called by the UI when the user submits the form and resolves the pending show_ui Promise.
@@ -242,6 +251,7 @@ if (request.params.name === "submit_form") {
 ### Step B3 - Explain what resolving the Promise does
 
 When `pending.resolve({ bulb, color, brightness })` is called:
+
 - The `await new Promise(...)` in `show_ui` unblocks.
 - `formData` now contains `{ bulb, color, brightness }`.
 - `show_ui` returns its final content to the AI.
@@ -254,6 +264,7 @@ When `pending.resolve({ bulb, color, brightness })` is called:
 > **Suggested time:** 3 minutes
 
 > 💬 **Copilot Prompt — update ui.ts to call submit_form** (open `ui/ui.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+>
 > ```
 > Update this TypeScript file so that instead of console.log, the form submit handler calls mcpHost.callTool("submit_form", { session_id: mcpHost.sessionId, bulb, color }).
 > Add a TypeScript declare const for mcpHost with callTool (name: string, args: Record<string, unknown>) => Promise<void> and sessionId: string.
@@ -316,9 +327,10 @@ Confirm `dist/ui/index.html` is updated. The inlined script should now include t
 
 ### Step D1 - Register the MCP server with GitHub Copilot in VS Code
 
-In VS Code, open the Command Palette (`⌘⇧P` / `Ctrl+Shift+P`) and run **MCP: Add Server**. Enter the path to your compiled `dist/server.js` and follow the prompts to register it.
+In VS Code, open the Command Palette (`⌘⇧P` / `Ctrl+Shift+P`) and run **MCP: Add Server**. Enter the path to `my-mcp-app/dist/server.js` and follow the prompts to register it.
 
 > 💬 **Copilot Chat Prompt — open a new chat and test the loop**
+>
 > ```
 > Set the living room lights to a warm color.
 > ```
@@ -336,6 +348,7 @@ Done! Set the living room bulb to #ffd27f (warm white).
 The exact wording will vary, but the values should match what you submitted in the form.
 
 ### Success Criteria
+
 - [ ] `show_ui` suspends the chat until `submit_form` is called
 - [ ] `submit_form` resolves the Promise and the chat resumes
 - [ ] The AI response includes the values submitted in the form
@@ -348,6 +361,7 @@ The exact wording will vary, but the values should match what you submitted in t
 For a more robust implementation, add a timeout that rejects the Promise if the user does not submit within a set period.
 
 > 💬 **Copilot Prompt — add timeout and cancel handling** (open `src/server.ts`, then use Inline Chat `⌘I` / `Ctrl+I`)
+>
 > ```
 > Wrap the show_ui Promise in a Promise.race with a 5-minute timeout that rejects with "Form submission timed out". Clean up the pendingForms Map entry in a finally block to avoid memory leaks.
 > ```
@@ -357,14 +371,16 @@ For a more robust implementation, add a timeout that rejects the Promise if the 
 const TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
 
 const formData = await Promise.race([
-  new Promise<{ bulb: string; color: string; brightness: number }>((resolve, reject) => {
-    pendingForms.set(session_id, { resolve, reject });
-  }),
+  new Promise<{ bulb: string; color: string; brightness: number }>(
+    (resolve, reject) => {
+      pendingForms.set(session_id, { resolve, reject });
+    },
+  ),
   new Promise<never>((_, reject) =>
     setTimeout(
       () => reject(new Error("Form submission timed out")),
-      TIMEOUT_MS
-    )
+      TIMEOUT_MS,
+    ),
   ),
 ]);
 ```
@@ -394,6 +410,7 @@ git commit -m "feat: add show_ui and submit_form tools with Promise-based chat h
 ## Quick Debrief
 
 Answer in one sentence:
+
 - Why does `show_ui` use `await new Promise(...)`?
 - What happens to the chat if `submit_form` is never called?
 - How would you add a Cancel button that rejects the Promise?
@@ -402,24 +419,24 @@ Answer in one sentence:
 
 ## Troubleshooting
 
-| Problem | What to Check |
-|---|---|
-| Chat does not halt after `show_ui` is called | Verify `await new Promise(...)` is used and `resolve` is not called immediately |
-| `submit_form` throws "No pending form for session" | Confirm the `session_id` passed to `show_ui` matches the one used in `submit_form` |
-| Form submits but chat does not resume | Check that `pendingForms.get(session_id)` returns a valid entry and `resolve` is called |
-| `mcpHost` is not defined in the UI | Check the GitHub Copilot documentation for the injected bridge object name and API |
-| Memory leak warning after many submissions | Add `pendingForms.delete(session_id)` after resolving and in a `finally` block |
+| Problem                                            | What to Check                                                                           |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Chat does not halt after `show_ui` is called       | Verify `await new Promise(...)` is used and `resolve` is not called immediately         |
+| `submit_form` throws "No pending form for session" | Confirm the `session_id` passed to `show_ui` matches the one used in `submit_form`      |
+| Form submits but chat does not resume              | Check that `pendingForms.get(session_id)` returns a valid entry and `resolve` is called |
+| `mcpHost` is not defined in the UI                 | Check the GitHub Copilot documentation for the injected bridge object name and API      |
+| Memory leak warning after many submissions         | Add `pendingForms.delete(session_id)` after resolving and in a `finally` block          |
 
 ---
 
 ## Workshop Recap
 
-| Activity | What you built | Key concept |
-|---|---|---|
-| Activity 1 | Hello World MCP server with registered tools | StdioServerTransport and the ListTools/CallTool pattern |
-| Activity 2 | HTML form + Vite bundle + UI resource registration | Single-file bundling and MCP resource registration |
+| Activity   | What you built                                         | Key concept                                              |
+| ---------- | ------------------------------------------------------ | -------------------------------------------------------- |
+| Activity 1 | Hello World MCP server with registered tools           | StdioServerTransport and the ListTools/CallTool pattern  |
+| Activity 2 | HTML form + Vite bundle + UI resource registration     | Single-file bundling and MCP resource registration       |
 | Activity 3 | `show_ui` + `submit_form` + Promise-based chat halting | Bidirectional UI communication and async chat suspension |
 
 ---
 
-*← [Activity 2](./activity-2.md) · [Back to Workshop README](../README.md)*
+_← [Activity 2](./activity-2.md) · [Back to Workshop README](../README.md)_

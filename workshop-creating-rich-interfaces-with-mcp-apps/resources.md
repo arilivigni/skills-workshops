@@ -74,16 +74,16 @@ A curated list of documentation, reference material, and workshop support artifa
 
 ## Workshop Example Files
 
-The `examples/` folder in this workshop includes:
+The `examples/` folder in this workshop includes reference files you can compare against or copy into `my-mcp-app`:
 
-| File | Purpose |
-|---|---|
-| `example-mcp-server.ts` | Complete MCP server with all four tools: `get_time`, `echo`, `show_ui`, and `submit_form` |
-| `example-ui.html` | HTML form for the Bulb Controller with Pico CSS styling and a brightness slider |
-| `example-ui.ts` | TypeScript front-end logic that calls `submit_form` via `mcpHost.callTool` on form submission |
-| `example-vite-config.ts` | Vite configuration for bundling the UI into a single self-contained HTML file |
+| File                     | Purpose                                                                  |
+| ------------------------ | ------------------------------------------------------------------------ |
+| `example-mcp-server.ts`  | Complete MCP server reference to adapt into `my-mcp-app/src/server.ts`   |
+| `example-ui.html`        | HTML form reference to adapt into `my-mcp-app/ui/index.html`             |
+| `example-ui.ts`          | TypeScript front-end logic reference to adapt into `my-mcp-app/ui/ui.ts` |
+| `example-vite-config.ts` | Vite configuration reference to adapt into `my-mcp-app/vite.config.ts`   |
 
-The `demo/` folder is a pre-scaffolded starter project (created by the devcontainer setup) with `package.json`, `tsconfig.json`, and empty `src/` and `ui/` directories, ready for participants to start coding without spending time on project initialization.
+The `demo/` folder is a separate pre-scaffolded starter project for instructor use. Participant activity instructions still assume the working project root is `my-mcp-app`.
 
 See [speaker-notes.md](./speaker-notes.md) for timed delivery notes, talking points, demo cues, and a common-mistakes guide for instructors.
 
@@ -114,4 +114,4 @@ After the workshop, try one of these in a real project:
 
 ---
 
-*← [Back to Workshop README](./README.md)*
+_← [Back to Workshop README](./README.md)_
