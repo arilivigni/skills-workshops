@@ -54,8 +54,8 @@ By the end of this workshop, participants will be able to:
 
 **Tools & Accounts**
 
-- [ ] Node.js 18+ and npm installed
-- [ ] TypeScript installed globally or available via `npx`
+- [ ] Node.js 20 LTS and npm installed
+- [ ] TypeScript 6 installed globally or available via `npx`
 - [ ] VS Code installed (or another editor with TypeScript support)
 - [ ] VS Code with the GitHub Copilot extension installed and signed in
 - [ ] Git installed and working in the terminal
@@ -75,7 +75,7 @@ The working project root for Activities 1-3 is always `my-mcp-app`. The files in
 ```bash
 mkdir my-mcp-app && cd my-mcp-app
 npm init -y
-npm install --save-dev typescript @types/node
+npm install --save-dev typescript@^6 @types/node@^20
 npm install @modelcontextprotocol/sdk
 npx tsc --init
 ```
@@ -98,9 +98,9 @@ When you begin the hands-on activities, create and work inside `workshop-creatin
 
 Before the workshop officially starts, ask participants to verify:
 
-1. `node --version` returns 18 or higher.
+1. `node --version` returns 20.x in the devcontainer, or another current Node runtime compatible with the project dependencies.
 2. `npm --version` returns a usable npm version.
-3. `npx tsc --version` works without errors.
+3. `npx tsc --version` reports TypeScript 6.x.
 4. Their editor opens TypeScript files with syntax highlighting.
 
 > **Facilitation recommendation:** Run through the setup section yourself the day before. The npm install and tsc init steps are quick but worth pre-verifying in the exact node environment you plan to use.

@@ -47,7 +47,7 @@ All file paths in Activities 2 and 3 are relative to this `my-mcp-app` folder.
 
 ```bash
 npm install @modelcontextprotocol/sdk
-npm install --save-dev typescript @types/node
+npm install --save-dev typescript@^6 @types/node@^20
 ```
 
 ### Step A3 - Initialize TypeScript
@@ -61,9 +61,9 @@ Open `tsconfig.json` and make sure these options are set:
 ```json
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "target": "ES2023",
+    "module": "Node20",
+    "types": ["node"],
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
@@ -77,7 +77,7 @@ Open `tsconfig.json` and make sure these options are set:
 > Open `tsconfig.json` in VS Code, then use Inline Chat (`⌘I` / `Ctrl+I`) and paste:
 >
 > ```
-> Replace this tsconfig with one targeting ES2022 using Node16 module resolution, outputting to dist/, sourcing from src/, with strict mode and skipLibCheck enabled.
+> Replace this tsconfig with one targeting ES2023 using Node20 ESM output, including Node types, outputting to dist/, sourcing from src/, with strict mode and skipLibCheck enabled.
 > ```
 
 ### Step A4 - Add a build script
@@ -97,7 +97,7 @@ Also add `"type": "module"` at the top level of `package.json` so Node.js treats
 ### Success Criteria for Part A
 
 - [ ] `package.json` exists with the correct dependencies
-- [ ] `tsconfig.json` is configured for ES2022 modules and outputs to `dist/`
+- [ ] `tsconfig.json` is configured for ES2023 modules and outputs to `dist/`
 - [ ] `npm install` completes without errors
 
 ---
@@ -315,7 +315,7 @@ git commit -m "feat: hello world MCP server with get_time and echo tools"
 | Problem                                          | What to Check                                                                                                            |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
 | `Cannot find module '@modelcontextprotocol/sdk'` | Run `npm install` again and confirm `node_modules` exists                                                                |
-| TypeScript module resolution errors              | Confirm `"module": "Node16"` and `"moduleResolution": "Node16"` in `tsconfig.json` and that imports use `.js` extensions |
+| TypeScript module resolution errors              | Confirm `"module": "Node20"` in `tsconfig.json`, include `"types": ["node"]`, and make sure imports use `.js` extensions |
 | Server exits immediately                         | Confirm `server.connect(transport)` is awaited and the process does not exit before the first message                    |
 | Tool call returns an error                       | Confirm the tool name in `CallToolRequestSchema` matches the name in `ListToolsRequestSchema` exactly                    |
 | `console.log` interferes with MCP messages       | Replace `console.log` with `console.error` for all non-MCP output                                                        |

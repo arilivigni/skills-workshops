@@ -161,7 +161,7 @@ Wait for answers. Then confirm:
 
 **Module resolution errors** (`Cannot find module`):
 
-> "Make sure your tsconfig has `"module": "Node16"` and `"moduleResolution": "Node16"`. And your imports need `.js` extensions even for TypeScript files — that's a Node.js ESM quirk."
+> "Make sure your tsconfig has `"module": "Node20"` and `"types": ["node"]`. And your imports need `.js` extensions even for TypeScript files — that's a Node.js ESM quirk."
 
 **Server exits immediately:**
 
