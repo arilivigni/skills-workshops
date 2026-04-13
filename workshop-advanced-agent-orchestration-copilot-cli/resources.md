@@ -1,6 +1,6 @@
-# Resources - Workshop 3: Mastering GitHub Copilot CLI Workflows
+# Resources - Workshop 3: Advanced Agent Orchestration & The Copilot CLI
 
-A curated list of documentation, blog references, and workshop support material for GitHub Copilot CLI slash commands, model families, agent orchestration, agent skills, and Fleet.
+A curated list of documentation, blog references, and workshop support material for the GitHub Copilot CLI — autonomous autopilot loops, slash commands, multi-model agent teams, agent orchestration, skills, and Fleet.
 
 ---
 

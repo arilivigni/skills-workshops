@@ -1,31 +1,31 @@
-# Workshop 3: Mastering GitHub Copilot CLI Workflows
+# Workshop 3: Advanced Agent Orchestration & The Copilot CLI
 
 > **Format:** Instructor-led live workshop · **Duration:** 60 minutes · **Level:** Intermediate
 > **Inspired by:** [GitHub Copilot CLI blog series](https://github.blog/ai-and-ml/github-copilot/)
 
-This workshop teaches participants how to unlock the full power of GitHub Copilot in the terminal. Rather than treating Copilot as a simple suggestion box, participants learn how to compose agentic workflows, build custom agents and sub-agents, use slash commands for fast context management, run parallel workstreams with Fleet, and package reusable capabilities as agent skills — all from the command line.
+This workshop teaches participants how to use the GitHub Copilot CLI to run autonomous "autopilot" loops and configure multiple AI models to act as sub-agents in a coordinated team. Participants move from running one-off CLI suggestions to building a multi-model agent team: an orchestrator that dispatches specialized sub-agents, a skills layer that progressively loads reusable capabilities, and Fleet for parallel autonomous execution — all driven from the terminal.
 
 The session is designed for live delivery: a short mental-model introduction, three focused hands-on activities, visible checkpoints, and reusable artifacts participants can immediately apply in their own projects.
 
-> **Copilot-first approach:** Each activity includes **💬 Copilot Prompt** blocks — copy-paste prompts for your active `gh copilot` terminal session. Participants can use these prompts to have Copilot generate agent configs, skill files, and Fleet manifests instead of writing them by hand, keeping the focus on understanding the patterns rather than YAML syntax.
+> **Copilot-first approach:** Each activity includes **💬 Copilot Prompt** blocks — copy-paste prompts for your active `gh copilot` terminal session. Participants use these prompts to have Copilot generate agent configs, skill files, and Fleet manifests instead of writing them by hand, keeping the focus on understanding the patterns rather than YAML syntax.
 
 ---
 
 ## Welcome
 
-- **Who is this for:** Developers and platform engineers who want to use GitHub Copilot beyond the IDE, running agentic workflows directly in the terminal
-- **What you'll learn:** How to drive the Copilot CLI with slash commands, combine model families for a second opinion, create and orchestrate custom agents, run parallel agent workstreams with Fleet, and package reusable capabilities as skills
-- **What you'll build:** A set of CLI configurations — slash-command workflows, a custom orchestrator agent, sub-agent definitions, and a packaged skill — you can take back to any project
+- **Who is this for:** Developers and platform engineers who want to use the GitHub Copilot CLI to run autonomous multi-step workflows and build coordinated multi-model agent teams
+- **What you'll learn:** How to run autonomous "autopilot" loops with the Copilot CLI, configure multiple AI models as specialized sub-agents, orchestrate them as a coordinated team, run parallel workstreams with Fleet, and package reusable capabilities as skills
+- **What you'll build:** A multi-model agent team — slash-command workflows, an orchestrator that dispatches specialized sub-agents (each running a different model), a packaged skill, and a Fleet manifest for parallel autonomous execution — that you can take back to any project
 - **How to use this README:** Walk the workshop in order from Section 1 through Activity 3; each section includes the instructor goal, the participant task, and a concrete example you can demo
 
 In this workshop, you will:
 
-1. Explain how the Copilot CLI assembles an agent session and where customization lands
-2. Use slash commands to navigate, manage context, and change models mid-session
-3. Combine model families to get a second opinion on generated code or plans
-4. Build a custom orchestrator agent that delegates to specialized sub-agents
-5. Run parallel workstreams with Fleet to tackle independent tasks simultaneously
-6. Package a reusable capability as an agent skill and attach it to an agent config
+1. Explain how the Copilot CLI assembles an autonomous agent session and where the multi-model customization layers land
+2. Use slash commands to navigate, manage context, switch models, and monitor sub-agent execution
+3. Configure AI models as specialized sub-agents in a coordinated team
+4. Build an orchestrator that autonomously dispatches tasks to the right sub-agent
+5. Run autonomous parallel workstreams with Fleet
+6. Package a reusable capability as an agent skill that loads only when needed
 
 ---
 
@@ -33,13 +33,12 @@ In this workshop, you will:
 
 By the end of this workshop, participants will be able to:
 
-1. **Navigate the Copilot CLI confidently** using slash commands for context management, session control, and agent switching.
-2. **Use model families together** to get a second opinion that catches errors and improves quality before accepting generated output.
-3. **Build a custom agent** with a defined role, tool set, and handoff strategy for the terminal.
-4. **Compose an orchestrator that coordinates sub-agents**, delegating specialized tasks to focused agents rather than asking one agent to do everything.
-5. **Run multiple agents in parallel with Fleet** to speed up independent workstreams.
-6. **Create and attach an agent skill** that bundles instructions and helper scripts into a progressively loaded, portable capability.
-7. **Choose the right CLI workflow pattern** — single agent, orchestrated agents, Fleet, or skills — for a given task.
+1. **Use the Copilot CLI to run autonomous loops** — start agent sessions, use slash commands for context control, and let Copilot execute multi-step tasks autonomously without hand-holding each step.
+2. **Configure multiple AI models as sub-agents** — assign different model families to different roles so each sub-agent runs the model best suited to its task.
+3. **Orchestrate a coordinated agent team** — build an orchestrator that autonomously routes work to the right sub-agent, collects results, and assembles a final output.
+4. **Run autonomous parallel workstreams with Fleet** — launch multiple independent agent instances simultaneously and monitor them from a single session.
+5. **Create and attach an agent skill** that bundles instructions and helper scripts into a progressively loaded, portable capability.
+6. **Choose the right CLI workflow pattern** — single-agent autopilot loop, orchestrated multi-model team, Fleet parallel execution, or skills — for a given task.
 
 ---
 
@@ -98,8 +97,8 @@ You should receive a shell command suggestion. If authentication prompts appear,
 This repository includes a top-level `.devcontainer/`. In **GitHub Codespaces**, create a codespace from this repository. In **VS Code**, run **Dev Containers: Reopen in Container** from the Command Palette.
 
 Once the container starts, navigate to:
-- `workshop-mastering-copilot-cli/README.md`
-- `workshop-mastering-copilot-cli/examples/`
+- `workshop-advanced-agent-orchestration-copilot-cli/README.md`
+- `workshop-advanced-agent-orchestration-copilot-cli/examples/`
 
 ### Pre-flight Check
 
@@ -116,21 +115,21 @@ Before the workshop officially starts, ask participants to verify:
 
 | Time | Section | Format | Outcome |
 |---|---|---|---|
-| 00:00–15:00 | [1. How the Copilot CLI Works: Agent Sessions & Customization Layers](#section-1-how-the-copilot-cli-works-agent-sessions--customization-layers) | Concept + demo | Participants understand how a CLI agent session is assembled and where customization lands |
-| 15:00–30:00 | [2. Activity 1 – Slash Commands & Second-Opinion Model Families](#section-2-activity-1--slash-commands--second-opinion-model-families) | Hands-on | Participants use slash commands fluently and apply a second model family to validate output |
-| 30:00–45:00 | [3. Activity 2 – Custom Agents & Agent Orchestration](#section-3-activity-2--custom-agents--agent-orchestration) | Hands-on | Participants create a custom orchestrator agent and delegate tasks to specialized sub-agents |
-| 45:00–60:00 | [4. Activity 3 – Agent Skills & Fleet](#section-4-activity-3--agent-skills--fleet) | Hands-on + debrief | Participants package a skill and run multiple agents in parallel with Fleet |
+| 00:00–15:00 | [1. The Copilot CLI: Autopilot Loops & Multi-Model Agent Teams](#section-1-the-copilot-cli-autopilot-loops--multi-model-agent-teams) | Concept + demo | Participants understand how the CLI runs autonomous loops and how multiple models are layered into a coordinated agent team |
+| 15:00–30:00 | [2. Activity 1 – Slash Commands & Autonomous Session Control](#section-2-activity-1--slash-commands--autonomous-session-control) | Hands-on | Participants control autonomous CLI sessions with slash commands and configure models for second-opinion review |
+| 30:00–45:00 | [3. Activity 2 – Building a Multi-Model Orchestrated Agent Team](#section-3-activity-2--building-a-multi-model-orchestrated-agent-team) | Hands-on | Participants configure multiple AI models as sub-agents and build an orchestrator that dispatches them autonomously |
+| 45:00–60:00 | [4. Activity 3 – Agent Skills & Parallel Autopilot with Fleet](#section-4-activity-3--agent-skills--parallel-autopilot-with-fleet) | Hands-on + debrief | Participants package a reusable skill and run multiple autonomous agents in parallel with Fleet |
 
 ---
 
-## Section 1: How the Copilot CLI Works: Agent Sessions & Customization Layers
+## Section 1: The Copilot CLI: Autopilot Loops & Multi-Model Agent Teams
 
 **Duration:** 15 minutes
 **Format:** Instructor explanation + short live demo
 
 ### Teaching Goal
 
-Give participants a practical mental model for how the Copilot CLI constructs an agent session and then show the four customization layers that let them shape that session before and during execution.
+Give participants the mental model for how the Copilot CLI runs autonomous "autopilot" loops — where the agent executes multi-step tasks without human hand-holding — and show how multiple AI models are configured as specialized sub-agents in a coordinated team.
 
 ### The CLI Agent Session Stack
 
@@ -163,11 +162,13 @@ When you start a Copilot CLI agent session, the agent receives:
 
 ### Key Talking Points
 
+- **Autopilot loop**: The Copilot CLI can execute multi-step tasks autonomously — reading files, running tools, generating outputs — without the participant manually guiding each step. This is the "autopilot" mode participants are building toward in all three activities.
+- **Multi-model agent team**: Each sub-agent in this workshop runs a different AI model family. The code-review sub-agent uses Claude for deep reasoning; the test-writer uses GPT for structured output. The orchestrator coordinates them as a team.
 - **Slash commands** are the fastest lever: they change model, clear context, switch agents, or compress history without restarting.
-- **Custom agents** let you define a stable persona with specific tools, a workflow, and a preferred model for a class of task.
-- **Agent orchestration** means one agent (the orchestrator) delegates to specialized sub-agents rather than trying to do everything itself.
+- **Custom agents** let you configure a stable persona with specific tools, a preferred model, and a workflow — the building block of each team member.
+- **Agent orchestration** means one agent (the orchestrator) autonomously routes work to the right sub-agent rather than trying to do everything itself.
 - **Skills** keep large, specialized capabilities out of the default session context, loading them only when the current task needs them.
-- **Fleet** runs multiple independent agent instances in parallel — useful when you have concurrent tasks that do not depend on each other.
+- **Fleet** runs multiple independent agent instances in parallel — the autopilot equivalent of running your whole team at once.
 
 ### The Full Slash Command Reference
 
@@ -241,7 +242,7 @@ Show participants this full command list at the start of the session. They will 
 
 ---
 
-## Section 2: Activity 1 – Slash Commands & Second-Opinion Model Families
+## Section 2: Activity 1 – Slash Commands & Autonomous Session Control
 
 **Duration:** 15 minutes
 **Format:** Hands-on
@@ -281,7 +282,7 @@ Ask the first model to write a Bash script that backs up a directory. Then use t
 
 ---
 
-## Section 3: Activity 2 – Custom Agents & Agent Orchestration
+## Section 3: Activity 2 – Building a Multi-Model Orchestrated Agent Team
 
 **Duration:** 15 minutes
 **Format:** Hands-on
@@ -321,7 +322,7 @@ Orchestrator task: "Review and add tests for the function in `src/backup.sh`."
 
 ---
 
-## Section 4: Activity 3 – Agent Skills & Fleet
+## Section 4: Activity 3 – Agent Skills & Parallel Autopilot with Fleet
 
 **Duration:** 15 minutes
 **Format:** Hands-on + debrief

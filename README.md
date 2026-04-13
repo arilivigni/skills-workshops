@@ -8,7 +8,7 @@ A collection of **instructor-led live workshops** built on top of [GitHub Skills
 |---|---|---|---|
 | [Workshop 1: Mastering VS Code AI Workflows & Context](./workshop-mastering-vscode-ai-workflows/README.md) | AI context layers, instructions, prompts, agents, and skills in VS Code | 60 min | [Customize Your GitHub Copilot Experience](https://github.com/skills/customize-your-github-copilot-experience) |
 | [Workshop 2: Creating Rich Interfaces with MCP Apps](./workshop-creating-rich-interfaces-with-mcp-apps/README.md) | Building MCP servers that return interactive UIs directly inside the AI chat | 60 min | [Model Context Protocol](https://modelcontextprotocol.io) |
-| [Workshop 3: Mastering GitHub Copilot CLI Workflows](./workshop-mastering-copilot-cli/README.md) | Slash commands, model families, custom agents, agent orchestration, skills, and Fleet in the terminal | 60 min | [GitHub Copilot CLI blog series](https://github.blog/ai-and-ml/github-copilot/) |
+| [Workshop 3: Advanced Agent Orchestration & The Copilot CLI](./workshop-advanced-agent-orchestration-copilot-cli/README.md) | Use the GitHub Copilot CLI to run autonomous autopilot loops and configure multiple AI models as sub-agents in a coordinated team | 60 min | [GitHub Copilot CLI blog series](https://github.blog/ai-and-ml/github-copilot/) |
 
 ## How These Workshops Are Structured
 
