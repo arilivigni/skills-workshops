@@ -1,0 +1,25 @@
+# Fleet manifest — review-and-test
+# Runs the code-review and test-writer sub-agents in parallel on a target file.
+#
+# Usage:
+#   gh copilot fleet .github/fleet.yml
+#
+# Both agents start simultaneously. Results are written to separate output files.
+# Inspect the outputs after both complete:
+#   cat .github/fleet-output/review-report.md
+#   cat .github/fleet-output/test-cases.sh
+
+name: review-and-test
+description: Run code review and test writing in parallel on a target source file
+parallel: true
+
+agents:
+  - id: review
+    agent: .github/agents/code-review.agent.md
+    task: "Review backup.sh for bugs, security issues, missing error handling, and improvement opportunities. Produce a structured report with severity levels."
+    output: .github/fleet-output/review-report.md
+
+  - id: tests
+    agent: .github/agents/test-writer.agent.md
+    task: "Write test cases for backup.sh covering the happy path, edge cases, and error conditions. Output a Bash test file using bats-core style assertions."
+    output: .github/fleet-output/test-cases.sh
