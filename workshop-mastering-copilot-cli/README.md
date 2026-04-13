@@ -7,6 +7,8 @@ This workshop teaches participants how to unlock the full power of GitHub Copilo
 
 The session is designed for live delivery: a short mental-model introduction, three focused hands-on activities, visible checkpoints, and reusable artifacts participants can immediately apply in their own projects.
 
+> **Copilot-first approach:** Each activity includes **💬 Copilot Prompt** blocks — copy-paste prompts for your active `gh copilot` terminal session. Participants can use these prompts to have Copilot generate agent configs, skill files, and Fleet manifests instead of writing them by hand, keeping the focus on understanding the patterns rather than YAML syntax.
+
 ---
 
 ## Welcome
@@ -161,31 +163,81 @@ When you start a Copilot CLI agent session, the agent receives:
 
 ### Key Talking Points
 
-- **Slash commands** are the fastest lever: they change model, clear context, or switch agents without restarting.
+- **Slash commands** are the fastest lever: they change model, clear context, switch agents, or compress history without restarting.
 - **Custom agents** let you define a stable persona with specific tools, a workflow, and a preferred model for a class of task.
 - **Agent orchestration** means one agent (the orchestrator) delegates to specialized sub-agents rather than trying to do everything itself.
 - **Skills** keep large, specialized capabilities out of the default session context, loading them only when the current task needs them.
 - **Fleet** runs multiple independent agent instances in parallel — useful when you have concurrent tasks that do not depend on each other.
 
+### The Full Slash Command Reference
+
+Show participants this full command list at the start of the session. They will use most of these in Activities 1–3.
+
+**Agent environment**
+
+| Command | What it does |
+|---|---|
+| `/init` | Initialize Copilot instructions for this repository, or suppress the init suggestion |
+| `/agent` | Browse and select from available agents |
+| `/skills` | Manage skills for enhanced capabilities |
+| `/mcp` | Manage MCP server configuration |
+| `/plugin` | Manage plugins and plugin marketplaces |
+
+**Models and sub-agents**
+
+| Command | What it does |
+|---|---|
+| `/model` | Select the AI model to use in this session |
+| `/delegate` | Send this session to GitHub — Copilot will create a PR |
+| `/fleet` | Enable fleet mode for parallel sub-agent execution |
+| `/tasks` | View and manage background tasks (sub-agents and shell sessions) |
+
+**Code**
+
+| Command | What it does |
+|---|---|
+| `/ide` | Connect to an IDE workspace |
+| `/diff` | Review the changes made in the current directory |
+| `/pr` | Operate on pull requests for the current branch |
+| `/review` | Run the code review agent to analyze changes |
+
+**Session**
+
+| Command | What it does |
+|---|---|
+| `/resume` | Switch to a different session (optionally specify session ID or task ID) |
+| `/rename` | Rename the current session, or auto-generate a name from the conversation |
+| `/context` | Show context window token usage and visualization |
+| `/usage` | Display session usage metrics and statistics |
+| `/session` | View and manage sessions |
+| `/compact` | Summarize conversation history to reduce context window usage |
+| `/share` | Share session or research report to markdown file, HTML file, or GitHub gist |
+| `/remote` | Enable steering your session from GitHub web and mobile |
+| `/copy` | Copy the last response to the clipboard |
+| `/rewind` | Rewind the last turn and revert file changes |
+
 ### Context Drift Talking Points
 
 - A long-running agent session accumulates context the same way a long VS Code chat does.
-- Skills, handoffs, and `/new` or `/clear` slash commands are the CLI-native ways to fight context drift.
+- `/compact` compresses the conversation history in place — use it before switching phases or model families.
+- `/context` shows exactly how many tokens are in use — the visual indicator is the fastest way to spot context pressure building.
 - Orchestration helps because each sub-agent gets a short, focused context instead of a single agent accumulating everything.
 
 ### Suggested Live Demo
 
 1. Open a terminal, run `gh copilot suggest "show only staged git changes"`, and show the result.
-2. Start an agent session and type `/help` to show available slash commands.
-3. Ask the agent a question, then type `/model` to show model-switching in action.
-4. Open the `examples/example-orchestrator.agent.md` file and walk through each section briefly.
-5. Preview the Fleet config in `examples/example-fleet.yml` to show what parallel execution looks like.
+2. Start an agent session and type `/help` to show the full slash command list organized by category.
+3. Run `/context` to show the token usage display — explain this is how you spot context pressure.
+4. Ask the agent a question, then type `/model` to show model-switching in action.
+5. Run `/diff` to show pending changes surfaced directly in the session.
+6. Open the `examples/example-orchestrator.agent.md` file and walk through each section briefly.
+7. Preview the Fleet config in `examples/example-fleet.yml` to show what parallel execution looks like.
 
 ### Checkpoint Question
 
 > "If you want to run a code review with a different model than the one you used to write the code, what is the fastest way to do that?"
 
-**Answer:** Use the `/model` slash command to switch model families, or use the second-opinion flag to have a second model family review the same output.
+**Answer:** Use the `/model` slash command to switch model families within the same session, then paste the review prompt. Use `/compact` first if the session context is large.
 
 ---
 
@@ -198,11 +250,12 @@ When you start a Copilot CLI agent session, the agent receives:
 
 ### What Participants Do
 
-1. Start a Copilot CLI agent session.
-2. Use the core slash commands: `/help`, `/model`, `/clear`, `/new`, and `/history`.
-3. Generate a code snippet or shell script using one model.
-4. Use a second model family to review and improve the first output.
-5. Compare the responses from each model family and articulate when the second opinion adds value.
+1. Start a Copilot CLI agent session and run `/help` to see the full command list.
+2. Try at least one command from each category: agent environment, models/sub-agents, code, and session.
+3. Generate a Bash script using one model with a 💬 Copilot Prompt.
+4. Use `/context` to check token usage, then switch model families with `/model`.
+5. Get a second-opinion review using a focused 💬 Copilot Prompt.
+6. Use `/compact`, `/rename`, and `/share` to manage the session.
 
 ### Suggested Example
 
@@ -213,9 +266,11 @@ Ask the first model to write a Bash script that backs up a directory. Then use t
 
 ### Success Criteria
 
-- [ ] Participant used at least three slash commands in a session.
+- [ ] Participant ran `/help` and identified commands in all four categories.
+- [ ] Participant used at least one command from each category.
 - [ ] Participant switched model families during the session.
 - [ ] Participant obtained a second-opinion review on generated output.
+- [ ] Participant used `/context` and `/compact` to manage session state.
 - [ ] Participant can explain when a second model family adds more value than staying with one.
 
 ### Instructor Notes
@@ -235,11 +290,11 @@ Ask the first model to write a Bash script that backs up a directory. Then use t
 
 ### What Participants Do
 
-1. Create a custom **Orchestrator** agent config that delegates to two sub-agents.
-2. Create a **code-review sub-agent** with focused tool access.
-3. Create a **test-writer sub-agent** with its own role and boundaries.
-4. Invoke the orchestrator and observe it delegating a task to the appropriate sub-agent.
-5. Explain the orchestration handoff pattern and why it beats a single overloaded agent.
+1. Use 💬 Copilot Prompts to generate agent configs for a **code-review sub-agent** and a **test-writer sub-agent**.
+2. Use a 💬 Copilot Prompt to generate the **Orchestrator** agent config with handoffs to both sub-agents.
+3. Use `/agent` to verify all agents are discoverable.
+4. Invoke the orchestrator with a 💬 Copilot Prompt and use `/tasks` to monitor delegated sub-agent sessions.
+5. Use `/diff` to review changes before committing and `/delegate` to optionally create a PR.
 
 ### Suggested Example
 
@@ -250,14 +305,17 @@ Orchestrator task: "Review and add tests for the function in `src/backup.sh`."
 
 ### Success Criteria
 
-- [ ] Orchestrator agent config created.
+- [ ] Orchestrator agent config created (using a 💬 Copilot Prompt).
 - [ ] At least two sub-agent configs created with distinct roles.
+- [ ] `/agent` used to verify all agents are discoverable.
 - [ ] Orchestrator used to delegate a real task.
+- [ ] `/tasks` used to monitor sub-agent execution.
 - [ ] Participant can explain why orchestration beats a single overloaded agent.
 
 ### Instructor Notes
 
 - Keep emphasizing that narrow agents outperform broad ones — one job per sub-agent.
+- Point out that `/agent` for discovery and `/tasks` for monitoring are the two new slash commands this activity introduces.
 - If participants finish early, add a third sub-agent for documentation writing and wire it into the orchestrator.
 - Draw the handoff arrow on a whiteboard if available: orchestrator → sub-agent → result → orchestrator → final output.
 
@@ -272,11 +330,11 @@ Orchestrator task: "Review and add tests for the function in `src/backup.sh`."
 
 ### What Participants Do
 
-1. Create a local agent skill with a `SKILL.md` and an optional helper script.
-2. Attach the skill to an agent config.
-3. Create a Fleet manifest that runs two agents in parallel on independent tasks.
-4. Invoke Fleet and observe both agents executing simultaneously.
-5. Debrief on when Fleet adds real value versus when it adds unnecessary complexity.
+1. Use 💬 Copilot Prompts to generate a `SKILL.md` and helper script for a `git-summary` skill.
+2. Attach the skill to an agent config and verify it with `/skills`.
+3. Use a 💬 Copilot Prompt to generate a Fleet manifest.
+4. Invoke Fleet and use `/tasks` to monitor both agents executing simultaneously.
+5. Use `/pr` or `/diff` to review outputs, then debrief on the decision map.
 
 ### Suggested Example
 
@@ -287,14 +345,16 @@ Fleet run: run the `code-review` sub-agent and the `test-writer` sub-agent in pa
 ### Success Criteria
 
 - [ ] `SKILL.md` exists with a clear name, description, and workflow.
-- [ ] Skill is referenced in an agent config.
+- [ ] Skill is referenced in an agent config and verified with `/skills`.
 - [ ] Fleet manifest created with at least two parallel agents.
 - [ ] Fleet invoked and both agent outputs received.
+- [ ] `/tasks` used to monitor Fleet agents while running.
 - [ ] Participant can explain when Fleet is worth the added setup.
 
 ### Instructor Notes
 
 - This is where the workshop thesis lands: the best CLI setup uses the right tool for the job — a single agent for simple tasks, orchestrated agents for complex multi-phase work, Fleet for independent parallel workstreams, and skills for portable capabilities.
+- Point out that `/fleet`, `/tasks`, `/skills`, `/review`, and `/pr` are all new slash commands introduced in this activity.
 - Keep the last 3–4 minutes for the debrief question.
 
 ### Suggested Example
@@ -308,9 +368,9 @@ Fleet run: run the `code-review` sub-agent and the `test-writer` sub-agent in pa
 
 | Activity | Outcome | Why it matters |
 |---|---|---|
-| [Activity 1](./activities/activity-1.md) | Fluent slash-command usage + second-opinion model review | Fastest levers for quality control without restarting a session |
-| [Activity 2](./activities/activity-2.md) | Orchestrator + two focused sub-agents | Shows that delegation beats one overloaded agent |
-| [Activity 3](./activities/activity-3.md) | A packaged skill + a parallel Fleet run | Shows progressive loading for reusable capabilities and parallelism for independent work |
+| [Activity 1](./activities/activity-1.md) | Full slash command fluency + second-opinion model review with 💬 Copilot Prompts | Fastest levers for quality control without restarting a session |
+| [Activity 2](./activities/activity-2.md) | Orchestrator + two focused sub-agents generated with 💬 Copilot Prompts | Shows that delegation beats one overloaded agent |
+| [Activity 3](./activities/activity-3.md) | A packaged skill + a parallel Fleet run, both using 💬 Copilot Prompts | Shows progressive loading for reusable capabilities and parallelism for independent work |
 
 ---
 
@@ -319,7 +379,7 @@ Fleet run: run the `code-review` sub-agent and the `test-writer` sub-agent in pa
 For advanced participants or post-workshop follow-up:
 
 1. Add a third sub-agent — such as a documentation writer — and wire it into the orchestrator's routing logic.
-2. Create a prompt file for a repeated CLI invocation and compare it with a fully customized agent config.
+2. Use `/share` to export a full session including the second-opinion review and the orchestrated output as a GitHub gist.
 3. Add a `post-skill` step that commits skill output automatically to a file.
 4. Write a Fleet manifest that fans out a code review across three different model families and compares the results.
 5. Publish a skill to a shared skills registry so your team can install it.
