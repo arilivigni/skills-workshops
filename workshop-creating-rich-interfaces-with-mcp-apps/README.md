@@ -94,6 +94,8 @@ Once the container starts, navigate to:
 
 When you begin the hands-on activities, create and work inside `workshop-creating-rich-interfaces-with-mcp-apps/my-mcp-app/`.
 
+This repository also keeps a workspace MCP configuration in `.vscode/mcp.json`. It is fine to commit that file even if some participants register the server another way during the workshop. In this repo, the file is the shared, documented way to start `my-mcp-app` from VS Code once `dist/server.js` has been built.
+
 ### Pre-flight Check
 
 Before the workshop officially starts, ask participants to verify:
@@ -180,7 +182,7 @@ The system has four parts:
 ### Suggested Live Demo
 
 1. Open the finished reference files from the `examples/` folder to show the target state.
-2. Run the actual demo server from the `my-mcp-app` project root with `npm run dev`.
+2. Build the actual demo server from the `my-mcp-app` project root with `npm run build`, then let VS Code start it from the committed `.vscode/mcp.json` workspace configuration.
 3. Open the AI chat and send an ambiguous prompt such as "set the lights."
 4. Show the chat halting and the interactive form appearing.
 5. Click a bulb, select a color, and click Submit.

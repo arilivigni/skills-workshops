@@ -6,6 +6,12 @@
         "aw",
         "mcp-server"
       ]
+    },
+    "my-mcp-app": {
+      "command": "node",
+      "args": [
+        "/workspaces/skills-workshops/workshop-creating-rich-interfaces-with-mcp-apps/my-mcp-app/dist/server.js"
+      ]
     }
   }
 }

@@ -325,9 +325,34 @@ Confirm `dist/ui/index.html` is updated. The inlined script should now include t
 
 > **Suggested time:** 2 minutes
 
-### Step D1 - Register the MCP server with GitHub Copilot in VS Code
+### Step D1 - Start the MCP server from `.vscode/mcp.json`
 
-In VS Code, open the Command Palette (`⌘⇧P` / `Ctrl+Shift+P`) and run **MCP: Add Server**. Enter the path to `my-mcp-app/dist/server.js` and follow the prompts to register it.
+This repository already includes a workspace MCP configuration at `.vscode/mcp.json`. Keep that file in the repo so everyone opening the workshop gets the same server definition.
+
+The file points VS Code at the built server entrypoint:
+
+```json
+{
+  "servers": {
+    "my-mcp-app": {
+      "command": "node",
+      "args": [
+        "/workspaces/skills-workshops/workshop-creating-rich-interfaces-with-mcp-apps/my-mcp-app/dist/server.js"
+      ]
+    }
+  }
+}
+```
+
+Before testing in chat:
+
+1. From `my-mcp-app`, run `npm run build` so `dist/server.js` and `dist/ui/index.html` exist.
+2. In VS Code, open the Command Palette (`⌘⇧P` / `Ctrl+Shift+P`) and run **MCP: Start Server**.
+3. Choose `my-mcp-app` from the server list defined in `.vscode/mcp.json`.
+
+If VS Code does not show the server immediately, reload the window once so it re-reads the workspace MCP configuration.
+
+> **Why keep `.vscode/mcp.json` in the repo?** It is workspace setup, not application runtime code. Committing it gives participants and instructors the same MCP server definition without repeating the manual registration steps.
 
 > 💬 **Copilot Chat Prompt — open a new chat and test the loop**
 >
