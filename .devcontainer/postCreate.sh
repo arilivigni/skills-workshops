@@ -8,6 +8,12 @@ if [[ ! "$NODE_VERSION" =~ ^v20\. ]]; then
   exit 1
 fi
 
+if command -v copilot >/dev/null 2>&1; then
+  COPILOT_VERSION="$(copilot --version 2>/dev/null || true)"
+else
+  COPILOT_VERSION="not installed"
+fi
+
 # ---------------------------------------------------------------------------
 # Workshop 1: PDF skill support
 # ---------------------------------------------------------------------------
@@ -27,7 +33,13 @@ npm install -g typescript@^6
 
 echo "- Node.js $(node --version) and npm $(npm --version) are ready."
 echo "- TypeScript $(tsc --version) is installed globally."
+if command -v copilot >/dev/null 2>&1; then
+  echo "- Copilot CLI ${COPILOT_VERSION} is available."
+else
+  echo "- Copilot CLI is not installed."
+fi
 echo ""
 echo "Devcontainer setup complete."
 echo "- Open workshop-mastering-vscode-ai-workflows/README.md to run Workshop 1."
 echo "- Open workshop-creating-rich-interfaces-with-mcp-apps/README.md to run Workshop 2."
+echo "- Open workshop-advanced-agent-orchestration-copilot-cli/README.md to run Workshop 3."

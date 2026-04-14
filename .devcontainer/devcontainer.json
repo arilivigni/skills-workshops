@@ -16,16 +16,11 @@
       "openFiles": [
         "README.md",
         "workshop-mastering-vscode-ai-workflows/README.md",
-        "workshop-creating-rich-interfaces-with-mcp-apps/README.md"
+        "workshop-creating-rich-interfaces-with-mcp-apps/README.md",
+        "workshop-advanced-agent-orchestration-copilot-cli/README.md"
       ]
     },
     "vscode": {
-      "settings": {
-        "files.insertFinalNewline": true,
-        "files.trimTrailingWhitespace": true,
-        "markdown.preview.breaks": true,
-        "terminal.integrated.defaultLocation": "editor"
-      },
       "extensions": [
         "GitHub.copilot",
         "GitHub.copilot-chat",
@@ -39,6 +34,7 @@
         "files.insertFinalNewline": true,
         "files.trimTrailingWhitespace": true,
         "markdown.preview.breaks": true,
+        "terminal.integrated.defaultLocation": "editor",
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "[typescript]": {

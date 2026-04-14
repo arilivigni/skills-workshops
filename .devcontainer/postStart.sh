@@ -24,6 +24,11 @@ Recommended starting points:
 - workshop-creating-rich-interfaces-with-mcp-apps/activities/
 - workshop-creating-rich-interfaces-with-mcp-apps/examples/
 - workshop-creating-rich-interfaces-with-mcp-apps/demo/   (pre-scaffolded starter project)
+- workshop-advanced-agent-orchestration-copilot-cli/README.md
+- workshop-advanced-agent-orchestration-copilot-cli/activities/
+- workshop-advanced-agent-orchestration-copilot-cli/examples/
+- .github/agents/agentic-workflows.agent.md
+- .github/skills/write-a-prd/
 
 Quick tools check:
   node --version    (expect v20.x)
@@ -31,3 +36,7 @@ Quick tools check:
   tsc --version
   python3 --version (expect 3.12.x)
 EOF
+
+if command -v copilot >/dev/null 2>&1; then
+  echo "  copilot --version   # $(copilot --version)"
+fi

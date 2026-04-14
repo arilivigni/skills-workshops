@@ -8,6 +8,7 @@ A collection of **instructor-led live workshops** built on top of [GitHub Skills
 |---|---|---|---|
 | [Workshop 1: Mastering VS Code AI Workflows & Context](./workshop-mastering-vscode-ai-workflows/README.md) | AI context layers, instructions, prompts, agents, and skills in VS Code | 60 min | [Customize Your GitHub Copilot Experience](https://github.com/skills/customize-your-github-copilot-experience) |
 | [Workshop 2: Creating Rich Interfaces with MCP Apps](./workshop-creating-rich-interfaces-with-mcp-apps/README.md) | Building MCP servers that return interactive UIs directly inside the AI chat | 60 min | [Model Context Protocol](https://modelcontextprotocol.io) |
+| [Workshop 3: Advanced Agent Orchestration & The Copilot CLI](./workshop-advanced-agent-orchestration-copilot-cli/README.md) | Copilot CLI slash commands, autopilot loops, sub-agents, multi-model workflows, and skills | 60 min | [GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli) + [awesome-copilot Agent Skills](https://github.com/github/awesome-copilot/blob/main/docs/README.skills.md) |
 
 ## How These Workshops Are Structured
 
@@ -36,7 +37,7 @@ This repo includes a top-level `.devcontainer/` so you can open it directly in:
 - **GitHub Codespaces**
 - **VS Code Dev Containers**
 
-The container uses `mcr.microsoft.com/devcontainers/base:jammy` and preps the workshop environment for Copilot demos, Markdown editing, and the PDF skill example.
+The container uses `mcr.microsoft.com/devcontainers/base:jammy` and preps the workshop environment for Copilot CLI demos, Markdown editing, the PDF skill example, and the MCP app workshop.
 
 ## Contributing
 
