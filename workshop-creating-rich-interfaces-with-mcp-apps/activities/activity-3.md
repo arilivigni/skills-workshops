@@ -448,6 +448,22 @@ Answer in one sentence:
 
 ---
 
+## Presenter Script
+
+Use this short explanation to close the activity:
+
+> "This MCP app is not a normal website and it is not served from a separate web server. VS Code starts it as an MCP server using the workspace MCP configuration, and the server runs over standard input and output, not HTTP.
+>
+> The main entry point is `server.ts`. That server exposes tools and one UI resource. The tools are the app's machine-facing input points. In this example, we have a direct tool called `set_light` for clear requests, and a `show_ui` tool for ambiguous requests where the assistant should not guess.
+>
+> The UI itself starts as `ui/index.html` plus the browser logic in `ui/ui.ts`. Those files are bundled, and the server returns them as an MCP resource called `app://bulb-controller`.
+>
+> If the user says something explicit, like 'set the living room light to a cool color,' Copilot can call the direct tool and the server returns a plain text result confirming the new light state. If the user says something ambiguous, like 'set the lights,' Copilot can call `show_ui`, and the form appears inside the chat window itself. When the user submits the form, the UI calls back into the server through `submit_form`, the pending request resolves, and the chat continues.
+>
+> So the big idea is: MCP apps can return either text outputs or interactive UI, and the host chat experience decides when to render that UI inline."
+
+---
+
 ## Troubleshooting
 
 | Problem                                            | What to Check                                                                           |
