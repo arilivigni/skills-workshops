@@ -159,7 +159,7 @@ copilot
 Create and switch to a new git branch named workshop-3-demo before we make any edits in this repository.
 ```
 
-If you prefer to create the branch manually before entering the prompt-driven flow, run:
+If you prefer to create the branch manually (instead of asking the CLI), run:
 
 ```bash
 git switch -c workshop-3-demo
