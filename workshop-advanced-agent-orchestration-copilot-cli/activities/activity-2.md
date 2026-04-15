@@ -6,6 +6,11 @@
 
 This activity uses a Markdown-only task so the room can focus on orchestration behavior rather than build tools or test failures.
 
+Useful references while you run this activity:
+
+- [Fleet prompt example](../examples/example-fleet-prompt.md)
+- [Command cheat sheet](../examples/example-command-cheatsheet.md)
+
 ---
 
 ## What You'll Practice
@@ -25,13 +30,21 @@ By the end of this activity you will:
 
 Use a low-risk change in this workshop folder on a throwaway branch. Good candidates:
 
-- improve wording in `examples/example-command-cheatsheet.md`
+- improve wording in [`examples/example-command-cheatsheet.md`](../examples/example-command-cheatsheet.md)
 - add one clarification paragraph to `README.md`
 - update a heading or table cell in an example file
 
 Avoid broad feature work for this activity. The point is to observe orchestration, not to risk the repo.
 
-If you have not already created a demo branch, do it now in a second terminal:
+If you have not already created a demo branch, do it now. You can either use the prompt from Activity 1 or run the git command manually.
+
+Prompt version:
+
+```text
+Create and switch to a new git branch named workshop-3-demo before we make any edits in this repository.
+```
+
+Manual version:
 
 ```bash
 git switch -c workshop-3-demo
@@ -50,6 +63,10 @@ Example prompt:
 ```text
 Create a concise plan to improve workshop-advanced-agent-orchestration-copilot-cli/examples/example-command-cheatsheet.md so it is easier for first-time Copilot CLI users to scan. Keep the task limited to Markdown edits in this workshop folder.
 ```
+
+Reference:
+
+- [example-fleet-prompt.md](../examples/example-fleet-prompt.md)
 
 Discuss the plan with the room before accepting it:
 
@@ -110,6 +127,10 @@ Use GPT-5-mini to summarize the final changes and call out any follow-up cleanup
 Keep all edits inside workshop-advanced-agent-orchestration-copilot-cli/.
 ```
 
+You can keep this open beside the terminal:
+
+- [example-fleet-prompt.md](../examples/example-fleet-prompt.md)
+
 ### What to point out live
 
 - `/fleet` is not just "go faster"; it creates separate sub-agent context windows
@@ -136,3 +157,9 @@ Ask participants:
 - [ ] You handed a bounded task to autopilot
 - [ ] You used `/fleet` for a multi-part task
 - [ ] You can explain the difference between autonomy and parallelism
+
+---
+
+## Next Step
+
+Continue to [Activity 3 - Skills, Plugins, Progressive Loading, and Shared Catalogs](./activity-3.md).

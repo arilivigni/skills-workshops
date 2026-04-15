@@ -6,6 +6,11 @@
 
 Skills are one of the best examples of context-efficient customization. The CLI does not stuff the full contents of every skill into the prompt all the time. Instead, it sees the skill name and description first, and only loads the full skill instructions when the skill is actually relevant.
 
+Useful references while you run this activity:
+
+- [Skill and plugin workflow example](../examples/example-skill-workflow.md)
+- [Live repo assets](../examples/example-live-repo-assets.md)
+
 ---
 
 ## What You'll Practice
@@ -27,6 +32,10 @@ By the end of this activity you will:
 This repository already includes a local skill:
 
 - `.github/skills/write-a-prd/`
+
+Reference:
+
+- [example-live-repo-assets.md](../examples/example-live-repo-assets.md)
 
 In the CLI, list available skills:
 
@@ -59,6 +68,10 @@ Example:
 ```text
 Use /write-a-prd to draft a PRD in the chat for a follow-up lab to this workshop that focuses on code review workflows in Copilot CLI. Keep the output in the chat only and do not create a GitHub issue.
 ```
+
+Reference:
+
+- [example-skill-workflow.md](../examples/example-skill-workflow.md)
 
 ### What to point out
 
@@ -174,3 +187,9 @@ Ask participants:
 - [ ] You installed or planned a concrete plugin install such as `project-planning@awesome-copilot`
 - [ ] You can explain why skills help conserve context
 - [ ] You can explain why plugins are a better distribution mechanism for larger bundles of capabilities
+
+---
+
+## Workshop Complete
+
+Return to the [Workshop 3 README](../README.md) to review the diagram, comparison table, and instructor notes.

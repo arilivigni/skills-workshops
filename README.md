@@ -39,6 +39,13 @@ This repo includes a top-level `.devcontainer/` so you can open it directly in:
 
 The container uses `mcr.microsoft.com/devcontainers/base:jammy` and preps the workshop environment for Copilot CLI demos, Markdown editing, the PDF skill example, and the MCP app workshop.
 
+For **Workshop 3** specifically, you can also run locally without a devcontainer. The shortest path is:
+
+1. Clone this repository
+2. Install GitHub Copilot CLI (`brew install copilot-cli`, `winget install GitHub.Copilot`, or `npm install -g @github/copilot`)
+3. Run `copilot` from the repo root
+4. Authenticate with `/login`
+
 ## Contributing
 
 Each workshop is self-contained and designed to be runnable with minimal prep. See individual workshop `README.md` files for prerequisites and setup instructions.

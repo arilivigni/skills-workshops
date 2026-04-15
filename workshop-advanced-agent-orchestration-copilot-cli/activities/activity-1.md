@@ -25,6 +25,11 @@ Use this repository so the demo stays concrete:
 - the repo already exposes a custom agent in `.github/agents/agentic-workflows.agent.md`
 - the repo already exposes a local skill in `.github/skills/write-a-prd/`
 
+Useful references while you run this activity:
+
+- [Command cheat sheet](../examples/example-command-cheatsheet.md)
+- [Live repo assets](../examples/example-live-repo-assets.md)
+
 ---
 
 ## Part A - Start the CLI
@@ -43,10 +48,25 @@ copilot
 
 If prompted to trust the current folder, accept it for this workshop repo.
 
+### Step A3 - Create the workshop branch with an explicit prompt
+
+Use this prompt in the CLI so the branch-creation step is part of the live workflow:
+
+```text
+Create and switch to a new git branch named workshop-3-demo before we make any edits in this repository.
+```
+
+If you prefer to do it manually in a second shell, the equivalent command is:
+
+```bash
+git switch -c workshop-3-demo
+```
+
 ### Success checkpoint
 
 - [ ] The Copilot CLI session opens
 - [ ] You are in the repo root
+- [ ] You are on `workshop-3-demo` before making changes
 
 ---
 
@@ -101,6 +121,10 @@ Do not try to memorize every slash command. The habit to teach is:
 
 Ask participants to notice the kinds of information the CLI exposes about the current repository and session.
 
+If you want a ready-made example of the kind of output to discuss, open:
+
+- [example-command-cheatsheet.md](../examples/example-command-cheatsheet.md)
+
 ### Step C2 - Inspect the active model
 
 ```text
@@ -117,6 +141,10 @@ Explain that participants may see different models depending on their plan and a
 
 In this repository, point out the existing `agentic-workflows` agent. It is a real repo-level agent, not a mock example.
 
+Reference:
+
+- [example-live-repo-assets.md](../examples/example-live-repo-assets.md)
+
 ### Step C4 - Inspect available skills
 
 ```text
@@ -124,6 +152,10 @@ In this repository, point out the existing `agentic-workflows` agent. It is a re
 ```
 
 In this repository, point out the `write-a-prd` skill. If participants do not see it immediately, confirm they started the CLI from the repo root.
+
+Reference:
+
+- [example-live-repo-assets.md](../examples/example-live-repo-assets.md)
 
 ### Optional step - Get more detail about a skill
 
@@ -213,3 +245,9 @@ Ask participants:
 - [ ] You saw a real repo skill with `/skills list`
 - [ ] You browsed the Awesome Copilot marketplace with `/plugin`
 - [ ] You understand that `/chronicle` may require `/experimental on`
+
+---
+
+## Next Step
+
+Continue to [Activity 2 - Plan Mode, Autopilot, and `/fleet`](./activity-2.md).

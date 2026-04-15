@@ -40,3 +40,11 @@ EOF
 if command -v copilot >/dev/null 2>&1; then
   echo "  copilot --version   # $(copilot --version)"
 fi
+echo ""
+echo "Workshop 3 quick start:"
+echo "  copilot"
+echo "  /login"
+echo "  /help"
+echo "  /env"
+echo "  /skills list"
+echo "  /plugin marketplace browse awesome-copilot"

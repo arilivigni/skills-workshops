@@ -42,6 +42,51 @@ Use this as the instructor's quick-reference sheet during the walkthrough.
 | `copilot plugin install project-planning@awesome-copilot` | Install a planning-focused plugin from the shared marketplace |
 | `copilot plugin marketplace add github/awesome-copilot` | Register the marketplace in older or custom setups |
 
+## Plausible output you can show live
+
+### `/env`
+
+```text
+Environment summary
+
+Workspace:
+  cwd: /workspaces/skills-workshops
+  git repo: skills-workshops
+  branch: workshop-3-demo
+
+Loaded customizations:
+  agents: agentic-workflows
+  skills: write-a-prd
+  plugins: project-planning@awesome-copilot
+```
+
+### `/skills list`
+
+```text
+Available skills
+
+  write-a-prd
+    Location: .github/skills/write-a-prd
+```
+
+### `/plugin list`
+
+```text
+Installed plugins
+
+  project-planning@awesome-copilot
+  structured-autonomy@awesome-copilot
+```
+
+### `/agent`
+
+```text
+Available agents
+
+  agentic-workflows
+    Source: .github/agents/agentic-workflows.agent.md
+```
+
 ## Speaker note
 
 Use `/help` first, then drill into the smallest command that answers the current question. That habit is more important than memorizing command names.
