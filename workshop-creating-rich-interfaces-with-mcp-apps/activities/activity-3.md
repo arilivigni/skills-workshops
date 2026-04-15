@@ -16,6 +16,7 @@ By the end of this activity you will have:
 2. A `submit_form` tool that resolves the Promise with the form data
 3. An updated `ui.ts` that calls `submit_form` via a JavaScript MCP bridge when the user clicks Submit
 4. A working end-to-end loop: prompt → UI shown → user submits → AI continues with data
+5. A direct `set_light` tool for explicit requests so the UI is only used when clarification or a visual picker is needed
 
 ---
 
@@ -50,6 +51,11 @@ AI processes the submitted values and responds
 ```
 
 The key insight: `show_ui` does not return immediately. It stores the Promise's resolve function and returns a reference to the UI. The AI host knows to wait for the Promise. Only when `submit_form` calls `resolve()` does the chat continue.
+
+For a better end-user experience, keep both interaction modes in the same server:
+
+- Use `set_light` when the user already specified a bulb plus a color or brightness clearly enough to act.
+- Use `show_ui` when the assistant should not guess, needs confirmation, or the user would benefit from picking visually.
 
 ---
 

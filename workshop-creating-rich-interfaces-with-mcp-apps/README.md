@@ -16,6 +16,7 @@ The session is designed for live delivery: a short concept introduction, focused
 - **Who is this for:** Developers who want to build interactive, in-chat UI experiences using MCP apps and TypeScript
 - **What you'll learn:** How to build an MCP server, bundle a front-end UI resource with Vite, register the UI with an MCP app, and use Promises to synchronize the chat with user input
 - **What you'll build:** A working MCP app that halts the chat, renders an interactive HTML form in the AI chat window, and resumes processing once the user submits their input
+- **What you'll build:** A working MCP app that can either handle explicit bulb commands directly or halt the chat, render an interactive HTML form in the AI chat window, and resume processing once the user submits their input
 - **How to use this README:** Walk the workshop in order from Section 1 through Activity 3; each section includes the instructor goal, the participant task, and a concrete example you can demo
 
 In this workshop, you will:
@@ -25,6 +26,7 @@ In this workshop, you will:
 3. Bundle an HTML form and TypeScript file into a single UI resource using Vite
 4. Register the UI resource with the MCP server using the `ext-apps` package and UI schema
 5. Establish bidirectional communication and use a Promise to halt the chat until user input arrives
+6. Route explicit requests to a direct tool and ambiguous requests to the UI flow
 
 ---
 
@@ -158,6 +160,7 @@ Key points to make:
 - The UI is rendered **inside the chat** — the user never leaves the conversation.
 - The MCP server controls what UI is shown and what happens when the user interacts with it.
 - The chat **halts** while waiting for user input and **resumes** after the form is submitted.
+- A direct action tool can handle fully specified requests, while the UI is the safe fallback when the assistant should not guess.
 
 ### Real-World Example: Smart Bulb Controller
 
@@ -179,14 +182,18 @@ The system has four parts:
 3. **UI Tool** — a special MCP tool that, when called, returns the UI resource reference and holds a Promise open until the user submits the form.
 4. **Submit Tool** — a second tool that the UI form calls when the user clicks Submit. It resolves the Promise and returns the collected data to the AI.
 
+In a production-friendly version of this pattern, you typically keep a direct action tool as well. That lets the assistant execute clear requests such as "set the living room light to cool white at 60%" immediately, while still using the UI tool for prompts like "set the lights" where the bulb or color is ambiguous.
+
 ### Suggested Live Demo
 
 1. Open the finished reference files from the `examples/` folder to show the target state.
 2. Build the actual demo server from the `my-mcp-app` project root with `npm run build`, then let VS Code start it from the committed `.vscode/mcp.json` workspace configuration.
-3. Open the AI chat and send an ambiguous prompt such as "set the lights."
-4. Show the chat halting and the interactive form appearing.
-5. Click a bulb, select a color, and click Submit.
-6. Show the chat resuming with the correct, user-specified input.
+3. Open the AI chat and send a fully specified prompt such as "set the living room light to cool white at 60%."
+4. Show the assistant taking the direct tool path without opening the UI.
+5. Send an ambiguous prompt such as "set the lights."
+6. Show the chat halting and the interactive form appearing.
+7. Click a bulb, select a color, and click Submit.
+8. Show the chat resuming with the correct, user-specified input.
 
 ### Checkpoint Question
 
