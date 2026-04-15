@@ -60,6 +60,19 @@ Loaded customizations:
   plugins: project-planning@awesome-copilot
 ```
 
+### `/model`
+
+```text
+Current model
+
+  active: gpt-5.4
+
+Available models:
+  gpt-5.4
+  claude-opus-4.6
+  gpt-5-mini
+```
+
 ### `/skills list`
 
 ```text
