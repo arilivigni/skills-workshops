@@ -63,14 +63,14 @@ Loaded customizations:
 ### `/model`
 
 ```text
-Model status
+Current model
 
-  active: GPT-5.4
+  active: gpt-5.4
 
 Available models:
-  - GPT-5.4
-  - Claude Opus 4.6
-  - GPT-5-mini
+  gpt-5.4
+  claude-opus-4.6
+  gpt-5-mini
 ```
 
 ### `/skills list`
