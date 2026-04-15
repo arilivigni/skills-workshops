@@ -141,31 +141,31 @@ To use the repo as the walkthrough environment:
 
 1. Open the repository in **GitHub Codespaces** or **VS Code Dev Containers**
 2. Open a terminal in the repo root
-3. Create a disposable branch for live edits:
-
-```bash
-git switch -c workshop-3-demo
-```
-
-4. Start the CLI:
+3. Start the CLI:
 
 ```bash
 copilot
 ```
 
-5. If this is the first launch, authenticate inside the CLI:
+4. If this is the first launch, authenticate inside the CLI:
 
 ```text
 /login
 ```
 
-6. Create a throwaway demo branch explicitly from inside the workshop flow:
+5. Create the throwaway demo branch inside the CLI workshop flow:
 
 ```text
 Create and switch to a new git branch named workshop-3-demo before we make any edits in this repository.
 ```
 
-7. Run this 30-second dry run:
+If you prefer to create the branch manually before entering the prompt-driven flow, run:
+
+```bash
+git switch -c workshop-3-demo
+```
+
+6. Run this 30-second dry run:
 
 ```text
 /help
@@ -280,6 +280,8 @@ If the marketplace is unknown:
 copilot plugin marketplace add github/awesome-copilot
 ```
 
+Once this setup is done, continue into the Workshop Agenda below and start with Section 1.
+
 ---
 
 ## Using This Repository as the Live Demo Repo
@@ -380,6 +382,20 @@ Loaded customizations:
 Capabilities:
   mcp servers: github
   lsp servers: none
+```
+
+**Example: `/model`**
+
+```text
+Current model
+
+  claude-sonnet-4.5
+
+Available models
+
+  claude-sonnet-4.5
+  claude-haiku-4.5
+  gpt-5-mini
 ```
 
 **Example: `/skills list`**
@@ -545,6 +561,8 @@ Then install a shared plugin from the catalog, such as:
 ---
 
 ## Suggested Walkthrough Order for the Instructor
+
+Use the timed Workshop Agenda above for pacing; use this list as the simplest execution order for a first-time run.
 
 If you want to run this workshop directly from the repo, this is the simplest flow:
 

@@ -19,6 +19,12 @@ Do not touch files outside that folder.
 - it uses separate models for analysis, editing, and summarization
 - it keeps the risk low by staying inside one workshop folder
 
+## What to expect
+
+- the CLI will spawn sub-agents for the analysis, editing, and summarization work
+- participants will see task and status output as each subtask runs
+- the main session will merge the results back into one final response
+
 ## Instructor note
 
 If participants have different model names available, keep the structure the same and swap the names:
